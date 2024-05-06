@@ -90,6 +90,9 @@
 		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/object.h">
 			<Option target="Pavage"/>
 		</Unit>
+		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/objectdata.h">
+			<Option target="Pavage"/>
+		</Unit>
 		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/renderer.c">
 			<Option target="Pavage"/>
 		</Unit>

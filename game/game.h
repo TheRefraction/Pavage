@@ -5,10 +5,10 @@
 #include <stdbool.h>
 #include "../engine/renderer.h"
 #include "../engine/input.h"
+#include "../engine/scene.h"
 
 void run(bool debug);
-void update(Input *input, Object *objects[]);
-void render(Renderer *renderer);
+void render(Renderer *renderer, Scene *scene);
 void close(SDL_Window *window);
 
 #endif

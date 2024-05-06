@@ -184,7 +184,9 @@ CMakeFiles/Pavage.dir/game/game.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdbool.h \
  C:/Users/coren/CLionProjects/Pavage/engine/renderer.h \
  C:/Users/coren/CLionProjects/Pavage/engine/object.h \
+ C:/Users/coren/CLionProjects/Pavage/engine/objectdata.h \
+ C:/Users/coren/CLionProjects/Pavage/game/constants.h \
  C:/Users/coren/CLionProjects/Pavage/engine/input.h \
+ C:/Users/coren/CLionProjects/Pavage/engine/scene.h \
  C:/Users/coren/CLionProjects/Pavage/engine/window.h \
- C:/Users/coren/CLionProjects/Pavage/engine/object.h \
  C:\Users\coren\CLionProjects\Pavage\game\constants.h

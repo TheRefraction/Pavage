@@ -1,12 +1,23 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "object.h"
 #include "../game/constants.h"
+#include "objectdata.h"
+
+#include <stdbool.h>
 
 typedef struct SCENE_STRUCT {
     int id;
-    Object *objects[MAX_OBJECTS];
+    int lastIndex;
+    bool isReady;
+    ObjectData objects[MAX_OBJECTS];
 } Scene;
+
+void initScene(Scene *scene, int id);
+void updateScene(Scene *scene);
+void destroyScene(Scene *scene);
+
+void pushScene(Scene *scene, ObjectData object);
+ObjectData* popScene(Scene *scene);
 
 #endif

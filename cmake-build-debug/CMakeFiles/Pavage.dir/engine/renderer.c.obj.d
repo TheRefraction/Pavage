@@ -181,4 +181,7 @@ CMakeFiles/Pavage.dir/engine/renderer.c.obj: \
  C:/Users/coren/CLionProjects/Pavage/include/SDL2/SDL_version.h \
  C:/Users/coren/CLionProjects/Pavage/include/SDL2/SDL_locale.h \
  C:/Users/coren/CLionProjects/Pavage/include/SDL2/SDL_misc.h \
- C:\Users\coren\CLionProjects\Pavage\engine\object.h
+ C:\Users\coren\CLionProjects\Pavage\engine\object.h \
+ C:\Users\coren\CLionProjects\Pavage\engine\objectdata.h \
+ C:/Program\ Files/JetBrains/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdbool.h \
+ C:/Users/coren/CLionProjects/Pavage/game/constants.h

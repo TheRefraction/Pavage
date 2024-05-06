@@ -33,17 +33,14 @@ void run(bool debug) {
     Renderer renderer;
     Input input;
     SDL_Event event;
+    Scene scene;
 
     initWindow(&window, WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
     initRenderer(&renderer, window.handle);
     initInput(&input);
+    initScene(&scene, 0);
 
     showWindow(&window);
-
-    // testObject
-    Object testObject;
-    initObject(&testObject, renderer.renderer, "./resources/spr_test.bmp", 200, 200, 0);
-    renderer.objects[0] = &testObject;
 
     while(!window.isClosing && !input.keys[SDLK_ESCAPE]) {
         while(SDL_PollEvent(&event)) {
@@ -52,8 +49,8 @@ void run(bool debug) {
         }
 
         if(window.isVisible && window.hasMouseFocus) {
-            update(&input, renderer.objects);
-            render(&renderer);
+            updateScene(&scene);
+            render(&renderer, &scene);
         }
 
         SDL_Delay(1000 / FRAMERATE);
@@ -63,20 +60,19 @@ void run(bool debug) {
     close(window.handle);
 }
 
-void update(Input *input, Object *objects[]) {
-    //update everything else here
-    objects[0]->x = input->cursor[0];
-    objects[0]->y = input->cursor[1];
-}
-
-void render(Renderer *renderer) {
+void render(Renderer *renderer, Scene *scene) {
     SDL_RenderClear(renderer->renderer);
 
-    for(int i = 0; i < 128; i++) {
-        if(renderer->objects[i] != NULL) {
-            Object *object = renderer->objects[i];
-            SDL_Rect dest = {object->x, object->y, object->sprite->w, object->sprite->h};
-            SDL_RenderCopy(renderer->renderer, renderer->objects[i]->texture, NULL, &dest);
+    for(int i = 0; i < MAX_OBJECTS; i++) {
+        if(!scene->objects[i].null && !scene->objects[i].renderered) {
+            addToRenderer(renderer, scene->objects[i]);
+            scene->objects[i].renderered = true;
+        }
+
+        if(!renderer->objects[i].null) {
+            Object object = renderer->objects[i];
+            SDL_Rect dest = {object.data.x, object.data.y, object.sprite->w, object.sprite->h};
+            SDL_RenderCopy(renderer->renderer, renderer->objects[i].texture, NULL, &dest);
         }
     }
 

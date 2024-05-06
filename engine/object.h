@@ -2,17 +2,16 @@
 #define OBJECT_H
 
 #include <SDL2/SDL.h>
+#include "objectdata.h"
 
 typedef struct OBJECT_STRUCT {
-    int x;
-    int y;
-    int z;
+    ObjectData data;
+    bool null;
     SDL_Surface *sprite;
     SDL_Texture *texture;
 } Object;
 
-void initObject(Object *object, SDL_Renderer *renderer, char* sprite, int x, int y, int z);
-void updateObject(Object *object, int x, int y, int z);
+Object initObject(SDL_Renderer *renderer, ObjectData data);
 void cleanupObject(Object *object);
 
 #endif
