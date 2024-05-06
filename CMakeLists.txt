@@ -37,6 +37,8 @@ add_executable(Pavage main.c
         engine/renderer.h
         engine/object.c
         engine/object.h
+        engine/scene.c
+        engine/scene.h
 )
 
 # Copy the right DLL into the cmake-build-debug folder

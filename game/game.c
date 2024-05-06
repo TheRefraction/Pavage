@@ -1,7 +1,6 @@
 #include "game.h"
 
 #include "../engine/window.h"
-#include "../engine/object.h"
 #include "constants.h"
 
 void init() {
