@@ -7,11 +7,11 @@
 
 typedef struct RENDERER_STRUCT {
     SDL_Renderer *renderer;
-    Object objects[MAX_OBJECTS];
+    Object *objects[MAX_OBJECTS];
 } Renderer;
 
 void initRenderer(Renderer *renderer, SDL_Window *handle);
-void addToRenderer(Renderer *renderer, ObjectData data);
+void addToRenderer(Renderer *renderer, ObjectData *data);
 void cleanupRenderer(Renderer *renderer);
 
 #endif

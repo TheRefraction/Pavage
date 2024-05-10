@@ -4,17 +4,17 @@ void initRenderer(Renderer *renderer, SDL_Window *handle) {
     renderer->renderer = SDL_CreateRenderer(handle, -1, SDL_RENDERER_SOFTWARE);
 
     for(int i = 0; i < MAX_OBJECTS; i++) {
-        renderer->objects[i].null = true;
+        renderer->objects[i] = NULL;
     }
 }
 
-void addToRenderer(Renderer *renderer, ObjectData data) {
-    renderer->objects[data.id] = initObject(renderer->renderer, data);
+void addToRenderer(Renderer *renderer, ObjectData *data) {
+    renderer->objects[data->id] = initObject(renderer->renderer, data);
 }
 
 void removeFromRenderer(Renderer *renderer, int i) {
-    //cleanupObject(renderer->objects[i]);
-    renderer->objects[i].null = true;
+    cleanupObject(renderer->objects[i]);
+    renderer->objects[i] = NULL;
 }
 
 void flushRenderer(Renderer *renderer) {

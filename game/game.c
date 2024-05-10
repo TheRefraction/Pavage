@@ -3,7 +3,7 @@
 #include "../engine/window.h"
 #include "constants.h"
 
-void init() {
+void init(Window *window, Renderer *renderer, Input *input, Scene *scene) {
     SDL_version compiled, linked;
 
     if(SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0) {
@@ -24,32 +24,32 @@ void init() {
     }
 
     SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION,"SDL Version %u.%u.%u", linked.major, linked.minor, linked.patch);
+
+    initWindow(window, WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
+    initRenderer(renderer, window->handle);
+    initInput(input);
+    initScene(scene, 0);
 }
 
 void run(bool debug) {
-    init();
-
     Window window;
     Renderer renderer;
     Input input;
-    SDL_Event event;
     Scene scene;
+    SDL_Event event;
 
-    initWindow(&window, WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
-    initRenderer(&renderer, window.handle);
-    initInput(&input);
-    initScene(&scene, 0);
+    init(&window, &renderer, &input, &scene);
 
     showWindow(&window);
 
-    while(!window.isClosing && !input.keys[SDLK_ESCAPE]) {
+    while(!window.isClosing) {
         while(SDL_PollEvent(&event)) {
             updateWindow(&window, event);
             updateInput(&input, event);
         }
 
         if(window.isVisible && window.hasMouseFocus) {
-            updateScene(&scene);
+            updateScene(&scene, &input);
             render(&renderer, &scene);
         }
 
@@ -57,6 +57,7 @@ void run(bool debug) {
     }
 
     cleanupRenderer(&renderer);
+    destroyScene(&scene); // Maybe unnecessary
     close(window.handle);
 }
 
@@ -64,15 +65,15 @@ void render(Renderer *renderer, Scene *scene) {
     SDL_RenderClear(renderer->renderer);
 
     for(int i = 0; i < MAX_OBJECTS; i++) {
-        if(!scene->objects[i].null && !scene->objects[i].renderered) {
-            addToRenderer(renderer, scene->objects[i]);
-            scene->objects[i].renderered = true;
+        if(scene->data[i] != NULL && !scene->data[i]->inRenderer) {
+            addToRenderer(renderer, scene->data[i]);
+            scene->data[i]->inRenderer = true;
         }
 
-        if(!renderer->objects[i].null) {
-            Object object = renderer->objects[i];
-            SDL_Rect dest = {object.data.x, object.data.y, object.sprite->w, object.sprite->h};
-            SDL_RenderCopy(renderer->renderer, renderer->objects[i].texture, NULL, &dest);
+        if(renderer->objects[i] != NULL) {
+            Object* object = renderer->objects[i];
+            SDL_Rect dest = {object->data->x, object->data->y, object->sprite->w, object->sprite->h};
+            SDL_RenderCopyEx(renderer->renderer, renderer->objects[i]->texture, NULL, &dest, object->data->angle, NULL, object->data->flip);
         }
     }
 

@@ -91,6 +91,13 @@ build CMakeFiles/Pavage.dir/engine/object.c.obj: C_COMPILER__Pavage_unscanned_De
   OBJECT_DIR = CMakeFiles\Pavage.dir
   OBJECT_FILE_DIR = CMakeFiles\Pavage.dir\engine
 
+build CMakeFiles/Pavage.dir/engine/scene.c.obj: C_COMPILER__Pavage_unscanned_Debug C$:/Users/Corentin/CLionProjects/Pavage/engine/scene.c || cmake_object_order_depends_target_Pavage
+  DEP_FILE = CMakeFiles\Pavage.dir\engine\scene.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Corentin/CLionProjects/Pavage/include
+  OBJECT_DIR = CMakeFiles\Pavage.dir
+  OBJECT_FILE_DIR = CMakeFiles\Pavage.dir\engine
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Pavage
@@ -99,7 +106,7 @@ build CMakeFiles/Pavage.dir/engine/object.c.obj: C_COMPILER__Pavage_unscanned_De
 #############################################
 # Link the executable Pavage.exe
 
-build Pavage.exe: C_EXECUTABLE_LINKER__Pavage_Debug CMakeFiles/Pavage.dir/main.c.obj CMakeFiles/Pavage.dir/engine/input.c.obj CMakeFiles/Pavage.dir/game/game.c.obj CMakeFiles/Pavage.dir/engine/window.c.obj CMakeFiles/Pavage.dir/engine/renderer.c.obj CMakeFiles/Pavage.dir/engine/object.c.obj
+build Pavage.exe: C_EXECUTABLE_LINKER__Pavage_Debug CMakeFiles/Pavage.dir/main.c.obj CMakeFiles/Pavage.dir/engine/input.c.obj CMakeFiles/Pavage.dir/game/game.c.obj CMakeFiles/Pavage.dir/engine/window.c.obj CMakeFiles/Pavage.dir/engine/renderer.c.obj CMakeFiles/Pavage.dir/engine/object.c.obj CMakeFiles/Pavage.dir/engine/scene.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Users/Corentin/CLionProjects/Pavage/lib/x64

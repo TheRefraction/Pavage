@@ -69,19 +69,19 @@ typedef struct SDL_RWops
                              int whence);
 
     /**
-     *  Read up to \c maxnum objects each of size \c size from the data
+     *  Read up to \c maxnum data each of size \c size from the data
      *  stream to the area pointed at by \c ptr.
      *
-     *  \return the number of objects read, or 0 at error or end of file.
+     *  \return the number of data read, or 0 at error or end of file.
      */
     size_t (SDLCALL * read) (struct SDL_RWops * context, void *ptr,
                              size_t size, size_t maxnum);
 
     /**
-     *  Write exactly \c num objects each of size \c size from the area
+     *  Write exactly \c num data each of size \c size from the area
      *  pointed at by \c ptr to data stream.
      *
-     *  \return the number of objects written, or 0 at error or end of file.
+     *  \return the number of data written, or 0 at error or end of file.
      */
     size_t (SDLCALL * write) (struct SDL_RWops * context, const void *ptr,
                               size_t size, size_t num);
@@ -466,9 +466,9 @@ extern DECLSPEC Sint64 SDLCALL SDL_RWtell(SDL_RWops *context);
 /**
  * Read from a data source.
  *
- * This function reads up to `maxnum` objects each of size `size` from the
+ * This function reads up to `maxnum` data each of size `size` from the
  * data source to the area pointed at by `ptr`. This function may read less
- * objects than requested. It will return zero when there has been an error or
+ * data than requested. It will return zero when there has been an error or
  * the data stream is completely read.
  *
  * SDL_RWread() is actually a function wrapper that calls the SDL_RWops's
@@ -479,8 +479,8 @@ extern DECLSPEC Sint64 SDLCALL SDL_RWtell(SDL_RWops *context);
  * \param context a pointer to an SDL_RWops structure
  * \param ptr a pointer to a buffer to read data into
  * \param size the size of each object to read, in bytes
- * \param maxnum the maximum number of objects to be read
- * \returns the number of objects read, or 0 at error or end of file; call
+ * \param maxnum the maximum number of data to be read
+ * \returns the number of data read, or 0 at error or end of file; call
  *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 2.0.10.
@@ -500,7 +500,7 @@ extern DECLSPEC size_t SDLCALL SDL_RWread(SDL_RWops *context,
 /**
  * Write to an SDL_RWops data stream.
  *
- * This function writes exactly `num` objects each of size `size` from the
+ * This function writes exactly `num` data each of size `size` from the
  * area pointed at by `ptr` to the stream. If this fails for any reason, it'll
  * return less than `num` to demonstrate how far the write progressed. On
  * success, it returns `num`.
@@ -513,8 +513,8 @@ extern DECLSPEC size_t SDLCALL SDL_RWread(SDL_RWops *context,
  * \param context a pointer to an SDL_RWops structure
  * \param ptr a pointer to a buffer containing data to write
  * \param size the size of an object to write, in bytes
- * \param num the number of objects to write
- * \returns the number of objects written, which will be less than **num** on
+ * \param num the number of data to write
+ * \returns the number of data written, which will be less than **num** on
  *          error; call SDL_GetError() for more information.
  *
  * \since This function is available since SDL 2.0.10.

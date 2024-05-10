@@ -762,7 +762,7 @@ extern DECLSPEC SDL_Window * SDLCALL SDL_CreateWindowFrom(const void *data);
  * Get the numeric ID of a window.
  *
  * The numeric ID is what SDL_WindowEvent references, and is necessary to map
- * these events to specific SDL_Window objects.
+ * these events to specific SDL_Window data.
  *
  * \param window the window to query
  * \returns the ID of the window on success or 0 on failure; call
@@ -778,7 +778,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetWindowID(SDL_Window * window);
  * Get a window from a stored ID.
  *
  * The numeric ID is what SDL_WindowEvent references, and is necessary to map
- * these events to specific SDL_Window objects.
+ * these events to specific SDL_Window data.
  *
  * \param id the ID of the window
  * \returns the window associated with `id` or NULL if it doesn't exist; call
