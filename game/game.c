@@ -32,6 +32,15 @@ void init(Window *window, Renderer *renderer, Input *input, Scene *scene) {
         return;
     }
 
+    TTF_VERSION(&compiled);
+
+    if (compiled.major != linked.major){
+        SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION,"SDL_ttf versions mismatch!");
+
+        SDL_Quit();
+        return;
+    }
+
     initWindow(window, WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
     initRenderer(renderer, window->handle);
     initInput(input);
@@ -67,6 +76,7 @@ void run(bool debug) {
 
     cleanupRenderer(&renderer);
     destroyScene(&scene); // Maybe unnecessary
+
     close(window.handle);
 }
 
@@ -92,6 +102,7 @@ void render(Renderer *renderer, Scene *scene) {
 }
 
 void close(SDL_Window *window) {
+    TTF_Quit();
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
