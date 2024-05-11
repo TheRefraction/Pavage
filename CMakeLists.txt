@@ -15,8 +15,9 @@ else ()
     set(SDL2_DYNAMIC_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/bin/x86")
 endif ()
 
-set(SDL2_LIBRARIES SDL2main SDL2)
+set(SDL2_LIBRARIES SDL2main SDL2 SDL2_ttf)
 set(SDL2_DYNAMIC_LIB "SDL2.dll")
+set(SDL2_TTF_DYNAMIC_LIB "SDL2_ttf.dll")
 
 string(STRIP "${SDL2_LIBRARIES}" SDL2_LIBRARIES)
 #endregion
@@ -39,12 +40,18 @@ add_executable(Pavage main.c
         engine/object.h
         engine/scene.c
         engine/scene.h
+        engine/colors.h
 )
 
 # Copy the right DLL into the cmake-build-debug folder
 add_custom_command(TARGET Pavage
         POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_DYNAMIC_LIB_DIR}/${SDL2_DYNAMIC_LIB}" ${CMAKE_BINARY_DIR}/.
+)
+
+add_custom_command(TARGET Pavage
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_DYNAMIC_LIB_DIR}/${SDL2_TTF_DYNAMIC_LIB}" ${CMAKE_BINARY_DIR}/.
 )
 
 # Copy resources folder into the cmake-build-debug folder

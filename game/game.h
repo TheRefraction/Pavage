@@ -2,7 +2,10 @@
 #define GAME_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+
 #include <stdbool.h>
+
 #include "../engine/renderer.h"
 #include "../engine/input.h"
 #include "../engine/scene.h"

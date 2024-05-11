@@ -25,6 +25,13 @@ void init(Window *window, Renderer *renderer, Input *input, Scene *scene) {
 
     SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION,"SDL Version %u.%u.%u", linked.major, linked.minor, linked.patch);
 
+    if (TTF_Init() < 0){
+        SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL_ttf!\n%s", TTF_GetError());
+
+        SDL_Quit();
+        return;
+    }
+
     initWindow(window, WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
     initRenderer(renderer, window->handle);
     initInput(input);
@@ -39,6 +46,8 @@ void run(bool debug) {
     SDL_Event event;
 
     init(&window, &renderer, &input, &scene);
+
+    addFontToRenderer(&renderer, "./resources/default.ttf", 24);
 
     showWindow(&window);
 
@@ -72,7 +81,7 @@ void render(Renderer *renderer, Scene *scene) {
 
         if(renderer->objects[i] != NULL) {
             Object* object = renderer->objects[i];
-            SDL_Rect dest = {object->data->x, object->data->y, object->sprite->w, object->sprite->h};
+            SDL_Rect dest = {object->data->x, object->data->y, object->surface->w, object->surface->h};
             SDL_RenderCopyEx(renderer->renderer, renderer->objects[i]->texture, NULL, &dest, object->data->angle, NULL, object->data->flip);
         }
     }

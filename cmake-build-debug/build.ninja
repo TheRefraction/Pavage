@@ -108,10 +108,10 @@ build CMakeFiles/Pavage.dir/engine/scene.c.obj: C_COMPILER__Pavage_unscanned_Deb
 
 build Pavage.exe: C_EXECUTABLE_LINKER__Pavage_Debug CMakeFiles/Pavage.dir/main.c.obj CMakeFiles/Pavage.dir/engine/input.c.obj CMakeFiles/Pavage.dir/game/game.c.obj CMakeFiles/Pavage.dir/engine/window.c.obj CMakeFiles/Pavage.dir/engine/renderer.c.obj CMakeFiles/Pavage.dir/engine/object.c.obj CMakeFiles/Pavage.dir/engine/scene.c.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -lSDL2_ttf  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Users/Corentin/CLionProjects/Pavage/lib/x64
   OBJECT_DIR = CMakeFiles\Pavage.dir
-  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Corentin\CLionProjects\Pavage\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy C:/Users/Corentin/CLionProjects/Pavage/bin/x64/SDL2.dll C:/Users/Corentin/CLionProjects/Pavage/cmake-build-debug/. && cd /D C:\Users\Corentin\CLionProjects\Pavage\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory C:/Users/Corentin/CLionProjects/Pavage/resources C:/Users/Corentin/CLionProjects/Pavage/cmake-build-debug/resources"
+  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Corentin\CLionProjects\Pavage\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy C:/Users/Corentin/CLionProjects/Pavage/bin/x64/SDL2.dll C:/Users/Corentin/CLionProjects/Pavage/cmake-build-debug/. && cd /D C:\Users\Corentin\CLionProjects\Pavage\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy C:/Users/Corentin/CLionProjects/Pavage/bin/x64/SDL2_ttf.dll C:/Users/Corentin/CLionProjects/Pavage/cmake-build-debug/. && cd /D C:\Users\Corentin\CLionProjects\Pavage\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory C:/Users/Corentin/CLionProjects/Pavage/resources C:/Users/Corentin/CLionProjects/Pavage/cmake-build-debug/resources"
   PRE_LINK = cd .
   TARGET_FILE = Pavage.exe
   TARGET_IMPLIB = libPavage.dll.a

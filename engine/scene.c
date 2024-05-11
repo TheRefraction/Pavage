@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include "scene.h"
+#include "colors.h"
 
 void initScene(Scene *scene, int id) {
     scene->id = id;
@@ -10,10 +11,12 @@ void initScene(Scene *scene, int id) {
         scene->data[i] = NULL;
     }
 }
+
 void readyScene(Scene *scene) {
     switch(scene->id) {
         case 0:
-            scene->data[0] = initObjectData(0, "./resources/spr_back.bmp", 0, 30, 0, 0, SDL_FLIP_NONE, true, false);
+            scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_GREEN, SDL_FLIP_NONE, true);
+            scene->data[1] = initObjectData(1, TEXT, "Hello world:)", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             break;
     }
@@ -27,6 +30,7 @@ void updateScene(Scene *scene, Input *input) {
         switch (scene->id) {
             case 0: // TITLE SCREEN
                 scene->data[0]->angle += 2;
+                scene->data[1]->angle += 0.5;
                 if (input->keys[SDL_SCANCODE_UP]) {
                     scene->data[0]->y--;
                 } else if (input->keys[SDL_SCANCODE_DOWN]) {
