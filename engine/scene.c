@@ -38,12 +38,16 @@ void updateScene(Scene *scene, Input *input) {
                 }
                 break;
             case 1: // OPTION SCREEN
+
                 break;
             case 2: // GAME SELECTION SCREEN
+
                 break;
             case 3: // GAME 1-PLAYER
+
                 break;
             case 4: // GAME 2-PLAYERS
+
                 break;
             default: // NULL SCENE
                 return;
