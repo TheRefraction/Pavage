@@ -2,7 +2,7 @@
 
 Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) {
     Object* object = (Object*) malloc(sizeof(Object));
-    if(data->type == SPRITE) {
+    if(data->type == SPRITE || data->type == BUTTON) {
         object->surface = SDL_LoadBMP(data->sprite);
     } else if(data->type == TEXT) {
         object->surface = TTF_RenderText_Solid(fonts[data->fontId], data->sprite, data->color);
