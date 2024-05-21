@@ -1,5 +1,8 @@
 #include "input.h"
-
+/**
+ * initInput- initialise les differentes touches d'action
+ * @param input - action possible du joueur
+ */
 void initInput(Input *input) {
     for(int i = 0; i < 256; i++) {
         input->keys[i] = false;

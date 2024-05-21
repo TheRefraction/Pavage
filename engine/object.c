@@ -1,5 +1,12 @@
 #include "object.h"
 
+/**
+ * initObject- initialise un objet
+ * @param renderer
+ * @param fonts
+ * @param data
+ * @return
+ */
 Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) {
     Object* object = (Object*) malloc(sizeof(Object));
     if(data->type == SPRITE || data->type == BUTTON) {
@@ -24,6 +31,21 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
     }
 }
 
+/**
+ * initObjectData- prepare les informations d un nouvel objet
+ * @param id - nom de l'objet
+ * @param type - type de l'objet
+ * @param sprite - apparence de l'objet
+ * @param x - coordonée x de l'objet
+ * @param y - coordonée y de l'objet
+ * @param z - profondeur de l'objet
+ * @param fontId - police d'ecriture
+ * @param angle - rotation de l'objet
+ * @param color - couleur de l'objet
+ * @param flip - retourne symetriquement l'objet si vrai
+ * @param isVisible - visibilité de l'objet
+ * @return
+ */
 ObjectData* initObjectData(int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
     ObjectData* data = (ObjectData*) malloc(sizeof(ObjectData));
     data->id = id;
@@ -42,6 +64,10 @@ ObjectData* initObjectData(int id, ObjectType type, char *sprite, int x, int y, 
     return data;
 }
 
+/**
+ * cleanupObject - supprime l'objet pour liberer la memoire
+ * @param object - objet à supprimer
+ */
 void cleanupObject(Object *object) {
     if(object != NULL) {
         SDL_DestroyTexture(object->texture);

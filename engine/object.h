@@ -8,7 +8,8 @@
 typedef enum OBJECT_DATA_TYPE {
     NONE,
     SPRITE,
-    TEXT
+    TEXT,
+    BUTTON
 } ObjectType;
 
 typedef struct OBJECT_DATA_STRUCT {
