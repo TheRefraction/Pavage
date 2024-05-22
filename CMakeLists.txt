@@ -41,6 +41,9 @@ add_executable(Pavage main.c
         engine/scene.c
         engine/scene.h
         engine/colors.h
+        engine/file.c
+        engine/file.h
+        engine/maeline.c
 )
 
 # Copy the right DLL into the cmake-build-debug folder

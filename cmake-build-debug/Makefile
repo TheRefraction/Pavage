@@ -128,6 +128,30 @@ Pavage/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/build
 .PHONY : Pavage/fast
 
+engine/file.obj: engine/file.c.obj
+.PHONY : engine/file.obj
+
+# target to build an object file
+engine/file.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/file.c.obj
+.PHONY : engine/file.c.obj
+
+engine/file.i: engine/file.c.i
+.PHONY : engine/file.i
+
+# target to preprocess a source file
+engine/file.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/file.c.i
+.PHONY : engine/file.c.i
+
+engine/file.s: engine/file.c.s
+.PHONY : engine/file.s
+
+# target to generate assembly for a file
+engine/file.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/file.c.s
+.PHONY : engine/file.c.s
+
 engine/input.obj: engine/input.c.obj
 .PHONY : engine/input.obj
 
@@ -151,6 +175,30 @@ engine/input.s: engine/input.c.s
 engine/input.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/input.c.s
 .PHONY : engine/input.c.s
+
+engine/maeline.obj: engine/maeline.c.obj
+.PHONY : engine/maeline.obj
+
+# target to build an object file
+engine/maeline.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/maeline.c.obj
+.PHONY : engine/maeline.c.obj
+
+engine/maeline.i: engine/maeline.c.i
+.PHONY : engine/maeline.i
+
+# target to preprocess a source file
+engine/maeline.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/maeline.c.i
+.PHONY : engine/maeline.c.i
+
+engine/maeline.s: engine/maeline.c.s
+.PHONY : engine/maeline.s
+
+# target to generate assembly for a file
+engine/maeline.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/maeline.c.s
+.PHONY : engine/maeline.c.s
 
 engine/object.obj: engine/object.c.obj
 .PHONY : engine/object.obj
@@ -305,9 +353,15 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Pavage
+	@echo ... engine/file.obj
+	@echo ... engine/file.i
+	@echo ... engine/file.s
 	@echo ... engine/input.obj
 	@echo ... engine/input.i
 	@echo ... engine/input.s
+	@echo ... engine/maeline.obj
+	@echo ... engine/maeline.i
+	@echo ... engine/maeline.s
 	@echo ... engine/object.obj
 	@echo ... engine/object.i
 	@echo ... engine/object.s
