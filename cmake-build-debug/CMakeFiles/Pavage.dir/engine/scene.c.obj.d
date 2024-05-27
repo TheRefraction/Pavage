@@ -188,4 +188,4 @@ CMakeFiles/Pavage.dir/engine/scene.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdbool.h \
  C:\Users\coren\CLionProjects\Pavage\engine\input.h \
  C:\Users\coren\CLionProjects\Pavage\engine\colors.h \
- C:\Users\coren\CLionProjects\Pavage\engine\button.h
+ C:\Users\coren\CLionProjects\Pavage\engine\gui_elements.h

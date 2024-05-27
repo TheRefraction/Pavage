@@ -1,10 +1,5 @@
 #include "renderer.h"
 
-/**
- * initRenderer - Initialize the Rendering system
- * @param renderer - Pointer towards a Renderer STRUCT
- * @param handle - Window handle to use the renderer in
- */
 void initRenderer(Renderer *renderer, SDL_Window *handle) {
     renderer->renderer = SDL_CreateRenderer(handle, -1, SDL_RENDERER_SOFTWARE);
 
@@ -19,12 +14,6 @@ void initRenderer(Renderer *renderer, SDL_Window *handle) {
     renderer->lastFontIndex = -1;
 }
 
-/**
- * addFontToRenderer -
- * @param renderer
- * @param filename
- * @param size
- */
 void addFontToRenderer(Renderer *renderer, char *filename, unsigned short size) {
     if(renderer->lastFontIndex >= MAX_FONTS - 1) { //TO CHECK !!
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Reached MAX_FONTS limit! Font has not been added!");
@@ -52,11 +41,7 @@ void removeFontFromRenderer(Renderer *renderer, int i) {
     }
 }
 
-/**
- * addToRenderer-
- * @param renderer
- * @param data
- */
+
 void addToRenderer(Renderer *renderer, ObjectData *data) {
     renderer->objects[data->id] = initObject(renderer->renderer, renderer->fonts, data);
 }
@@ -72,10 +57,6 @@ void removeFromRenderer(Renderer *renderer, int i) {
     renderer->objects[i] = NULL;
 }
 
-/**
- * flushRenderer-
- * @param renderer
- */
 void flushRenderer(Renderer *renderer) {
     for(int i = 0; i < MAX_OBJECTS; i++) {
         removeFromRenderer(renderer, i);
@@ -93,10 +74,6 @@ void flushFontRenderer(Renderer *renderer) {
     renderer->lastFontIndex = -1;
 }
 
-/**
- * cleanupRenderer- supprime pour liberer de la memoire
- * @param renderer
- */
 void cleanupRenderer(Renderer *renderer) {
     flushRenderer(renderer);
     flushFontRenderer(renderer);

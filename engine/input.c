@@ -1,8 +1,5 @@
 #include "input.h"
-/**
- * initInput- initialise les differentes touches d'action
- * @param input - action possible du joueur
- */
+
 void initInput(Input *input) {
     for(int i = 0; i < 256; i++) {
         input->keys[i] = false;
@@ -16,11 +13,7 @@ void initInput(Input *input) {
 
     input->scroll = 0;
 }
-/**
- * updateInput- met à jour les actions
- * @param input - action effectué par le joueur
- * @param event - evenement qui decoule de l'action
- */
+
 void updateInput(Input *input, SDL_Event event) {
     switch(event.type)
     {

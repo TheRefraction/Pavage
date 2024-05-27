@@ -128,30 +128,6 @@ Pavage/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/build
 .PHONY : Pavage/fast
 
-engine/button.obj: engine/button.c.obj
-.PHONY : engine/button.obj
-
-# target to build an object file
-engine/button.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/button.c.obj
-.PHONY : engine/button.c.obj
-
-engine/button.i: engine/button.c.i
-.PHONY : engine/button.i
-
-# target to preprocess a source file
-engine/button.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/button.c.i
-.PHONY : engine/button.c.i
-
-engine/button.s: engine/button.c.s
-.PHONY : engine/button.s
-
-# target to generate assembly for a file
-engine/button.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/button.c.s
-.PHONY : engine/button.c.s
-
 engine/file.obj: engine/file.c.obj
 .PHONY : engine/file.obj
 
@@ -175,6 +151,30 @@ engine/file.s: engine/file.c.s
 engine/file.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/file.c.s
 .PHONY : engine/file.c.s
+
+engine/gui_elements.obj: engine/gui_elements.c.obj
+.PHONY : engine/gui_elements.obj
+
+# target to build an object file
+engine/gui_elements.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/gui_elements.c.obj
+.PHONY : engine/gui_elements.c.obj
+
+engine/gui_elements.i: engine/gui_elements.c.i
+.PHONY : engine/gui_elements.i
+
+# target to preprocess a source file
+engine/gui_elements.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/gui_elements.c.i
+.PHONY : engine/gui_elements.c.i
+
+engine/gui_elements.s: engine/gui_elements.c.s
+.PHONY : engine/gui_elements.s
+
+# target to generate assembly for a file
+engine/gui_elements.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/gui_elements.c.s
+.PHONY : engine/gui_elements.c.s
 
 engine/input.obj: engine/input.c.obj
 .PHONY : engine/input.obj
@@ -353,12 +353,12 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Pavage
-	@echo ... engine/button.obj
-	@echo ... engine/button.i
-	@echo ... engine/button.s
 	@echo ... engine/file.obj
 	@echo ... engine/file.i
 	@echo ... engine/file.s
+	@echo ... engine/gui_elements.obj
+	@echo ... engine/gui_elements.i
+	@echo ... engine/gui_elements.s
 	@echo ... engine/input.obj
 	@echo ... engine/input.i
 	@echo ... engine/input.s

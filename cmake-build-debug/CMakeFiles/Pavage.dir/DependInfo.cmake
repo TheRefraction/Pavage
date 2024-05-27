@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/coren/CLionProjects/Pavage/engine/button.c" "CMakeFiles/Pavage.dir/engine/button.c.obj" "gcc" "CMakeFiles/Pavage.dir/engine/button.c.obj.d"
   "C:/Users/coren/CLionProjects/Pavage/engine/file.c" "CMakeFiles/Pavage.dir/engine/file.c.obj" "gcc" "CMakeFiles/Pavage.dir/engine/file.c.obj.d"
+  "C:/Users/coren/CLionProjects/Pavage/engine/gui_elements.c" "CMakeFiles/Pavage.dir/engine/gui_elements.c.obj" "gcc" "CMakeFiles/Pavage.dir/engine/gui_elements.c.obj.d"
   "C:/Users/coren/CLionProjects/Pavage/engine/input.c" "CMakeFiles/Pavage.dir/engine/input.c.obj" "gcc" "CMakeFiles/Pavage.dir/engine/input.c.obj.d"
   "C:/Users/coren/CLionProjects/Pavage/engine/object.c" "CMakeFiles/Pavage.dir/engine/object.c.obj" "gcc" "CMakeFiles/Pavage.dir/engine/object.c.obj.d"
   "C:/Users/coren/CLionProjects/Pavage/engine/renderer.c" "CMakeFiles/Pavage.dir/engine/renderer.c.obj" "gcc" "CMakeFiles/Pavage.dir/engine/renderer.c.obj.d"

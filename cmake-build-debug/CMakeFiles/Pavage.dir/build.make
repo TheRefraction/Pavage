@@ -188,20 +188,20 @@ CMakeFiles/Pavage.dir/engine/file.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Pavage.dir/engine/file.c.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\coren\CLionProjects\Pavage\engine\file.c -o CMakeFiles\Pavage.dir\engine\file.c.s
 
-CMakeFiles/Pavage.dir/engine/button.c.obj: CMakeFiles/Pavage.dir/flags.make
-CMakeFiles/Pavage.dir/engine/button.c.obj: CMakeFiles/Pavage.dir/includes_C.rsp
-CMakeFiles/Pavage.dir/engine/button.c.obj: C:/Users/coren/CLionProjects/Pavage/engine/button.c
-CMakeFiles/Pavage.dir/engine/button.c.obj: CMakeFiles/Pavage.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\coren\CLionProjects\Pavage\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/Pavage.dir/engine/button.c.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Pavage.dir/engine/button.c.obj -MF CMakeFiles\Pavage.dir\engine\button.c.obj.d -o CMakeFiles\Pavage.dir\engine\button.c.obj -c C:\Users\coren\CLionProjects\Pavage\engine\button.c
+CMakeFiles/Pavage.dir/engine/gui_elements.c.obj: CMakeFiles/Pavage.dir/flags.make
+CMakeFiles/Pavage.dir/engine/gui_elements.c.obj: CMakeFiles/Pavage.dir/includes_C.rsp
+CMakeFiles/Pavage.dir/engine/gui_elements.c.obj: C:/Users/coren/CLionProjects/Pavage/engine/gui_elements.c
+CMakeFiles/Pavage.dir/engine/gui_elements.c.obj: CMakeFiles/Pavage.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\coren\CLionProjects\Pavage\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/Pavage.dir/engine/gui_elements.c.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Pavage.dir/engine/gui_elements.c.obj -MF CMakeFiles\Pavage.dir\engine\gui_elements.c.obj.d -o CMakeFiles\Pavage.dir\engine\gui_elements.c.obj -c C:\Users\coren\CLionProjects\Pavage\engine\gui_elements.c
 
-CMakeFiles/Pavage.dir/engine/button.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Pavage.dir/engine/button.c.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\coren\CLionProjects\Pavage\engine\button.c > CMakeFiles\Pavage.dir\engine\button.c.i
+CMakeFiles/Pavage.dir/engine/gui_elements.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Pavage.dir/engine/gui_elements.c.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\coren\CLionProjects\Pavage\engine\gui_elements.c > CMakeFiles\Pavage.dir\engine\gui_elements.c.i
 
-CMakeFiles/Pavage.dir/engine/button.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Pavage.dir/engine/button.c.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\coren\CLionProjects\Pavage\engine\button.c -o CMakeFiles\Pavage.dir\engine\button.c.s
+CMakeFiles/Pavage.dir/engine/gui_elements.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Pavage.dir/engine/gui_elements.c.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.4\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\coren\CLionProjects\Pavage\engine\gui_elements.c -o CMakeFiles\Pavage.dir\engine\gui_elements.c.s
 
 # Object files for target Pavage
 Pavage_OBJECTS = \
@@ -213,7 +213,7 @@ Pavage_OBJECTS = \
 "CMakeFiles/Pavage.dir/engine/object.c.obj" \
 "CMakeFiles/Pavage.dir/engine/scene.c.obj" \
 "CMakeFiles/Pavage.dir/engine/file.c.obj" \
-"CMakeFiles/Pavage.dir/engine/button.c.obj"
+"CMakeFiles/Pavage.dir/engine/gui_elements.c.obj"
 
 # External object files for target Pavage
 Pavage_EXTERNAL_OBJECTS =
@@ -226,7 +226,7 @@ Pavage.exe: CMakeFiles/Pavage.dir/engine/renderer.c.obj
 Pavage.exe: CMakeFiles/Pavage.dir/engine/object.c.obj
 Pavage.exe: CMakeFiles/Pavage.dir/engine/scene.c.obj
 Pavage.exe: CMakeFiles/Pavage.dir/engine/file.c.obj
-Pavage.exe: CMakeFiles/Pavage.dir/engine/button.c.obj
+Pavage.exe: CMakeFiles/Pavage.dir/engine/gui_elements.c.obj
 Pavage.exe: CMakeFiles/Pavage.dir/build.make
 Pavage.exe: CMakeFiles/Pavage.dir/linkLibs.rsp
 Pavage.exe: CMakeFiles/Pavage.dir/objects1.rsp

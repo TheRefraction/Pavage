@@ -14,10 +14,38 @@ typedef struct RENDERER_STRUCT {
     int lastFontIndex;
 } Renderer;
 
+/**
+ * initRenderer - Initializes the Rendering system
+ * @param renderer Pointer to the renderer to initialize
+ * @param handle Window handle to use the renderer in
+ */
 void initRenderer(Renderer *renderer, SDL_Window *handle);
+
+/**
+* addToRenderer - Creates and pushes an new object onto the rendering list
+* @param renderer Pointer to the current renderer
+* @param data Pointer to the ObjectData to add in
+*/
 void addToRenderer(Renderer *renderer, ObjectData *data);
+
+/**
+ * addFontToRenderer - Pushes a new font onto the fonts list
+ * @param renderer Pointer to the current renderer
+ * @param filename Filename of the font to add in
+ * @param size Size (in px) of the font
+ */
 void addFontToRenderer(Renderer *renderer, char *filename, unsigned short size);
+
+/**
+ * flushRenderer - Destroys all objects in rendering list
+ * @param renderer Pointer to the current renderer
+ */
 void flushRenderer(Renderer *renderer);
+
+/**
+ * cleanupRenderer - Destroys the current renderer and frees memory
+ * @param renderer Pointer to the current renderer
+ */
 void cleanupRenderer(Renderer *renderer);
 
 #endif

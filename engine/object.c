@@ -1,18 +1,11 @@
 #include "object.h"
 
-/**
- * initObject- initialise un objet
- * @param renderer
- * @param fonts
- * @param data
- * @return
- */
 Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) {
     Object* object = (Object*) malloc(sizeof(Object));
     if(data->type == SPRITE) {
         object->surface = SDL_LoadBMP(data->sprite);
     } else if(data->type == TEXT) {
-        object->surface = TTF_RenderText_Solid(fonts[data->fontId], data->sprite, data->color);
+        object->surface = TTF_RenderText_Blended_Wrapped(fonts[data->fontId], data->sprite, data->color, 0);
     } else if(data->type == TILE) {
         Uint8 pixels[96 * 96 * 3] = {0};
         int pitch = 3 * 96;
@@ -31,13 +24,12 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
             }
         }
 
-        Uint32 rmask, gmask, bmask, amask;
-        rmask = 0x000000ff;
-        gmask = 0x0000ff00;
-        bmask = 0x00ff0000;
-        amask = 0xff000000;
+        Uint32 rmask = 0x000000ff;
+        Uint32 gmask = 0x0000ff00;
+        Uint32 bmask = 0x00ff0000;
+        Uint32 amask = 0xff000000;
 
-        SDL_Surface *surf_tmp = TTF_RenderText_Solid(fonts[data->fontId], data->sprite, data->color);
+        SDL_Surface *surf_tmp = TTF_RenderText_Blended_Wrapped(fonts[data->fontId], data->sprite, data->color, 0);
         object->surface = SDL_CreateRGBSurfaceFrom(pixels, 96, 96, 24, pitch, rmask, gmask, bmask, amask);
         SDL_BlitSurface(surf_tmp, NULL, object->surface, NULL);
     }
@@ -59,21 +51,6 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
     }
 }
 
-/**
- * initObjectData- prepare les informations d un nouvel objet
- * @param id - nom de l'objet
- * @param type - type de l'objet
- * @param sprite - apparence de l'objet
- * @param x - coordonée x de l'objet
- * @param y - coordonée y de l'objet
- * @param z - profondeur de l'objet
- * @param fontId - police d'ecriture
- * @param angle - rotation de l'objet
- * @param color - couleur de l'objet
- * @param flip - retourne symetriquement l'objet si vrai
- * @param isVisible - visibilité de l'objet
- * @return
- */
 ObjectData* initObjectData(int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
     ObjectData* data = (ObjectData*) malloc(sizeof(ObjectData));
     data->id = id;
@@ -92,10 +69,6 @@ ObjectData* initObjectData(int id, ObjectType type, char *sprite, int x, int y, 
     return data;
 }
 
-/**
- * cleanupObject - supprime l'objet pour liberer la memoire
- * @param object - objet à supprimer
- */
 void cleanupObject(Object *object) {
     if(object != NULL) {
         SDL_DestroyTexture(object->texture);

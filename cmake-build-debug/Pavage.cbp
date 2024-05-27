@@ -78,12 +78,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/button.c">
-			<Option target="Pavage"/>
-		</Unit>
-		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/button.h">
-			<Option target="Pavage"/>
-		</Unit>
 		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/colors.h">
 			<Option target="Pavage"/>
 		</Unit>
@@ -91,6 +85,12 @@
 			<Option target="Pavage"/>
 		</Unit>
 		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/file.h">
+			<Option target="Pavage"/>
+		</Unit>
+		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/gui_elements.c">
+			<Option target="Pavage"/>
+		</Unit>
+		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/gui_elements.h">
 			<Option target="Pavage"/>
 		</Unit>
 		<Unit filename="C:/Users/coren/CLionProjects/Pavage/engine/input.c">

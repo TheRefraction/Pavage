@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Pavage.dir/engine/button.c.obj"
-  "CMakeFiles/Pavage.dir/engine/button.c.obj.d"
   "CMakeFiles/Pavage.dir/engine/file.c.obj"
   "CMakeFiles/Pavage.dir/engine/file.c.obj.d"
+  "CMakeFiles/Pavage.dir/engine/gui_elements.c.obj"
+  "CMakeFiles/Pavage.dir/engine/gui_elements.c.obj.d"
   "CMakeFiles/Pavage.dir/engine/input.c.obj"
   "CMakeFiles/Pavage.dir/engine/input.c.obj.d"
   "CMakeFiles/Pavage.dir/engine/object.c.obj"

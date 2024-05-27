@@ -43,8 +43,8 @@ add_executable(Pavage main.c
         engine/colors.h
         engine/file.c
         engine/file.h
-        engine/button.c
-        engine/button.h
+        engine/gui_elements.c
+        engine/gui_elements.h
 )
 
 # Copy the right DLL into the cmake-build-debug folder
