@@ -128,6 +128,30 @@ Pavage/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/build
 .PHONY : Pavage/fast
 
+engine/button.obj: engine/button.c.obj
+.PHONY : engine/button.obj
+
+# target to build an object file
+engine/button.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/button.c.obj
+.PHONY : engine/button.c.obj
+
+engine/button.i: engine/button.c.i
+.PHONY : engine/button.i
+
+# target to preprocess a source file
+engine/button.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/button.c.i
+.PHONY : engine/button.c.i
+
+engine/button.s: engine/button.c.s
+.PHONY : engine/button.s
+
+# target to generate assembly for a file
+engine/button.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/button.c.s
+.PHONY : engine/button.c.s
+
 engine/file.obj: engine/file.c.obj
 .PHONY : engine/file.obj
 
@@ -175,30 +199,6 @@ engine/input.s: engine/input.c.s
 engine/input.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/input.c.s
 .PHONY : engine/input.c.s
-
-engine/maeline.obj: engine/maeline.c.obj
-.PHONY : engine/maeline.obj
-
-# target to build an object file
-engine/maeline.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/maeline.c.obj
-.PHONY : engine/maeline.c.obj
-
-engine/maeline.i: engine/maeline.c.i
-.PHONY : engine/maeline.i
-
-# target to preprocess a source file
-engine/maeline.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/maeline.c.i
-.PHONY : engine/maeline.c.i
-
-engine/maeline.s: engine/maeline.c.s
-.PHONY : engine/maeline.s
-
-# target to generate assembly for a file
-engine/maeline.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Pavage.dir\build.make CMakeFiles/Pavage.dir/engine/maeline.c.s
-.PHONY : engine/maeline.c.s
 
 engine/object.obj: engine/object.c.obj
 .PHONY : engine/object.obj
@@ -353,15 +353,15 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Pavage
+	@echo ... engine/button.obj
+	@echo ... engine/button.i
+	@echo ... engine/button.s
 	@echo ... engine/file.obj
 	@echo ... engine/file.i
 	@echo ... engine/file.s
 	@echo ... engine/input.obj
 	@echo ... engine/input.i
 	@echo ... engine/input.s
-	@echo ... engine/maeline.obj
-	@echo ... engine/maeline.i
-	@echo ... engine/maeline.s
 	@echo ... engine/object.obj
 	@echo ... engine/object.i
 	@echo ... engine/object.s

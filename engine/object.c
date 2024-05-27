@@ -9,11 +9,39 @@
  */
 Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) {
     Object* object = (Object*) malloc(sizeof(Object));
-    if(data->type == SPRITE || data->type == BUTTON) {
+    if(data->type == SPRITE) {
         object->surface = SDL_LoadBMP(data->sprite);
     } else if(data->type == TEXT) {
         object->surface = TTF_RenderText_Solid(fonts[data->fontId], data->sprite, data->color);
+    } else if(data->type == TILE) {
+        Uint8 pixels[96 * 96 * 3] = {0};
+        int pitch = 3 * 96;
+        for (int dy = 0; dy < 96; dy++) {
+            for (int dx = 0; dx < pitch; dx += 3) {
+                int index = dx + pitch * dy;
+                if (dy % 32 == 0 || dx % 96 == 0) {
+                    pixels[index] = 0;
+                    pixels[index + 1] = 0;
+                    pixels[index + 2] = 0;
+                } else {
+                    pixels[index] = 255;
+                    pixels[index + 1] = 255;
+                    pixels[index + 2] = 255;
+                }
+            }
+        }
+
+        Uint32 rmask, gmask, bmask, amask;
+        rmask = 0x000000ff;
+        gmask = 0x0000ff00;
+        bmask = 0x00ff0000;
+        amask = 0xff000000;
+
+        SDL_Surface *surf_tmp = TTF_RenderText_Solid(fonts[data->fontId], data->sprite, data->color);
+        object->surface = SDL_CreateRGBSurfaceFrom(pixels, 96, 96, 24, pitch, rmask, gmask, bmask, amask);
+        SDL_BlitSurface(surf_tmp, NULL, object->surface, NULL);
     }
+
     if(object->surface) {
         object->texture = SDL_CreateTextureFromSurface(renderer, object->surface);
         if(object->texture) {

@@ -56,7 +56,11 @@ void run(bool debug) {
 
     init(&window, &renderer, &input, &scene);
 
+    addFontToRenderer(&renderer, "./resources/default.ttf", 12);
+    addFontToRenderer(&renderer, "./resources/default.ttf", 20);
     addFontToRenderer(&renderer, "./resources/default.ttf", 24);
+    addFontToRenderer(&renderer, "./resources/default.ttf", 32);
+    addFontToRenderer(&renderer, "./resources/default.ttf", 48);
 
     showWindow(&window);
 
