@@ -27,6 +27,8 @@ void readyScene(Scene *scene) {
             scene->data[3] = initObjectData(3, SPRITE, "./resources/spr_btn.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             scene->data[4] = initObjectData(4, SPRITE, "./resources/spr_btn.bmp", 97, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             scene->data[5] = initObjectData(5, SPRITE, "./resources/spr_btn.bmp", 194, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            scene->data[6] = initObjectData(6, SPRITE, "./resources/spr_btn.bmp", 300, 300, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            scene->data[7] = initObjectData(7, SPRITE, "./resources/spr_btn.bmp", 400, 400, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
             break;
     }
     scene->isReady = true;
@@ -47,12 +49,24 @@ void updateScene(Scene *scene, Input *input) {
 
                 if (isOnObject(scene, 3, input) && input->mouse[SDL_BUTTON_LEFT]) { //si on est le boutton 1 et qu'on clique dessus :
                     scene->data[3]->angle++;  //alors le boutton tourne
+                    scene->data[4]->isVisible=false;
+                    scene->data[5]->isVisible=false;
+                    scene->data[6]->isVisible=true;
+                    scene->data[7]->isVisible=true;
                 }
                 if (isOnObject(scene, 4, input) && input->mouse[SDL_BUTTON_LEFT]) { //si on est le boutton 2 et qu'on clique dessus :
                     scene->data[4]->angle++;  //alors le boutton tourne
+                    scene->data[3]->isVisible=false;
+                    scene->data[5]->isVisible=false;
+                    scene->data[6]->isVisible=true;
+                    scene->data[7]->isVisible=true;
                 }
                 if (isOnObject(scene, 5, input) && input->mouse[SDL_BUTTON_LEFT]) { //si on est le boutton 3 et qu'on clique dessus :
                     scene->data[5]->angle++;  //alors le boutton tourne
+                    scene->data[3]->isVisible=false;
+                    scene->data[4]->isVisible=false;
+                    scene->data[6]->isVisible=true;
+                    scene->data[7]->isVisible=true;
                 }
 
                 break;
