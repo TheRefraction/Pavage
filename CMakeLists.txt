@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(Pavage C)
+project(Tiling C)
 
 set(CMAKE_C_STANDARD 99)
 
@@ -26,7 +26,7 @@ include_directories(${SDL2_INCLUDE_DIR})
 link_directories(${SDL2_LIBRARIES_DIR})
 link_libraries(mingw32 ${SDL2_LIBRARIES})
 
-add_executable(Pavage main.c
+add_executable(Tiling main.c
         game/constants.h
         engine/input.c
         engine/input.h
@@ -43,23 +43,23 @@ add_executable(Pavage main.c
         engine/colors.h
         engine/file.c
         engine/file.h
-        engine/gui_elements.c
-        engine/gui_elements.h
+        engine/gui.c
+        engine/gui.h
 )
 
 # Copy the right DLL into the cmake-build-debug folder
-add_custom_command(TARGET Pavage
+add_custom_command(TARGET Tiling
         POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_DYNAMIC_LIB_DIR}/${SDL2_DYNAMIC_LIB}" ${CMAKE_BINARY_DIR}/.
 )
 
-add_custom_command(TARGET Pavage
+add_custom_command(TARGET Tiling
         POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_DYNAMIC_LIB_DIR}/${SDL2_TTF_DYNAMIC_LIB}" ${CMAKE_BINARY_DIR}/.
 )
 
 # Copy resources folder into the cmake-build-debug folder
-add_custom_command(TARGET Pavage
+add_custom_command(TARGET Tiling
         POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/resources" "${CMAKE_BINARY_DIR}/resources"
 )

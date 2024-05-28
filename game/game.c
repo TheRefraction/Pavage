@@ -71,7 +71,7 @@ void run(bool debug) {
         }
 
         if(window.isVisible && window.hasMouseFocus) {
-            updateScene(&scene, &input);
+            updateScene(&scene, &input, &window);
             render(&renderer, &scene);
         }
 
@@ -93,7 +93,7 @@ void render(Renderer *renderer, Scene *scene) {
             scene->data[i]->inRenderer = true;
         }
 
-        if(renderer->objects[i] != NULL) {
+        if(renderer->objects[i] != NULL && scene->data[i]->isVisible) {
             Object* object = renderer->objects[i];
             SDL_Rect dest = {object->data->x, object->data->y, object->surface->w, object->surface->h};
             SDL_RenderCopyEx(renderer->renderer, renderer->objects[i]->texture, NULL, &dest, object->data->angle, NULL, object->data->flip);

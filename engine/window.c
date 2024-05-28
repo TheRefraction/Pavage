@@ -1,6 +1,5 @@
 #include "window.h"
 
-
 void initWindow(Window *window, char *title, int width, int height) {
     window->handle = SDL_CreateWindow(title,SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_HIDDEN);
     window->surface = SDL_GetWindowSurface(window->handle);
@@ -18,7 +17,6 @@ void initWindow(Window *window, char *title, int width, int height) {
     window->hasKeyboardFocus = false;
     window->hasGrabbedCursor = false;
 }
-
 
 void updateWindow(Window *window, SDL_Event event) {
     if(event.type == SDL_QUIT) {
@@ -50,7 +48,6 @@ void updateWindow(Window *window, SDL_Event event) {
         }
     }
 }
-
 
 void setTitleWindow(Window *window, char *title) {
     SDL_SetWindowTitle(window->handle, title);
@@ -88,7 +85,6 @@ void setResizableWindow(Window *window, bool resizable) {
     SDL_SetWindowResizable(window->handle, resizable ? SDL_TRUE : SDL_FALSE);
     window->isResizable = resizable;
 }
-
 
 void showWindow(Window * window) {
     SDL_ShowWindow(window->handle);

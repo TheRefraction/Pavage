@@ -1,0 +1,134 @@
+PENSE-BÊTE POUR L'USAGE DES INPUTS DANS UNE SCENE
+
+scene->data[0]->angle += 2;
+if (input->keys[SDL_SCANCODE_UP]) {
+    scene->data[0]->y--;
+} else if (input->keys[SDL_SCANCODE_DOWN]) {
+    scene->data[0]->y++;
+}
+======================================================================
+ALGORITHME DE PLACEMENT D'UNE TUILE SUR LE PLATEAU
+
+// plateau grid de largeur c et de hauteur l
+// tuile tile
+//pinit : position sur le plateau de où on veut placer la tuile
+//pi: position sur le plateau de la i-eme case de la tuile
+for(int i=0; i<8; i++) {
+    int pi = pinit + i%3 +(i/3)*c;
+    // NB : vérifier les cas de débordements avant de mettre à jour le plateau (4 cas !!!)
+    grid[pi] = tile[i];
+}
+=====================================================================
+CODE CONCERNANT LA VERIFICATION D'UNE TUILE ET LES ENVIES DE SUICIDE DE LORNA non:)
+
+void afficher(char tab[], int w, int h){ // tab[] = *tab
+    for (int i=0; i<(w*h); i++){
+        if ((i%w) == 0){
+            printf("\n");
+        }
+        printf("(%c)", tab[i]);
+    }
+}
+
+int main() {
+    int nbX=0,numTuile,ligneplateau,colonneplateau,pi=0;
+    int c=4,l=4; // a modifIer avec les valeurs du plateau
+    char tuile[9]={'X',' ',' ',' ','1','1','1',' ',' '};//a enlever
+    char plateau[16]={'X','1',' ',' ',' ',' ',' ','1','X',' ',' ',' ',' ','1',' ',' '};//a enlever une fois
+    // mettre le code une fois avant
+
+    while(nbX<1){//verifie que la tuile peut etre placé
+        //printf("emplacement incorrect, l'un des motifs X doit se trouver sur un nombre");
+        do{
+            printf("quelle tuile voulez vous placer?(entre 1 et 5)\n");
+            scanf("%d",&numTuile);
+        }while(numTuile<1||numTuile>5);
+        do {
+            printf("ligne ou voulez vous placer la case sup gauche de la tuile\n ");
+            scanf("%d", &ligneplateau);
+        }while(ligneplateau<0||ligneplateau>c);
+        do{
+            printf("colonne ou voulez vous placer la case sup gauche de la tuile\n");
+            scanf("%d", &colonneplateau);
+        }while (colonneplateau<0||colonneplateau>l);
+
+        // NE MARCHE PAS ==> A REMODIFIER (POUR LA POSITION INITIALE)
+        for(int i=0;i<=8;i++){
+            pi=c*(colonneplateau-1)+ligneplateau-1;  definit l'endroit p1 de  la grille ... je pense que ça marche ou pas
+            if (i%3==0){
+                pi=pi+c-2;//pour passer à la ligne suivante
+            }
+            if(tuile[i]=='X'){
+                if (plateau[pi]=='1'){ //regarder comment selectionner la bonne case du plateau et aussi pour mettre des nombres autre que 1
+                    nbX++;
+                }
+
+            }
+
+        }
+    }
+
+    // NE MARCHE PAS ==> A REMODIFIER
+    for (int j=0;j<=8;j++){
+        pi=c*(colonneplateau-1)+ligneplateau-1; //definit l'endroit p1 de  la grille ... je pense que ça marche ou pas
+        if (j%3==0){
+            pi=pi+c-2;//pour passer à la ligne suivante
+        }
+        printf("%d",pi);
+        switch (plateau[pi]){
+            case 'X':
+                break;
+            case '1':
+                if (tuile[j]=='X'){
+                    plateau[pi]='X';
+                }
+                else{
+                    plateau[pi]=plateau[j]+tuile[j]-48;
+                }
+                break;
+            case '2':
+                if (tuile[j]=='X'){
+                    plateau[pi]='X';
+                }
+                else{
+                    plateau[pi]=plateau[pi]+tuile[j]-48;
+                }
+                break;
+            case '3':
+                if (tuile[j]=='X'){
+                    plateau[pi]='X';
+                }
+                else{
+                    plateau[pi]=plateau[pi]+tuile[j]-48;
+                }
+                break;
+            case '4':
+                if (tuile[j]=='X'){
+                    plateau[pi]='X';
+                }
+                else{
+                    plateau[pi]=plateau[pi]+tuile[j]-48;
+                }
+                break;
+            case '5':
+                if (tuile[j]=='X'){
+                    plateau[pi]='X';
+                }
+                else{
+                    plateau[pi]=plateau[pi]+tuile[j]-48;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    afficher(tuile,3,3);
+    afficher(plateau,l,c);
+
+
+    //-->penser à generer une nouvelle tuile//
+    return 0;
+}

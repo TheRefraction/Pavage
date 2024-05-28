@@ -30,9 +30,9 @@ void addFontToRenderer(Renderer *renderer, char *filename, unsigned short size) 
 }
 
 /**
- * removeFontRenderer-
- * @param renderer
- * @param i
+ * removeFontRenderer - Removes the selected font from the renderer
+ * @param renderer Pointer on the current renderer
+ * @param i Index of the font to remove
  */
 void removeFontFromRenderer(Renderer *renderer, int i) {
     if(renderer->fonts[i] != NULL) {
@@ -41,16 +41,14 @@ void removeFontFromRenderer(Renderer *renderer, int i) {
     }
 }
 
-
 void addToRenderer(Renderer *renderer, ObjectData *data) {
     renderer->objects[data->id] = initObject(renderer->renderer, renderer->fonts, data);
 }
 
-
 /**
- * removeFromRenderer- supprime un element du rendu
- * @param renderer-rendu
- * @param i
+ * removeFromRenderer - Removes and destroys an object from the rendering list
+ * @param renderer Pointer on the current renderer
+ * @param i Index of the object to remove
  */
 void removeFromRenderer(Renderer *renderer, int i) {
     cleanupObject(renderer->objects[i]);
@@ -64,8 +62,8 @@ void flushRenderer(Renderer *renderer) {
 }
 
 /**
- * flushFontRenderer-
- * @param renderer
+ * flushFontRenderer - Removes all fonts from the renderer
+ * @param renderer Pointer on the current renderer
  */
 void flushFontRenderer(Renderer *renderer) {
     for(int i = 0; i < MAX_FONTS; i++) {

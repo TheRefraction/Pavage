@@ -32,6 +32,8 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
         SDL_Surface *surf_tmp = TTF_RenderText_Blended_Wrapped(fonts[data->fontId], data->sprite, data->color, 0);
         object->surface = SDL_CreateRGBSurfaceFrom(pixels, 96, 96, 24, pitch, rmask, gmask, bmask, amask);
         SDL_BlitSurface(surf_tmp, NULL, object->surface, NULL);
+
+        SDL_FreeSurface(surf_tmp);
     }
 
     if(object->surface) {

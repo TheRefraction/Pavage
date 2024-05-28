@@ -1,8 +1,7 @@
 #include <stddef.h>
 #include "scene.h"
 #include "colors.h"
-#include "gui_elements.h"
-
+#include "gui.h"
 
 void initScene(Scene *scene, int id) {
     scene->id = id;
@@ -14,14 +13,14 @@ void initScene(Scene *scene, int id) {
     }
 }
 
-/** readyScene - Prépare les objets sur la scène selon son identifiant
- * @param scene - La scène à préparer
+/** readyScene - Readies the scene according its ID
+ * @param scene Pointer on the current scene
  */
 
 void readyScene(Scene *scene) {
     switch(scene->id) {
         case 0: // Title screen
-            scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_FUCHSIA, SDL_FLIP_NONE, true);
+            scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             scene->data[1] = initObjectData(1, TEXT, "PAVAGE", 260, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             scene->data[2] = initObjectData(2, TILE, "  X  -1  X\n  X        X\n  1   X   X", 320, 240, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
             scene->data[3] = initObjectData(3, SPRITE, "./resources/spr_btn.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
@@ -34,49 +33,32 @@ void readyScene(Scene *scene) {
     scene->isReady = true;
 }
 
-void updateScene(Scene *scene, Input *input) {
+void updateScene(Scene *scene, Input *input, Window *window) {
     if(!scene->isReady) {
         readyScene(scene);
     } else {
         switch (scene->id) {
             case 0: // TITLE SCREEN
-                /*scene->data[0]->angle += 2;
-                if (input->keys[SDL_SCANCODE_UP]) {
-                    scene->data[0]->y--;
-                } else if (input->keys[SDL_SCANCODE_DOWN]) {
-                    scene->data[0]->y++;
-                }*/
+                if(input->mouse[SDL_BUTTON_LEFT]) {
+                    if (isOnObject(scene, 2, input)) { // New game
+                        scene->data[2]->isVisible=false;
+                        scene->data[3]->isVisible=false;
+                        scene->data[4]->isVisible=false;
 
-                if (isOnObject(scene, 3, input) && input->mouse[SDL_BUTTON_LEFT]) { //si on est le boutton 1 et qu'on clique dessus :
-                    scene->data[3]->angle++;  //alors le boutton tourne
-                    scene->data[4]->isVisible=false;
-                    scene->data[5]->isVisible=false;
-                    scene->data[6]->isVisible=true;
-                    scene->data[7]->isVisible=true;
-                }
-                if (isOnObject(scene, 4, input) && input->mouse[SDL_BUTTON_LEFT]) { //si on est le boutton 2 et qu'on clique dessus :
-                    scene->data[4]->angle++;  //alors le boutton tourne
-                    scene->data[3]->isVisible=false;
-                    scene->data[5]->isVisible=false;
-                    scene->data[6]->isVisible=true;
-                    scene->data[7]->isVisible=true;
-                }
-                if (isOnObject(scene, 5, input) && input->mouse[SDL_BUTTON_LEFT]) { //si on est le boutton 3 et qu'on clique dessus :
-                    scene->data[5]->angle++;  //alors le boutton tourne
-                    scene->data[3]->isVisible=false;
-                    scene->data[4]->isVisible=false;
-                    scene->data[6]->isVisible=true;
-                    scene->data[7]->isVisible=true;
+                        scene->data[6]->isVisible=true;
+                        scene->data[7]->isVisible=true;
+                    } else if (isOnObject(scene, 3, input)) { // Continue
+
+                    } else if (isOnObject(scene, 4, input)) { // Exit
+                        window->isClosing = true;
+                    }
                 }
 
                 break;
-            case 1: // GAME SELECTION SCREEN
+            case 1: // GAME 1-PLAYER
 
                 break;
-            case 2: // GAME 1-PLAYER
-
-                break;
-            case 3: // GAME 2-PLAYERS
+            case 2: // GAME 2-PLAYERS
 
                 break;
             default: // NULL SCENE

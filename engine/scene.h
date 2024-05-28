@@ -4,6 +4,7 @@
 #include "../game/constants.h"
 #include "object.h"
 #include "input.h"
+#include "window.h"
 
 #include <stdbool.h>
 
@@ -14,24 +15,25 @@ typedef struct SCENE_STRUCT {
     ObjectData *data[MAX_OBJECTS];
 } Scene;
 
-/** initScene - initialise une nouvelle scène
+/** initScene - Initializes the current scene
  *
- * @param scene - scene à preparer
- * @param id - nom de la scene
+ * @param scene Pointer on the scene to initialize
+ * @param id Which scene ID to load
  */
 
 void initScene(Scene *scene, int id);
 
 /**
- * updateScene- met à jour la scène
- * @param scene - scène à modifier
- * @param input - action à effectuer
+ * updateScene - Updates the current scene
+ * @param scene Pointer on the current scene
+ * @param input Pointer on the input system
+ * @param window Pointer on the current window
  */
-void updateScene(Scene *scene, Input *input);
+void updateScene(Scene *scene, Input *input, Window *window);
 
 /**
- * destroyScene - supprime la scène pour liberer de la memoire
- * @param scene - nom de la scène à detruire
+ * destroyScene - Destroys the scene and its ObjectData and frees memory
+ * @param scene Pointer on the scene to destroy
  */
 void destroyScene(Scene *scene);
 
