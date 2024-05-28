@@ -22,12 +22,20 @@ void readyScene(Scene *scene) {
         case 0: // Title screen
             scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             scene->data[1] = initObjectData(1, TEXT, "PAVAGE", 260, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->data[2] = initObjectData(2, TILE, "  X  -1  X\n  X        X\n  1   X   X", 320, 240, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[3] = initObjectData(3, SPRITE, "./resources/spr_btn.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->data[4] = initObjectData(4, SPRITE, "./resources/spr_btn.bmp", 97, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->data[5] = initObjectData(5, SPRITE, "./resources/spr_btn.bmp", 194, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->data[6] = initObjectData(6, SPRITE, "./resources/spr_btn.bmp", 300, 300, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            scene->data[7] = initObjectData(7, SPRITE, "./resources/spr_btn.bmp", 400, 400, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            //scene->data[2] = initObjectData(2, TILE, "  X  -1  X\n  X        X\n  1   X   X", 320, 240, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+
+            // buttons of main screen
+            scene->data[2] = initObjectData(2, SPRITE, "./resources/spr_btn_newgame.bmp", 336, 200, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            scene->data[3] = initObjectData(3, SPRITE, "./resources/spr_btn_continue.bmp", 336, 256, 0, 0, 0, SDL_GRAY, SDL_FLIP_NONE, true);
+            scene->data[4] = initObjectData(4, SPRITE, "./resources/spr_btn_exit.bmp", 336, 312, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+
+            // how many players buttons
+            scene->data[5] = initObjectData(5, SPRITE, "./resources/spr_btn.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            scene->data[6] = initObjectData(6, SPRITE, "./resources/spr_btn.bmp", 336, 236, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+
+            // difficulties buttons
+            scene->data[7] = initObjectData(7, SPRITE, "./resources/spr_btn.bmp", 336, 270, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            scene->data[8] = initObjectData(8, SPRITE, "./resources/spr_btn.bmp", 336, 304, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
             break;
     }
     scene->isReady = true;
