@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+
 #include <stdbool.h>
 
 typedef enum OBJECT_DATA_TYPE {
@@ -45,6 +46,7 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data);
 
 /**
  * initObjectData - Initializes the data of a new object
+ * @param data Current scene ObjectData array
  * @param id ID in the scene
  * @param type Type of object
  * @param sprite String that contains either a filename, or a text to render
@@ -56,9 +58,8 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data);
  * @param color Blend of the sprite
  * @param flip Flip the sprite
  * @param isVisible Visibility of the object
- * @return ObjectData*
  */
-ObjectData* initObjectData(int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible);
+void initObjectData(ObjectData *data[], int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible);
 
 /**
  * cleanupObject - Destroys the object specified and frees memory

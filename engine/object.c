@@ -1,6 +1,10 @@
 #include "object.h"
 #include "colors.h"
 
+#include "../game/tile.h"
+
+#include <ctype.h>
+
 Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) {
     Object* object = (Object*) malloc(sizeof(Object));
     if(data->type == SPRITE) {
@@ -28,6 +32,7 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
             }
         }
 
+        int line = width / 32;
         int pitch = 3 * width;
         Uint8 *pixels = (Uint8*) malloc(pitch * height * sizeof(Uint8));
 
@@ -46,19 +51,27 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
             }
         }
 
-        //SDL_Surface *surf_tmp;
-        object->surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, 24, pitch, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
+        SDL_Surface *surf_tmp;
+        object->surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, 24, pitch, (Uint32) 0x000000ff, (Uint32) 0x0000ff00, (Uint32) 0x00ff0000, (Uint32) 0xff000000);
 
-        /*for(int i = 0; i < sizeData; i++) {
-            char c[2] = {data->sprite[i], '\0'};
-            int line = width / 32;
+        for(int i = 0; i < sizeData; i++) {
+            char c[2] = {adjustChar(data->sprite[i]), '\0'};
+            bool negative = isNegativeDigit(data->sprite[i]);
+
             SDL_Rect dest = {10 + 32 * (i % line), 32 * (i / line), 32, 32};
-            surf_tmp = TTF_RenderText_Blended(fonts[data->fontId], c, SDL_BLACK);
-            SDL_BlitSurface(surf_tmp, NULL, object->surface, &dest);
-        }*/
+            SDL_Color color = SDL_BLACK;
 
-        //SDL_FreeSurface(surf_tmp);
-        free(pixels);
+            if(c[0] == '0') {
+                color = SDL_BLUE;
+            } else if(isdigit(c[0])) {
+                color = negative ? SDL_RED : SDL_GREEN;
+            }
+
+            surf_tmp = TTF_RenderText_Blended(fonts[data->fontId], c, color);
+            SDL_BlitSurface(surf_tmp, NULL, object->surface, &dest);
+        }
+
+        SDL_FreeSurface(surf_tmp);
     }
 
     if(object->surface) {
@@ -78,22 +91,22 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
     }
 }
 
-ObjectData* initObjectData(int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
-    ObjectData* data = (ObjectData*) malloc(sizeof(ObjectData));
-    data->id = id;
-    data->type = type;
-    data->sprite = sprite;
-    data->x = x;
-    data->y = y;
-    data->z = z;
-    data->fontId = fontId;
-    data->angle = angle;
-    data->color = color;
-    data->flip = flip;
-    data->isVisible = isVisible;
-    data->inRenderer = false;
+void initObjectData(ObjectData *data[], int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
+    ObjectData* _data = (ObjectData*) malloc(sizeof(ObjectData));
+    _data->id = id;
+    _data->type = type;
+    _data->sprite = sprite;
+    _data->x = x;
+    _data->y = y;
+    _data->z = z;
+    _data->fontId = fontId;
+    _data->angle = angle;
+    _data->color = color;
+    _data->flip = flip;
+    _data->isVisible = isVisible;
+    _data->inRenderer = false;
 
-    return data;
+    data[id] = _data;
 }
 
 void cleanupObject(Object *object) {

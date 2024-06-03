@@ -24,54 +24,65 @@ void initScene(Scene *scene, int id) {
 void readyScene(Scene *scene) {
     switch(scene->id) {
         case 0: // Title screen
-            scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->data[1] = initObjectData(1, TEXT, "PAVAGE", 260, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, TEXT, "PAVAGE", 260, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             // buttons of main screen
-            scene->data[2] = initObjectData(2, SPRITE, "./resources/spr_btn_newgame.bmp", 336, 200, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->data[3] = initObjectData(3, SPRITE, "./resources/spr_btn_continue.bmp", 336, 256, 0, 0, 0, SDL_GRAY, SDL_FLIP_NONE, true);
-            scene->data[4] = initObjectData(4, SPRITE, "./resources/spr_btn_exit.bmp", 336, 312, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 2, SPRITE, "./resources/spr_btn_newgame.bmp", 336, 200, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 3, SPRITE, "./resources/spr_btn_continue.bmp", 336, 256, 0, 0, 0, SDL_GRAY, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 4, SPRITE, "./resources/spr_btn_exit.bmp", 336, 312, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             // how many players buttons
-            scene->data[5] = initObjectData(5, SPRITE, "./resources/spr_btn_onep.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            scene->data[6] = initObjectData(6, SPRITE, "./resources/spr_btn_twop.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 5, SPRITE, "./resources/spr_btn_onep.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 6, SPRITE, "./resources/spr_btn_twop.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
 
             // difficulties buttons
-            scene->data[7] = initObjectData(7, SPRITE, "./resources/spr_btn_d1.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            scene->data[8] = initObjectData(8, SPRITE, "./resources/spr_btn_d2.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 7, SPRITE, "./resources/spr_btn_d1.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 8, SPRITE, "./resources/spr_btn_d2.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
 
             //which size ?
-            scene->data[9] = initObjectData(9, SPRITE, "./resources/spr_btn_s1.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            scene->data[10] = initObjectData(10, SPRITE, "./resources/spr_btn_s2.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            scene->data[11] = initObjectData(11, SPRITE, "./resources/spr_btn_s3.bmp", 336, 314, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 9, SPRITE, "./resources/spr_btn_s1.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 10, SPRITE, "./resources/spr_btn_s2.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 11, SPRITE, "./resources/spr_btn_s3.bmp", 336, 314, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
 
             break;
         case 1: // One Player
-            int x_tmp = 304;
-            if (scene->flags[4] == 1) {
+            int x_tmp, y_tmp;
+            char *str1 = "", *str2 = "";
+
+            if (scene->flags[4] == 0) {
+                x_tmp = 304;
+                y_tmp = 202;
+                str1 = "A   B   C   D   E   F";
+                str2 = "1\n2\n3";
+            } else if (scene->flags[4] == 1) {
                 x_tmp = 208;
-            } else if (scene->flags[4] == 2) {
+                y_tmp = 154;
+                str1 = "A   B   C   D   E   F   G   H   I   J   K   L";
+                str2 = "1\n2\n3\n4\n5\n6";
+            } else {
                 x_tmp = 112;
+                y_tmp = 106;
+                str1 = "A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R";
+                str2 = "1\n2\n3\n4\n5\n6\n7\n8\n9";
             }
 
-            scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_RED, SDL_FLIP_NONE, true);
-            scene->data[1] = initObjectData(1, GRID, "", x_tmp, 200, 1, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[2] = initObjectData(2, SPRITE, "./resources/spr_btn_d2.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_RED, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_d2.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
-            // 3 : Text A B C D E F G H I J
-            // 4 : Text 1 2 3 4 5 6 7 8 9 10
+            initObjectData(scene->data, 2, GRID, "", x_tmp, y_tmp, scene->flags[4], 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 3, TEXT, str1, x_tmp + 10, y_tmp - 32, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 4, TEXT, str2, x_tmp - 32, y_tmp, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+
             // Hand of 5 tiles
-            scene->data[5] = initObjectData(5, TILE, "", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[6] = initObjectData(6, TILE, "         ", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[7] = initObjectData(7, TILE, "         ", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[8] = initObjectData(8, TILE, "         ", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[9] = initObjectData(9, TILE, "         ", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 5, TILE, "'23+50789", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 6, TILE, "ABCDEFGHI", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 7, TILE, "         ", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 8, TILE, "         ", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 9, TILE, "         ", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
 
             break;
         case 2: // Two players
-
-
-            scene->data[2] = initObjectData(2, SPRITE, "./resources/spr_btn_d2.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             break;
     }
     scene->isReady = true;
