@@ -1,4 +1,5 @@
 #include "object.h"
+#include "colors.h"
 
 Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) {
     Object* object = (Object*) malloc(sizeof(Object));
@@ -6,10 +7,31 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
         object->surface = SDL_LoadBMP(data->sprite);
     } else if(data->type == TEXT) {
         object->surface = TTF_RenderText_Blended_Wrapped(fonts[data->fontId], data->sprite, data->color, 0);
-    } else if(data->type == TILE) {
-        Uint8 pixels[96 * 96 * 3] = {0};
-        int pitch = 3 * 96;
-        for (int dy = 0; dy < 96; dy++) {
+    } else if(data->type == TILE || data->type == GRID) {
+        int width = 96;
+        int height = 96;
+        int sizeData = 9;
+
+        if(data->type == GRID) {
+            if(data->z == 0) {
+                width = 192;
+                height = 96;
+                sizeData = 18;
+            } else if(data->z == 1) {
+                width = 384;
+                height = 192;
+                sizeData = 72;
+            } else if(data->z == 2) {
+                width = 576;
+                height = 288;
+                sizeData = 162;
+            }
+        }
+
+        int pitch = 3 * width;
+        Uint8 *pixels = (Uint8*) malloc(pitch * height * sizeof(Uint8));
+
+        for (int dy = 0; dy < height; dy++) {
             for (int dx = 0; dx < pitch; dx += 3) {
                 int index = dx + pitch * dy;
                 if (dy % 32 == 0 || dx % 96 == 0) {
@@ -24,16 +46,19 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
             }
         }
 
-        Uint32 rmask = 0x000000ff;
-        Uint32 gmask = 0x0000ff00;
-        Uint32 bmask = 0x00ff0000;
-        Uint32 amask = 0xff000000;
+        SDL_Surface *surf_tmp;
+        object->surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, 24, pitch, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 
-        SDL_Surface *surf_tmp = TTF_RenderText_Blended_Wrapped(fonts[data->fontId], data->sprite, data->color, 0);
-        object->surface = SDL_CreateRGBSurfaceFrom(pixels, 96, 96, 24, pitch, rmask, gmask, bmask, amask);
-        SDL_BlitSurface(surf_tmp, NULL, object->surface, NULL);
+        for(int i = 0; i < sizeData; i++) {
+            char c[2] = {data->sprite[i], '\0'};
+            int line = width / 32;
+            SDL_Rect dest = {10 + 32 * (i % line), 32 * (i / line), 32, 32};
+            surf_tmp = TTF_RenderText_Blended(fonts[data->fontId], c, SDL_BLACK);
+            SDL_BlitSurface(surf_tmp, NULL, object->surface, &dest);
+        }
 
         SDL_FreeSurface(surf_tmp);
+        free(pixels);
     }
 
     if(object->surface) {

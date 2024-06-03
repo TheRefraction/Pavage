@@ -1,6 +1,5 @@
 #include "game.h"
 
-#include "../engine/window.h"
 #include "constants.h"
 
 void init(Window *window, Renderer *renderer, Input *input, Scene *scene) {
@@ -17,13 +16,13 @@ void init(Window *window, Renderer *renderer, Input *input, Scene *scene) {
     SDL_GetVersion(&linked);
 
     if (compiled.major != linked.major){
-        SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION,"SDL versions mismatch!");
+        SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "SDL versions mismatch!");
 
         SDL_Quit();
         return;
     }
 
-    SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION,"SDL Version %u.%u.%u", linked.major, linked.minor, linked.patch);
+    SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "SDL Version %u.%u.%u", linked.major, linked.minor, linked.patch);
 
     if (TTF_Init() < 0){
         SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL_ttf!\n%s", TTF_GetError());
@@ -55,6 +54,8 @@ void run(bool debug) {
     SDL_Event event;
 
     init(&window, &renderer, &input, &scene);
+
+    srand(time(0));
 
     addFontToRenderer(&renderer, "./resources/default.ttf", 12);
     addFontToRenderer(&renderer, "./resources/default.ttf", 20);

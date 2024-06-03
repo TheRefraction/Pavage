@@ -48,9 +48,14 @@ void readyScene(Scene *scene) {
             break;
         case 1: // One Player
             scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_RED, SDL_FLIP_NONE, true);
-            scene->data[1] = initObjectData(1, TILE, "  X  -1  X\n  X        X\n  1   X   X", 320, 240, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[1] = initObjectData(1, GRID, "", 200, 200, 1, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
             scene->data[2] = initObjectData(2, SPRITE, "./resources/spr_btn_d2.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-
+            // Hand of 5 tiles
+            /*scene->data[3] = initObjectData(3, TILE, "         ", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[4] = initObjectData(4, TILE, "         ", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[5] = initObjectData(5, TILE, "         ", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[6] = initObjectData(6, TILE, "         ", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[7] = initObjectData(7, TILE, "         ", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);*/
             break;
         case 2: // Two players
 

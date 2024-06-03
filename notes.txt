@@ -19,119 +19,91 @@ for(int i=0; i<8; i++) {
     grid[pi] = tile[i];
 }
 =====================================================================
-CODE CONCERNANT LA VERIFICATION D'UNE TUILE ET LES ENVIES DE SUICIDE DE LORNA non:)
-
-void afficher(char tab[], int w, int h){ // tab[] = *tab
-    for (int i=0; i<(w*h); i++){
-        if ((i%w) == 0){
-            printf("\n");
-        }
-        printf("(%c)", tab[i]);
-    }
-}
+CODE CONCERNANT LA VERIFICATION D'UNE TUILE ET LES ENVIES DE SUICIDE DE LORNA non:) si
 
 int main() {
-    int nbX=0,numTuile,ligneplateau,colonneplateau,pi=0;
-    int c=4,l=4; // a modifIer avec les valeurs du plateau
-    char tuile[9]={'X',' ',' ',' ','1','1','1',' ',' '};//a enlever
-    char plateau[16]={'X','1',' ',' ',' ',' ',' ','1','X',' ',' ',' ',' ','1',' ',' '};//a enlever une fois
-    // mettre le code une fois avant
+    int XisFalse=0,ligneplateau=1,colonneplateau=2,pi,pinit,i=0;//enlever les valeurs de ligneplateau et colonneplateau pour les remplacer par celles choisis par le joueur
+    int c=4,l=4; //valeur a remplacer par celles du plateau
+    char tuile[9]={'X',' ',' ','1',' ','1',' ',' ','1'};//valeurs test
+    char plateau[16]={'X','1',' ',' ',' ',' ',' ','1','X',' ',' ',' ',' ','1',' ',' '};// valeurs test
+    do{
+                printf("quelle tuile voulez vous placer?(entre 1 et 5)\n");
+                scanf("%d",&numTuile);
+            }while(numTuile<1||numTuile>5);
+            do {
+                printf("ligne ou voulez vous placer la case sup gauche de la tuile\n ");
+                scanf("%d", &ligneplateau);
+            }while(ligneplateau<0||ligneplateau>c);
+            do{
+                printf("colonne ou voulez vous placer la case sup gauche de la tuile\n");
+                scanf("%d", &colonneplateau);
+            }while (colonneplateau<0||colonneplateau>l);
 
-    while(nbX<1){//verifie que la tuile peut etre placé
-        //printf("emplacement incorrect, l'un des motifs X doit se trouver sur un nombre");
-        do{
-            printf("quelle tuile voulez vous placer?(entre 1 et 5)\n");
-            scanf("%d",&numTuile);
-        }while(numTuile<1||numTuile>5);
-        do {
-            printf("ligne ou voulez vous placer la case sup gauche de la tuile\n ");
-            scanf("%d", &ligneplateau);
-        }while(ligneplateau<0||ligneplateau>c);
-        do{
-            printf("colonne ou voulez vous placer la case sup gauche de la tuile\n");
-            scanf("%d", &colonneplateau);
-        }while (colonneplateau<0||colonneplateau>l);
+    pinit = (colonneplateau-1) + (ligneplateau -1)*c; //initialise la position p1 dans lquelle on vient placer t1 (meme valeur pour tout le programme
 
-        // NE MARCHE PAS ==> A REMODIFIER (POUR LA POSITION INITIALE)
-        for(int i=0;i<=8;i++){
-            pi=c*(colonneplateau-1)+ligneplateau-1;  definit l'endroit p1 de  la grille ... je pense que ça marche ou pas
-            if (i%3==0){
-                pi=pi+c-2;//pour passer à la ligne suivante
-            }
-            if(tuile[i]=='X'){
-                if (plateau[pi]=='1'){ //regarder comment selectionner la bonne case du plateau et aussi pour mettre des nombres autre que 1
-                    nbX++;
-                }
+    //la boucle for ci dessous permet de verifier que tous les X sont placer sur un '1' (voir pour les autres nombres){commence par regarder si une case d'une tuile est égal à X
 
-            }
+    // si c'est le case ça regarde si la case pi correspondante est égal à '1' et si c'est différent cela met le compteur Xisfalse à 1;
+    for (i = 0; i <= 8; i++) {
 
+        pi = pinit + i % 3 + (i / 3) * c;//modifie la valeur de pi
+        if (tuile[i] == 'X') {
+        if (plateau[pi] != '1') {
+            XisFalse = 1;
         }
-    }
-
-    // NE MARCHE PAS ==> A REMODIFIER
-    for (int j=0;j<=8;j++){
-        pi=c*(colonneplateau-1)+ligneplateau-1; //definit l'endroit p1 de  la grille ... je pense que ça marche ou pas
-        if (j%3==0){
-            pi=pi+c-2;//pour passer à la ligne suivante
-        }
-        printf("%d",pi);
-        switch (plateau[pi]){
-            case 'X':
-                break;
-            case '1':
-                if (tuile[j]=='X'){
-                    plateau[pi]='X';
-                }
-                else{
-                    plateau[pi]=plateau[j]+tuile[j]-48;
-                }
-                break;
-            case '2':
-                if (tuile[j]=='X'){
-                    plateau[pi]='X';
-                }
-                else{
-                    plateau[pi]=plateau[pi]+tuile[j]-48;
-                }
-                break;
-            case '3':
-                if (tuile[j]=='X'){
-                    plateau[pi]='X';
-                }
-                else{
-                    plateau[pi]=plateau[pi]+tuile[j]-48;
-                }
-                break;
-            case '4':
-                if (tuile[j]=='X'){
-                    plateau[pi]='X';
-                }
-                else{
-                    plateau[pi]=plateau[pi]+tuile[j]-48;
-                }
-                break;
-            case '5':
-                if (tuile[j]=='X'){
-                    plateau[pi]='X';
-                }
-                else{
-                    plateau[pi]=plateau[pi]+tuile[j]-48;
-                }
-                break;
-
-            default:
-                break;
         }
 
     }
+    if(XisFalse==0) {//si Xisfalse est égal à 0 cela veut dire que tous les X sont placés sur des nombres donc on peut enchainer avec la suite du programme
+        for (int j = 0; j <= 8; j++) {//meme debut que avant
+            pi = pinit + j % 3 + (j / 3) * c;
+            switch (plateau[pi]) {//en fonction de la valeur du plateau on modifie les données du plateau
+                case 'X': //si la case du plateau =X ras
+                    break;
+                case '1':
+                    if (tuile[j - 1] == 'X') {
+                        plateau[pi] = 'X';
 
-    afficher(tuile,3,3);
-    afficher(plateau,l,c);
+                    } else {
+                        plateau[pi] = plateau[pi] + tuile[j - 1] - 48;
+                    }
+                    break;
+                case ' ':
+                    plateau[pi] = tuile[j];
+                    break;
+                case '2':
+                    if (tuile[j] == 'X') {
+                        plateau[pi] = 'X';
+                    } else {
+                        plateau[pi] = plateau[pi] + tuile[j] - 48;
+                    }
+                    break;
+                default:
+                break;
 
+            }
 
-    //-->penser à generer une nouvelle tuile//
-    return 0;
+        }
+
+afficher(plateau, c, l);
+
+// IMPORTANT// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+//X==> penser a generer une nouvelle tuile
+
+//
+
+    }
+        else{//si Xisfalse est égal à1 le placement est faux
+
+        printf("placement incorrect");
+
+            }
+
+return 0;
+
 }
+
 ===========================================================================================================
 ALGORITHME DE GENERATION DE TUILE
 
