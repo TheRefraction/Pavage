@@ -70,9 +70,15 @@ void run(bool debug) {
             updateInput(&input, event);
         }
 
-        if(window.isVisible && window.hasMouseFocus) {
+        if(window.isVisible && window.hasMouseFocus && !scene.flags[0]) {
             updateScene(&scene, &input, &window);
-            render(&renderer, &scene);
+
+            if(scene.flags[0]) {
+                flushRenderer(&renderer);
+                scene.flags[0] = false;
+            } else {
+                render(&renderer, &scene);
+            }
         }
 
         SDL_Delay(1000 / FRAMERATE);

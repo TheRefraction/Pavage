@@ -45,6 +45,8 @@ add_executable(Tiling main.c
         engine/file.h
         engine/gui.c
         engine/gui.h
+        game/tile.c
+        game/tile.h
 )
 
 # Copy the right DLL into the cmake-build-debug folder
