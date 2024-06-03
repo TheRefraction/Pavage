@@ -82,8 +82,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->data[3]->isVisible=false;
                         scene->data[4]->isVisible=false;
 
+                        scene->data[5]->isVisible=true;
                         scene->data[6]->isVisible=true;
-                        scene->data[7]->isVisible=true;
                     } else if (isOnObject(scene, 3, input)) { // Continue
 
                     } else if (isOnObject(scene, 4, input)) { // Exit

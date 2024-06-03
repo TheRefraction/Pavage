@@ -132,3 +132,93 @@ int main() {
     //-->penser à generer une nouvelle tuile//
     return 0;
 }
+===========================================================================================================
+ALGORITHME DE GENERATION DE TUILE
+
+void afficher(char tab[], int w, int h){          // tab[] = *tab
+    for (int i=0; i<(w*h); i++){
+        if ((i%w) == 0){
+            printf("\n");
+        }
+        printf("(%c)", tab[i]);
+    }
+}
+
+int isInIndex(const int *tab, int e) {
+    int i=0;
+    int res=0;
+    while(i<3 || res) {
+        if(tab[i] == e) {
+            res = 1;
+        }
+        i++;
+    }
+    return res;
+}
+
+void estdedans(char **tuile, int x, int y, int w, int h) {
+    for (int i=0; i<=2; i++){
+        for (int j=0; j<=2; j++){
+            printf("a");
+            //printf("%c", tuile[i][j]);
+            if (tuile[i][j] == 0) {
+                //continue;
+            } else {
+                if(y+i>=0 && y+i<=h+2){
+                    if (x+j>=0 && x+j<=w+2){
+                        printf("Le motif est dans la grille");
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main (){
+    int w, h;
+    srand(time(0));
+/*
+    printf("Veuillez rentrer le nombre de colonnes du tableau");
+    scanf("%d", &w);
+    printf("Veuillez rentrer le nombre de lignes du tableau");
+    scanf("%d", &h);
+
+    char *tab = (char*) malloc(sizeof(char) * w * h);
+    for (int i=0; i<(w*h);i++){
+        tab[i]=0;
+    }
+    afficher(tab,w,h);
+
+    char *tab1 = (char*) malloc(sizeof(char) * 9);
+    for (int i=0; i<9;i++){
+        tab1[i]=0;
+    }
+
+    int chiffre=rand()%9;
+    tab1[chiffre]='X';
+
+    int combien=rand()%3+1;
+    int index[combien];
+
+    for(int i=0; i<combien; i++) {
+        int marcel=rand()%9;
+        while(marcel == chiffre) { //|| isInIndex(index, marcel, combien)) {
+            marcel=rand()%9;
+        }
+        index[i]=marcel;
+        tab1[index[i]]=1;
+    }
+
+    afficher(tab1,3,3);
+
+    free(tab1);*/
+
+    char tuile[3][3] = {{0,1,0},{0,0,0},{0,0,0}};
+
+
+    estdedans((char **) tuile, 1, 1, 5, 5);
+
+
+
+    return 0;
+}
