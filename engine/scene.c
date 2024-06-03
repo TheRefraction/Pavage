@@ -47,15 +47,26 @@ void readyScene(Scene *scene) {
 
             break;
         case 1: // One Player
+            int x_tmp = 304;
+            if (scene->flags[4] == 1) {
+                x_tmp = 208;
+            } else if (scene->flags[4] == 2) {
+                x_tmp = 112;
+            }
+
             scene->data[0] = initObjectData(0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_RED, SDL_FLIP_NONE, true);
-            scene->data[1] = initObjectData(1, GRID, "", 200, 200, 1, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[1] = initObjectData(1, GRID, "", x_tmp, 200, 1, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
             scene->data[2] = initObjectData(2, SPRITE, "./resources/spr_btn_d2.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+
+            // 3 : Text A B C D E F G H I J
+            // 4 : Text 1 2 3 4 5 6 7 8 9 10
             // Hand of 5 tiles
-            /*scene->data[3] = initObjectData(3, TILE, "         ", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[4] = initObjectData(4, TILE, "         ", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[5] = initObjectData(5, TILE, "         ", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[6] = initObjectData(6, TILE, "         ", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            scene->data[7] = initObjectData(7, TILE, "         ", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);*/
+            scene->data[5] = initObjectData(5, TILE, "", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[6] = initObjectData(6, TILE, "         ", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[7] = initObjectData(7, TILE, "         ", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[8] = initObjectData(8, TILE, "         ", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            scene->data[9] = initObjectData(9, TILE, "         ", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+
             break;
         case 2: // Two players
 

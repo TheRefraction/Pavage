@@ -46,18 +46,18 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
             }
         }
 
-        SDL_Surface *surf_tmp;
+        //SDL_Surface *surf_tmp;
         object->surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, 24, pitch, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 
-        for(int i = 0; i < sizeData; i++) {
+        /*for(int i = 0; i < sizeData; i++) {
             char c[2] = {data->sprite[i], '\0'};
             int line = width / 32;
             SDL_Rect dest = {10 + 32 * (i % line), 32 * (i / line), 32, 32};
             surf_tmp = TTF_RenderText_Blended(fonts[data->fontId], c, SDL_BLACK);
             SDL_BlitSurface(surf_tmp, NULL, object->surface, &dest);
-        }
+        }*/
 
-        SDL_FreeSurface(surf_tmp);
+        //SDL_FreeSurface(surf_tmp);
         free(pixels);
     }
 
