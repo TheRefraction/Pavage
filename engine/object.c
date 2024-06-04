@@ -55,16 +55,20 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
         object->surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, 24, pitch, (Uint32) 0x000000ff, (Uint32) 0x0000ff00, (Uint32) 0x00ff0000, (Uint32) 0xff000000);
 
         for(int i = 0; i < sizeData; i++) {
-            char c[2] = {adjustChar(data->sprite[i]), '\0'};
+            char c[3] = {adjustChar(data->sprite[i]), '\0', '\0'};
             bool negative = isNegativeDigit(data->sprite[i]);
 
             SDL_Rect dest = {10 + 32 * (i % line), 32 * (i / line), 32, 32};
             SDL_Color color = SDL_BLACK;
 
-            if(c[0] == '0') {
-                color = SDL_BLUE;
-            } else if(isdigit(c[0])) {
-                color = negative ? SDL_RED : SDL_GREEN;
+            if(isdigit(c[0]) && c[0] != '0') {
+                if(negative) {
+                    color = SDL_RED;
+                    c[1] = c[0];
+                    c[0] = '-';
+
+                    dest.x -= 6;
+                } else color = SDL_GREEN;
             }
 
             surf_tmp = TTF_RenderText_Blended(fonts[data->fontId], c, color);

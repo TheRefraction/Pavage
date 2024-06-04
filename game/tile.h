@@ -31,4 +31,26 @@ char adjustChar(char c);
  */
 bool isNegativeDigit(char c);
 
+/**
+ * isInTile - verifie que la tuile est bien dans la grille
+ * @param tab - tuile choisi
+ * @param c -
+ * @return
+ */
+bool isInTile(char *tab, char c);
+
+
+/**
+ * setTile - verifie si le placement de la tuile est correct et place la tuile
+ * @param c
+ * @return
+ */
+int setTile();
+
+/**
+ * generationTile - genere la tuile
+ * @param str
+ * @return
+ */
+int generateTile(char *str);
 #endif

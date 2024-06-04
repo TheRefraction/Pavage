@@ -21,9 +21,9 @@ for(int i=0; i<8; i++) {
 =====================================================================
 CODE CONCERNANT LA VERIFICATION D'UNE TUILE ET LES ENVIES DE SUICIDE DE LORNA non:) si
 
-int main() {
-    int XisFalse=0,ligneplateau=1,colonneplateau=2,pi,pinit,i=0;//enlever les valeurs de ligneplateau et colonneplateau pour les remplacer par celles choisis par le joueur
-    int c=4,l=4; //valeur a remplacer par celles du plateau
+int PlacementTuile() {
+    int XisFalse=0,ligneplateau,colonneplateau,pi,pinit,i=0;//enlever les valeurs de ligneplateau et colonneplateau pour les remplacer par celles choisis par le joueur
+    int c,l; //valeur a remplacer par celles du plateau
     char tuile[9]={'X',' ',' ','1',' ','1',' ',' ','1'};//valeurs test
     char plateau[16]={'X','1',' ',' ',' ',' ',' ','1','X',' ',' ',' ',' ','1',' ',' '};// valeurs test
     do{
@@ -128,7 +128,7 @@ int isInIndex(const int *tab, int e) {
     return res;
 }
 
-void estdedans(char **tuile, int x, int y, int w, int h) {
+void isInTile(char **tuile, int x, int y, int w, int h) {
     for (int i=0; i<=2; i++){
         for (int j=0; j<=2; j++){
             printf("a");
@@ -188,7 +188,7 @@ int main (){
     char tuile[3][3] = {{0,1,0},{0,0,0},{0,0,0}};
 
 
-    estdedans((char **) tuile, 1, 1, 5, 5);
+    isInTile((char **) tuile, 1, 1, 5, 5);
 
 
 
