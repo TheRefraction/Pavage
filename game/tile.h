@@ -31,14 +31,15 @@ char adjustChar(char c);
  */
 bool isNegativeDigit(char c);
 
+void initArray(char *arr, int size, char e);
+
 /**
  * isInTile - verifie que la tuile est bien dans la grille
  * @param tab - tuile choisi
  * @param c -
  * @return
  */
-bool isInTile(char *tab, char c);
-
+bool isInTile(char *arr, char c);
 
 /**
  * setTile - verifie si le placement de la tuile est correct et place la tuile
@@ -48,9 +49,10 @@ bool isInTile(char *tab, char c);
 int setTile();
 
 /**
- * generationTile - genere la tuile
+ * generationTile - genere la main de depart
  * @param str
  * @return
  */
-int generateTile(char *str);
+void generateTile(char str[], int flags);
+
 #endif

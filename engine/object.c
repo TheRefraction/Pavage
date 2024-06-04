@@ -95,11 +95,15 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
     }
 }
 
-void initObjectData(ObjectData *data[], int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
+void initObjectData(ObjectData *data[], int id, ObjectType type, const char sprite[256], int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
     ObjectData* _data = (ObjectData*) malloc(sizeof(ObjectData));
+
+    char* str = (char*) malloc(sizeof(char) * 256);
+    strcpy(str, sprite);
+
     _data->id = id;
     _data->type = type;
-    _data->sprite = sprite;
+    _data->sprite = str;
     _data->x = x;
     _data->y = y;
     _data->z = z;

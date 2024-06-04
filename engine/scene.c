@@ -1,7 +1,10 @@
-#include <stddef.h>
 #include "scene.h"
 #include "colors.h"
 #include "gui.h"
+
+#include "../game/tile.h"
+
+#include <stddef.h>
 
 void initScene(Scene *scene, int id) {
     scene->id = id;
@@ -48,7 +51,7 @@ void readyScene(Scene *scene) {
             break;
         case 1: // One Player
             int x_tmp, y_tmp;
-            char *str1 = "", *str2 = "";
+            char *str1, *str2;
 
             if (scene->flags[4] == 0) {
                 x_tmp = 304;
@@ -67,19 +70,29 @@ void readyScene(Scene *scene) {
                 str2 = "1\n2\n3\n4\n5\n6\n7\n8\n9";
             }
 
-            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_RED, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_d2.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_PURPLE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_opt.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             initObjectData(scene->data, 2, GRID, "", x_tmp, y_tmp, scene->flags[4], 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
             initObjectData(scene->data, 3, TEXT, str1, x_tmp + 10, y_tmp - 32, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             initObjectData(scene->data, 4, TEXT, str2, x_tmp - 32, y_tmp, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             // Hand of 5 tiles
-            initObjectData(scene->data, 5, TILE, "'23+50789", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 6, TILE, "ABCDEFGHI", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 7, TILE, "         ", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 8, TILE, "         ", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 9, TILE, "         ", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 5, TILE, "", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 6, TILE, "", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 7, TILE, "", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 8, TILE, "", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 9, TILE, "", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+
+            initArray(scene->data[2]->sprite, 256, ' ');
+
+            int flags = 0;
+            if (scene->flags[2]) flags |= 1;
+            if (scene->flags[1]) flags |= 2;
+
+            for(int i = 5; i < 10; i++) {
+                generateTile(scene->data[i]->sprite, flags);
+            }
 
             break;
         case 2: // Two players
@@ -181,6 +194,10 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 void destroyScene(Scene *scene) {
     for(int i = 0; i < MAX_OBJECTS; i++) {
         if(scene->data[i] != NULL) {
+            if(scene->data[i]->sprite != NULL) {
+                free(scene->data[i]->sprite);
+                scene->data[i]->sprite = NULL;
+            }
             free(scene->data[i]);
             scene->data[i] = NULL;
         }

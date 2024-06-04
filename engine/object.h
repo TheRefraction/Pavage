@@ -59,7 +59,7 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data);
  * @param flip Flip the sprite
  * @param isVisible Visibility of the object
  */
-void initObjectData(ObjectData *data[], int id, ObjectType type, char *sprite, int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible);
+void initObjectData(ObjectData *data[], int id, ObjectType type, const char sprite[256], int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible);
 
 /**
  * cleanupObject - Destroys the object specified and frees memory

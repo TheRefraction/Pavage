@@ -1,11 +1,12 @@
 #include "tile.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 bool isInGrid(char **tile, int x, int y, int w, int h) {
     for (int i=0; i<=2; i++){
         for (int j=0; j<=2; j++){
-            if (tile[i][j] == 0) {
+            if (tile[i][j] == 0) {// on est pas en deux dimensions ?????
                 continue;
             } else if(y+i >= 0 && y+i <= h+2 && x+j >= 0 && x+j <= w+2){
                 return true;
@@ -51,16 +52,76 @@ bool isNegativeDigit(char c) {
     }
 }
 
-bool isInTile(char *tab, char c) {
+void initArray(char *arr, int size, char e) {
+    for (int i = 0; i < size; i++) {
+        arr[i] = e;
+    }
+}
+
+bool isInTile(char *arr, char c) {
     int i = 0;
     bool res = false;
-    while(i < 9 || res) {
-        if(tab[i] == c) {
+    while(i < 9 && !res) {
+        if(arr[i] == c) {
             res = true;
         }
         i++;
     }
     return res;
+}
+
+void populateTile(char str[], bool set[], int flags, bool digit) {
+    bool hard = (1 & flags) != 0;
+    bool multi = (2 & flags) != 0;
+    bool playerTwo = (4 & flags) != 0;
+
+    int n;
+    if(digit) {
+        n = rand() % 3 + 1;
+        if(hard) n++;
+    } else {
+        n = hard + 1;
+    }
+
+    for(int k = 0; k < n; k++) {
+        int i;
+        do {
+            i = rand() % 9;
+        } while (set[i]);
+
+        set[i] = true;
+        char c;
+        do {
+            if(digit) {
+                if(playerTwo) {
+                    c = rand() % 3 + 39;
+                } else {
+                    c = rand() % 3 + 49;
+                }
+            } else {
+                if(multi) {
+                    if(playerTwo) {
+                        c = rand() % 2 + 88;
+                    } else {
+                        c = rand() % 2 + 65;
+                    }
+                } else {
+                    c = rand() % 26 + 65;
+                }
+            }
+        } while (isInTile(str, c) && !digit);
+
+        str[i] = c;
+    }
+}
+
+void generateTile(char str[], int flags) {
+    bool set[9] = {false};
+
+    initArray(str, 9, ' ');
+
+    populateTile(str, set, flags, false);
+    populateTile(str, set, flags, true);
 }
 
 int setTile() {
@@ -83,9 +144,7 @@ int setTile() {
         printf("colonne ou voulez vous placer la case sup gauche de la tuile\n");
         scanf("%d", &colonneplateau);
     }while (colonneplateau<0||colonneplateau>l);*/
-
-    pinit = (colonneplateau - 1) + (ligneplateau - 1) *
-                                   c; //initialise la position p1 dans lquelle on vient placer t1 (meme valeur pour tout le programme
+    pinit = (colonneplateau - 1) + (ligneplateau - 1)*c; //initialise la position p1 dans lquelle on vient placer t1 (meme valeur pour tout le programme
 
     //la boucle for ci dessous permet de verifier que tous les X sont placer sur un '1' (voir pour les autres nombres){commence par regarder si une case d'une tuile est égal à X
 
@@ -100,17 +159,13 @@ int setTile() {
         }
 
     }
-    if (XisFalse ==
-        0) {//si Xisfalse est égal à 0 cela veut dire que tous les X sont placés sur des nombres donc on peut enchainer avec la suite du programme
+    if (XisFalse ==0) {//si Xisfalse est égal à 0 cela veut dire que tous les X sont placés sur des nombres donc on peut enchainer avec la suite du programme
         for (int j = 0; j <= 8; j++) {//meme debut que avant
             pi = pinit + j % 3 + (j / 3) * c;
             switch (plateau[pi]) {//en fonction de la valeur du plateau on modifie les données du plateau
-                case 'X': //si la case du plateau =X ras
-                    break;
                 case '1':
                     if (tuile[j - 1] == 'X') {
                         plateau[pi] = 'X';
-
                     } else {
                         plateau[pi] = plateau[pi] + tuile[j - 1] - 48;
                     }
@@ -127,33 +182,14 @@ int setTile() {
                     break;
                 default:
                     break;
-
             }
-
         }
 
 // IMPORTANT// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//generer une nouvelle tuile
 
-        //GenerationTuile();//modifier et mettre la fct plus haut
-
-    } else {//si Xisfalse est égal à1 le placement est faux
-
+    } else {//si Xisfalse est égal à 1 le placement est faux donc message d'erreur et retry
+        //printf("le placement est faux"); ====== a remplacer
     }
     return 0;
-}
-
-void generateTile(char *str, int difficulty) {
-    int i = rand() % 9; //65 -> 90
-    str[i] = 'X';
-
-    /*int combien=rand()%3+1;
-    int index[combien];*/
-    /*for(int i=0; i<combien; i++) {
-        int marcel=rand()%9;
-        while(marcel == chiffre) { //|| isInIndex(index, marcel, combien)) {
-            marcel=rand()%9;
-        }
-        index[i]=marcel;
-        tile1[index[i]]=1;
-    }*/
 }

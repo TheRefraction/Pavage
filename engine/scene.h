@@ -12,7 +12,7 @@ typedef struct SCENE_STRUCT {
     int id;
     int lastIndex;
     bool isReady;
-    short flags[256]; // 0: flush Renderer | 1: Players | 2 : Difficulty | 3: has pressed button | 4: size grid
+    short flags[256]; // 0: flush Renderer | 1: Players | 2 : Difficulty | 3: has pressed button | 4: size grid | 5: first turn
     ObjectData *data[MAX_OBJECTS];
 } Scene;
 
