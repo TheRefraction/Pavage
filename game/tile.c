@@ -1,9 +1,8 @@
 #include "tile.h"
 
 #include <stdlib.h>
-#include <string.h>
 
-bool isInGrid(char **tile, int x, int y, int w, int h) {
+bool isInGrid(char **tile, int x, int y, int w, int h) { //TO REWORK
     for (int i=0; i<=2; i++){
         for (int j=0; j<=2; j++){
             if (tile[i][j] == 0) {// on est pas en deux dimensions ?????
