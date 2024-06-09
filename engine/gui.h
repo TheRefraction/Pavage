@@ -10,8 +10,10 @@
  * @param scene Pointer on the current scene
  * @param index Index of the object to check
  * @param input Pointer on the input system
+ * @param width Width of object
+ * @param height Height of object
  * @return boolean
  */
-bool isOnObject(Scene *scene, int index, Input *input);
+bool isOnObject(Scene *scene, int index, Input *input, int width, int height);
 
 #endif

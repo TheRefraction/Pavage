@@ -1,6 +1,8 @@
 #include "tile.h"
 
 #include <stdlib.h>
+#include <ctype.h>
+
 
 char digitToChar(int i) {
     if (i > 0 && i <= 9) {
@@ -56,11 +58,60 @@ bool isInTile(char *arr, char c) {
     return res;
 }
 
-bool isInGrid(char *arr, int pos, int gridSize, int k) {
-    int c;
-    for(int i = k; i < 9; i++) {
-        if (arr[i] != ' ') {
+bool isInGrid(char *arr, int pos, int choice, int gridSize) {
+    int width, height;
+    if(gridSize == 0) {
+        width = 6;
+        height = 3;
+    } else if (gridSize == 1) {
+        width = 12;
+        height = 6;
+    } else if (gridSize == 2) {
+        width = 18;
+        height = 9;
+    }
 
+    int xPos = pos % width;
+    int yPos = pos / width;
+    // si yPos < 0 faire -1 à yPos (à cause de division euclidienne)
+
+    if(xPos == (width - 2)) {
+        if(choice % 3 == 2) { // tronquer les colonnes 0 et 1
+            if(arr[0] != ' ' || arr[1] != ' ' || arr[3] != ' ' || arr[4] != ' ' || arr[6] != ' ' || arr[7] != ' ') {
+                return false;
+            }
+        } else { // tronquer la colonne 2
+            if(arr[2] != ' ' || arr[5] != ' ' || arr[8] != ' ') {
+                return false;
+            }
+        }
+    } else if(xPos == (width - 1)) {
+        if(choice % 3 == 0) { // tronquer les colonnes 1 et 2
+            if(arr[1] != ' ' || arr[2] != ' ' || arr[4] != ' ' || arr[5] != ' ' || arr[7] != ' ' || arr[8] != ' ') {
+                return false;
+            }
+        } else { // tronquer la colonne 0
+            if(arr[0] != ' ' || arr[3] != ' ' || arr[6] != ' ') {
+                return false;
+            }
+        }
+    }
+
+    if(yPos == -2) { // tronquer les lignes 0 et 1
+        if(arr[0] != ' ' || arr[1] != ' ' || arr[2] != ' ' || arr[3] != ' ' || arr[4] != ' ' || arr[5] != ' ') {
+            return false;
+        }
+    } else if(yPos == -1) { // tronquer la ligne 0
+        if(arr[0] != ' ' || arr[1] != ' ' || arr[2] != ' ') {
+            return false;
+        }
+    } else if(yPos == (height - 2)) { // tronquer la ligne 2
+        if(arr[6] != ' ' || arr[7] != ' ' || arr[8] != ' ') {
+            return false;
+        }
+    } else if(yPos == (height - 1)) { // tronquer les lignes 1 et 2
+        if(arr[3] != ' ' || arr[4] != ' ' || arr[5] != ' ' || arr[6] != ' ' || arr[7] != ' ' || arr[8] != ' ') {
+            return false;
         }
     }
 
@@ -121,19 +172,27 @@ void generateTile(char *str, int flags) {
     populateTile(str, set, flags, true);
 }
 
-int setTile() {
+int setTile(char plateau[], char tuile[]) {
     int XisFalse = 0, ligneplateau, colonneplateau, numTuile, pi, pinit, i = 0;//enlever les valeurs de ligneplateau et colonneplateau pour les remplacer par celles choisis par le joueur
-    int c, l; //valeur a remplacer par celles du plateau
-    char tuile[9] = {'X', ' ', ' ', '1', ' ', '1', ' ', ' ', '1'};//valeurs test
-    char plateau[16] = {'X', '1', ' ', ' ', ' ', ' ', ' ', '1', 'X', ' ', ' ', ' ', ' ', '1', ' ', ' '};// valeurs test
+    int c, l,k; //valeur a remplacer par celles du plateau
+    //char tuile[9] = {'X', ' ', ' ', '1', ' ', '1', ' ', ' ', '1'};//valeurs test
+    //char plateau[16] = {'X', '1', ' ', ' ', ' ', ' ', ' ', '1', 'X', ' ', ' ', ' ', ' ', '1', ' ', ' '};// valeurs test
+    char caractere;
 
-    /*
     do{
-        printf("quelle tuile voulez vous placer?(entre 1 et 5)\n");
-        scanf("%d",&numTuile);
-    }while(numTuile<1||numTuile>5);
+        k=0;
+        //printf("quel caractere de la tuile %d voulez vous placer\n",numTuile);
+        //scanf(" %c",&caractere);
+        caractere=toupper(caractere);
 
-    do {
+        for (int z=0;z<=8;z++){
+            if(tuile[i]==caractere){
+                k=1;
+            }
+        }
+    }while(k=0);
+
+    /*do {
         printf("ligne ou voulez vous placer la case sup gauche de la tuile\n ");
         scanf("%d", &ligneplateau);
     }while(ligneplateau<0||ligneplateau>c);
@@ -148,35 +207,35 @@ int setTile() {
     //la boucle for ci dessous permet de verifier que tous les X sont placer sur un '1' (voir pour les autres nombres){commence par regarder si une case d'une tuile est égal à X
 
     // si c'est le case ça regarde si la case pi correspondante est égal à '1' et si c'est différent cela met le compteur Xisfalse à 1;
+
     for (i = 0; i <= 8; i++) {
 
         pi = pinit + i % 3 + (i / 3) * c;//modifie la valeur de pi
-        if (tuile[i] == 'X') {
-            if (plateau[pi] != '1') {
+        if (tuile[i] == caractere) {
+            if (plateau[pi] != '1') {//marche seulement pour 1
                 XisFalse = 1;
             }
         }
-
     }
     if (XisFalse ==0) {//si Xisfalse est égal à 0 cela veut dire que tous les X sont placés sur des nombres donc on peut enchainer avec la suite du programme
         for (int j = 0; j <= 8; j++) {//meme debut que avant
             pi = pinit + j % 3 + (j / 3) * c;
             switch (plateau[pi]) {//en fonction de la valeur du plateau on modifie les données du plateau
                 case '1':
-                    if (tuile[j - 1] == 'X') {
-                        plateau[pi] = 'X';
+                    if (tuile[j] == caractere) {
+                        plateau[pi] = caractere;
                     } else {
-                        plateau[pi] = digitToChar(charToDigit(plateau[pi]) + charToDigit(tuile[j - 1]));
+                        plateau[pi] = digitToChar(charToDigit(plateau[pi]) + charToDigit(tuile[j - 1]));//trop fatigué pour verrifier
                     }
                     break;
                 case ' ':
                     plateau[pi] = tuile[j];
                     break;
                 case '2':
-                    if (tuile[j] == 'X') {
-                        plateau[pi] = 'X';
+                    if (tuile[j] == caractere) {
+                        plateau[pi] = caractere;
                     } else {
-                        plateau[pi] = plateau[pi] + tuile[j] - 48;//à
+                        plateau[pi] = plateau[pi] + tuile[j] - 48;
                     }
                     break;
                 default:
@@ -188,7 +247,8 @@ int setTile() {
     //generer une nouvelle tuile
     // score augmente de 1
 
-    } else {//si Xisfalse est égal à 1 le placement est faux donc message d'erreur et retry
+    } else {
+        //si Xisfalse est égal à 1 le placement est faux donc message d'erreur et retry
         //printf("le placement est faux"); ====== a remplacer
     }
     return 0;

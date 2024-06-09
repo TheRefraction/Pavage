@@ -5,7 +5,6 @@
 #include "../game/tile.h"
 
 #include <stddef.h>
-#include <stdio.h>
 
 void initScene(Scene *scene, int id) {
     scene->id = id;
@@ -71,8 +70,8 @@ void readyScene(Scene *scene) {
                 str2 = "1\n2\n3\n4\n5\n6\n7\n8\n9";
             }
 
-            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back_1.bmp", 0, 0, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_opt.bmp", 10, 10, 1, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back_1.bmp", 0, 0, 0, 0, 0, SDL_PURPLE,SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_opt.bmp", 10, 10, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
 
             // Game Grid
             initObjectData(scene->data, 2, GRID, "", x_tmp, y_tmp, scene->flags[4], 3, 0, SDL_BLACK, SDL_FLIP_NONE,true);
@@ -94,15 +93,16 @@ void readyScene(Scene *scene) {
                 generateTile(scene->data[i]->sprite, flags);
             }
 
-            initObjectData(scene->data, 12, TEXT, "SCORE J1 : ", 400, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 12, TEXT, "SCORE: 0", 400, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             scene->flags[7] = 0;
+            scene->flags[9] = 0;
 
             break;
         case 2: // Two players
 
-
             scene->flags[7] = 0;
             scene->flags[8] = 0;
+            scene->flags[9] = 0;
             break;
     }
     scene->isReady = true;
@@ -124,58 +124,58 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                     if (scene->flags[3]) return;
                     scene->flags[3] = 1;
 
-                    if (isOnObject(scene, 2, input)) { // New game
-                        scene->data[2]->isVisible=false;
-                        scene->data[3]->isVisible=false;
-                        scene->data[4]->isVisible=false;
+                    if (isOnObject(scene, 2, input, 128, 48)) { // New game
+                        scene->data[2]->isVisible = false;
+                        scene->data[3]->isVisible = false;
+                        scene->data[4]->isVisible = false;
 
-                        scene->data[5]->isVisible=true;
-                        scene->data[6]->isVisible=true;
-                    } else if (isOnObject(scene, 3, input)) { // Continue
+                        scene->data[5]->isVisible = true;
+                        scene->data[6]->isVisible = true;
+                    } else if (isOnObject(scene, 3, input, 128, 48)) { // Continue
 
-                    } else if (isOnObject(scene, 4, input)) { // Exit
+                    } else if (isOnObject(scene, 4, input, 128, 48)) { // Exit
                         window->isClosing = true;
-                    } else if (isOnObject(scene, 5, input)) {
-                        scene->data[5]->isVisible=false;
-                        scene->data[6]->isVisible=false;
+                    } else if (isOnObject(scene, 5, input, 128, 48)) {
+                        scene->data[5]->isVisible = false;
+                        scene->data[6]->isVisible = false;
 
-                        scene->data[7]->isVisible=true;
-                        scene->data[8]->isVisible=true;
-                    } else if (isOnObject(scene, 6, input)) {
+                        scene->data[7]->isVisible = true;
+                        scene->data[8]->isVisible = true;
+                    } else if (isOnObject(scene, 6, input, 128, 48)) {
                         scene->flags[1] = 1;
 
-                        scene->data[5]->isVisible=false;
-                        scene->data[6]->isVisible=false;
+                        scene->data[5]->isVisible = false;
+                        scene->data[6]->isVisible = false;
 
-                        scene->data[7]->isVisible=true;
-                        scene->data[8]->isVisible=true;
-                    } else if (isOnObject(scene, 7, input)) {
-                        scene->data[7]->isVisible=false;
-                        scene->data[8]->isVisible=false;
+                        scene->data[7]->isVisible = true;
+                        scene->data[8]->isVisible = true;
+                    } else if (isOnObject(scene, 7, input, 128, 48)) {
+                        scene->data[7]->isVisible = false;
+                        scene->data[8]->isVisible = false;
 
-                        scene->data[9]->isVisible=true;
-                        scene->data[10]->isVisible=true;
-                        scene->data[11]->isVisible=true;
-                    } else if (isOnObject(scene, 8, input)) {
+                        scene->data[9]->isVisible = true;
+                        scene->data[10]->isVisible = true;
+                        scene->data[11]->isVisible = true;
+                    } else if (isOnObject(scene, 8, input, 128, 48)) {
                         scene->flags[2] = 1;
 
-                        scene->data[7]->isVisible=false;
-                        scene->data[8]->isVisible=false;
+                        scene->data[7]->isVisible = false;
+                        scene->data[8]->isVisible = false;
 
-                        scene->data[9]->isVisible=true;
-                        scene->data[10]->isVisible=true;
-                        scene->data[11]->isVisible=true;
-                    } else if (isOnObject(scene, 9, input)) {
+                        scene->data[9]->isVisible = true;
+                        scene->data[10]->isVisible = true;
+                        scene->data[11]->isVisible = true;
+                    } else if (isOnObject(scene, 9, input, 128,48)) {
                         scene->flags[3] = 0;
                         scene->flags[4] = 0;
 
                         changeScene(scene, scene->flags[1] ? 2 : 1);
-                    } else if (isOnObject(scene, 10, input)) {
+                    } else if (isOnObject(scene, 10, input, 128, 48)) {
                         scene->flags[3] = 0;
                         scene->flags[4] = 1;
 
                         changeScene(scene, scene->flags[1] ? 2 : 1);
-                    } else if (isOnObject(scene, 11, input)) {
+                    } else if (isOnObject(scene, 11, input, 128, 48)) {
                         scene->flags[3] = 0;
                         scene->flags[4] = 2;
 
@@ -187,11 +187,41 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                 break;
             case 1: // GAME 1-PLAYER
-                /*scene->data[2]->sprite[rand() % 256] = rand() % 128;
-                scene->data[2]->flush = true;*/
+                switch(scene->flags[9]) {
+                    case 0: // Select a tile to set on grid
+                        for (int i = 5; i < 10; i++) {
+                            if(isOnObject(scene, i, input, 96, 96)) {
+                                scene->data[i]->y = 480;
+                                if(input->mouse[SDL_BUTTON_LEFT]) {
+                                    scene->data[i]->z = 1;
+                                    scene->data[i]->flush = true;
 
-                sprintf(scene->data[12]->sprite, "SCORE: %d", scene->flags[7]);
-                scene->data[12]->flush = true;
+                                    scene->flags[10] = i; // save the currently selected tile for later uses
+                                    scene->flags[9] = 1;
+                                }
+                            } else {
+                                scene->data[i]->y = 500;
+                            }
+                        }
+                        break;
+                    case 1: // Select the character on the tile
+                        if(input->keys[SDL_SCANCODE_ESCAPE]) {
+                            scene->data[scene->flags[10]]->z = 0;
+                            scene->data[scene->flags[10]]->flush = true;
+                            scene->flags[9] = 0;
+                            scene->flags[10] = 0;
+                        }
+                        break;
+                    case 2: // Select a square in the tile
+                        if(scene->flags[7] == 0) { // first tile
+
+                        } else {
+
+                        }
+                        break;
+                }
+                /*sprintf(scene->data[12]->sprite, "SCORE: %d", scene->flags[7]);
+                scene->data[12]->flush = true;*/
                 break;
             case 2: // GAME 2-PLAYERS
 

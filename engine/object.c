@@ -61,14 +61,18 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
             SDL_Rect dest = {10 + 32 * (i % line), 32 * (i / line), 32, 32};
             SDL_Color color = SDL_BLACK;
 
-            if(isdigit(c[0]) && c[0] != '0') {
-                if(negative) {
-                    color = SDL_RED;
-                    c[1] = c[0];
-                    c[0] = '-';
+            if(c[0] != '0') {
+                if (isdigit(c[0])) {
+                    if (negative) {
+                        color = SDL_RED;
+                        c[1] = c[0];
+                        c[0] = '-';
 
-                    dest.x -= 6;
-                } else color = SDL_GREEN;
+                        dest.x -= 6;
+                    } else color = SDL_GREEN;
+                } else if(data->type == TILE && data->z == 1) {
+                    color = SDL_ORANGE;
+                }
             }
 
             surf_tmp = TTF_RenderText_Blended(fonts[data->fontId], c, color);
