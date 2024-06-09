@@ -10,9 +10,9 @@
 
 typedef struct SCENE_STRUCT {
     int id;
-    int lastIndex;
     bool isReady;
-    short flags[256]; // 0: flush Renderer | 1: Players | 2 : Difficulty | 3: has pressed button | 4: size grid | 5: first turn
+    short flags[256]; // 0: flush Renderer | 1: Players | 2 : Difficulty | 3: has pressed button |
+    // 4: size grid | 5: first turn | 6: player 2 turn | 7: score 1 | 8: score 2
     ObjectData *data[MAX_OBJECTS];
 } Scene;
 

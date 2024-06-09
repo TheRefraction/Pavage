@@ -5,10 +5,10 @@
 #include "../game/tile.h"
 
 #include <stddef.h>
+#include <stdio.h>
 
 void initScene(Scene *scene, int id) {
     scene->id = id;
-    scene->lastIndex = -1;
     scene->isReady = false;
 
     for(int i = 0; i < MAX_OBJECTS; i++) {
@@ -53,6 +53,7 @@ void readyScene(Scene *scene) {
             int x_tmp, y_tmp;
             char *str1, *str2;
 
+            // Misc
             if (scene->flags[4] == 0) {
                 x_tmp = 304;
                 y_tmp = 202;
@@ -70,19 +71,18 @@ void readyScene(Scene *scene) {
                 str2 = "1\n2\n3\n4\n5\n6\n7\n8\n9";
             }
 
-            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_PURPLE, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_opt.bmp", 10, 10, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back_1.bmp", 0, 0, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_opt.bmp", 10, 10, 1, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
 
-            initObjectData(scene->data, 2, GRID, "", x_tmp, y_tmp, scene->flags[4], 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            // Game Grid
+            initObjectData(scene->data, 2, GRID, "", x_tmp, y_tmp, scene->flags[4], 3, 0, SDL_BLACK, SDL_FLIP_NONE,true);
             initObjectData(scene->data, 3, TEXT, str1, x_tmp + 10, y_tmp - 32, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             initObjectData(scene->data, 4, TEXT, str2, x_tmp - 32, y_tmp, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             // Hand of 5 tiles
-            initObjectData(scene->data, 5, TILE, "", 144, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 6, TILE, "", 248, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 7, TILE, "", 352, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 8, TILE, "", 456, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 9, TILE, "", 560, 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            for (int i = 5; i < 10; i++) {
+                initObjectData(scene->data, i, TILE, "", 144 + 104 * (i - 5), 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
+            }
 
             initArray(scene->data[2]->sprite, 256, ' ');
 
@@ -94,8 +94,15 @@ void readyScene(Scene *scene) {
                 generateTile(scene->data[i]->sprite, flags);
             }
 
+            initObjectData(scene->data, 12, TEXT, "SCORE J1 : ", 400, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            scene->flags[7] = 0;
+
             break;
         case 2: // Two players
+
+
+            scene->flags[7] = 0;
+            scene->flags[8] = 0;
             break;
     }
     scene->isReady = true;
@@ -180,7 +187,11 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                 break;
             case 1: // GAME 1-PLAYER
+                /*scene->data[2]->sprite[rand() % 256] = rand() % 128;
+                scene->data[2]->flush = true;*/
 
+                sprintf(scene->data[12]->sprite, "SCORE: %d", scene->flags[7]);
+                scene->data[12]->flush = true;
                 break;
             case 2: // GAME 2-PLAYERS
 
@@ -202,6 +213,5 @@ void destroyScene(Scene *scene) {
             scene->data[i] = NULL;
         }
     }
-    scene->lastIndex = -1;
     scene->isReady = false;
 }

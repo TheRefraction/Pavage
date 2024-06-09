@@ -31,28 +31,36 @@ char adjustChar(char c);
  */
 bool isNegativeDigit(char c);
 
+/**
+ * initArray - Initializes a string
+ * @param arr The string to initialize
+ * @param size Size of the array
+ * @param e Character to initialize the array with
+ */
 void initArray(char *arr, int size, char e);
 
 /**
- * isInTile - verifie que la tuile est bien dans la grille
- * @param tab - tuile choisi
- * @param c -
- * @return
+ * isInTile - Checks if a character belongs to a tile
+ * @param arr The string that holds the tile's data
+ * @param c The character to check
+ * @return bool
  */
 bool isInTile(char *arr, char c);
 
 /**
- * setTile - verifie si le placement de la tuile est correct et place la tuile
- * @param c
- * @return
+ * populateTile - Randomly populates a tile
+ * @param str The string that holds the tile's data
+ * @param set Array that keeps in memory which tile's squares are empty
+ * @param flags Current flags
+ * @param digit Generates digits?
  */
-int setTile();
+void populateTile(char *str, bool *set, int flags, bool digit);
 
 /**
- * generationTile - genere la main de depart
- * @param str
- * @return
+ * generateTile - Randomly generates a tile depending on the current mode
+ * @param str The string that holds the tile's data
+ * @param flags Current mode
  */
-void generateTile(char str[], int flags);
+void generateTile(char *str, int flags);
 
 #endif

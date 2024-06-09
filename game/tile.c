@@ -1,20 +1,6 @@
 #include "tile.h"
 
 #include <stdlib.h>
-#include <string.h>
-
-bool isInGrid(char **tile, int x, int y, int w, int h) {
-    for (int i=0; i<=2; i++){
-        for (int j=0; j<=2; j++){
-            if (tile[i][j] == 0) {// on est pas en deux dimensions ?????
-                continue;
-            } else if(y+i >= 0 && y+i <= h+2 && x+j >= 0 && x+j <= w+2){
-                return true;
-            }
-        }
-    }
-    return false;
-}
 
 char digitToChar(int i) {
     if (i > 0 && i <= 9) {
@@ -70,7 +56,18 @@ bool isInTile(char *arr, char c) {
     return res;
 }
 
-void populateTile(char str[], bool set[], int flags, bool digit) {
+bool isInGrid(char *arr, int pos, int gridSize, int k) {
+    int c;
+    for(int i = k; i < 9; i++) {
+        if (arr[i] != ' ') {
+
+        }
+    }
+
+    return true;
+}
+
+void populateTile(char *str, bool *set, int flags, bool digit) {
     bool hard = (1 & flags) != 0;
     bool multi = (2 & flags) != 0;
     bool playerTwo = (4 & flags) != 0;
@@ -115,7 +112,7 @@ void populateTile(char str[], bool set[], int flags, bool digit) {
     }
 }
 
-void generateTile(char str[], int flags) {
+void generateTile(char *str, int flags) {
     bool set[9] = {false};
 
     initArray(str, 9, ' ');
@@ -129,6 +126,7 @@ int setTile() {
     int c, l; //valeur a remplacer par celles du plateau
     char tuile[9] = {'X', ' ', ' ', '1', ' ', '1', ' ', ' ', '1'};//valeurs test
     char plateau[16] = {'X', '1', ' ', ' ', ' ', ' ', ' ', '1', 'X', ' ', ' ', ' ', ' ', '1', ' ', ' '};// valeurs test
+
     /*
     do{
         printf("quelle tuile voulez vous placer?(entre 1 et 5)\n");
@@ -144,6 +142,7 @@ int setTile() {
         printf("colonne ou voulez vous placer la case sup gauche de la tuile\n");
         scanf("%d", &colonneplateau);
     }while (colonneplateau<0||colonneplateau>l);*/
+
     pinit = (colonneplateau - 1) + (ligneplateau - 1)*c; //initialise la position p1 dans lquelle on vient placer t1 (meme valeur pour tout le programme
 
     //la boucle for ci dessous permet de verifier que tous les X sont placer sur un '1' (voir pour les autres nombres){commence par regarder si une case d'une tuile est égal à X
@@ -167,7 +166,7 @@ int setTile() {
                     if (tuile[j - 1] == 'X') {
                         plateau[pi] = 'X';
                     } else {
-                        plateau[pi] = plateau[pi] + tuile[j - 1] - 48;
+                        plateau[pi] = digitToChar(charToDigit(plateau[pi]) + charToDigit(tuile[j - 1]));
                     }
                     break;
                 case ' ':
@@ -177,7 +176,7 @@ int setTile() {
                     if (tuile[j] == 'X') {
                         plateau[pi] = 'X';
                     } else {
-                        plateau[pi] = plateau[pi] + tuile[j] - 48;
+                        plateau[pi] = plateau[pi] + tuile[j] - 48;//à
                     }
                     break;
                 default:
@@ -185,8 +184,9 @@ int setTile() {
             }
         }
 
-// IMPORTANT// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//generer une nouvelle tuile
+    // IMPORTANT// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //generer une nouvelle tuile
+    // score augmente de 1
 
     } else {//si Xisfalse est égal à 1 le placement est faux donc message d'erreur et retry
         //printf("le placement est faux"); ====== a remplacer

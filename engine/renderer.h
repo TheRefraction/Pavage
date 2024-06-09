@@ -43,6 +43,13 @@ void addFontToRenderer(Renderer *renderer, char *filename, unsigned short size);
 void flushRenderer(Renderer *renderer);
 
 /**
+ * flushObject - Flush an object from the rendering list to allow updates
+ * @param renderer Pointer to the current renderer
+ * @param data  Pointer to the current ObjectData to flush
+ */
+void flushObject(Renderer *renderer, ObjectData *data);
+
+/**
  * cleanupRenderer - Destroys the current renderer and frees memory
  * @param renderer Pointer to the current renderer
  */

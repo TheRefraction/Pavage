@@ -95,9 +95,15 @@ void render(Renderer *renderer, Scene *scene) {
     SDL_RenderClear(renderer->renderer);
 
     for(int i = 0; i < MAX_OBJECTS; i++) {
-        if(scene->data[i] != NULL && !scene->data[i]->inRenderer) {
-            addToRenderer(renderer, scene->data[i]);
-            scene->data[i]->inRenderer = true;
+        if(scene->data[i] != NULL) {
+            if(scene->data[i]->flush) {
+                flushObject(renderer, scene->data[i]);
+            }
+
+            if(!scene->data[i]->inRenderer) {
+                addToRenderer(renderer, scene->data[i]);
+                scene->data[i]->inRenderer = true;
+            }
         }
 
         if(renderer->objects[i] != NULL && scene->data[i]->isVisible) {

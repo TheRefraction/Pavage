@@ -113,6 +113,7 @@ void initObjectData(ObjectData *data[], int id, ObjectType type, const char spri
     _data->flip = flip;
     _data->isVisible = isVisible;
     _data->inRenderer = false;
+    _data->flush = false;
 
     data[id] = _data;
 }

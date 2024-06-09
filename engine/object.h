@@ -27,6 +27,7 @@ typedef struct OBJECT_DATA_STRUCT {
     SDL_RendererFlip flip;
     bool inRenderer;
     bool isVisible;
+    bool flush;
 } ObjectData;
 
 typedef struct OBJECT_STRUCT {
@@ -52,7 +53,7 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data);
  * @param sprite String that contains either a filename, or a text to render
  * @param x X-Coordinate
  * @param y Y-Coordinate
- * @param z Depth (unused)
+ * @param z Misc variable
  * @param fontId The font ID to use (0 when SPRITE)
  * @param angle Angle in degrees of rotation around the center of the sprite
  * @param color Blend of the sprite

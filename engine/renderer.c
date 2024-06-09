@@ -55,6 +55,12 @@ void removeFromRenderer(Renderer *renderer, int i) {
     renderer->objects[i] = NULL;
 }
 
+void flushObject(Renderer *renderer, ObjectData *data) {
+    removeFromRenderer(renderer, data->id);
+    data->inRenderer = false;
+    data->flush = false;
+}
+
 void flushRenderer(Renderer *renderer) {
     for(int i = 0; i < MAX_OBJECTS; i++) {
         removeFromRenderer(renderer, i);
