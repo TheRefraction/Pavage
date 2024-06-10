@@ -5,8 +5,10 @@
 #include "../game/tile.h"
 
 #include <stddef.h>
+#include <stdio.h>
+#include <ctype.h>
 
-void initScene(Scene *scene, int id) {
+void initScene(Scene *scene, short id) {
     scene->id = id;
     scene->isReady = false;
 
@@ -78,24 +80,23 @@ void readyScene(Scene *scene) {
             initObjectData(scene->data, 3, TEXT, str1, x_tmp + 10, y_tmp - 32, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             initObjectData(scene->data, 4, TEXT, str2, x_tmp - 32, y_tmp, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
-            // Hand of 5 tiles
-            for (int i = 5; i < 10; i++) {
-                initObjectData(scene->data, i, TILE, "", 144 + 104 * (i - 5), 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-            }
-
             initArray(scene->data[2]->sprite, 256, ' ');
 
             int flags = 0;
             if (scene->flags[2]) flags |= 1;
             if (scene->flags[1]) flags |= 2;
 
-            for(int i = 5; i < 10; i++) {
+            scene->flags[7] = 0;
+            scene->flags[9] = 0;
+
+            // Hand of 5 tiles
+            for (int i = 5; i < 10; i++) {
+                initObjectData(scene->data, i, TILE, "", 144 + 104 * (i - 5), 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
                 generateTile(scene->data[i]->sprite, flags);
             }
 
-            initObjectData(scene->data, 12, TEXT, "SCORE: 0", 400, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            scene->flags[7] = 0;
-            scene->flags[9] = 0;
+            initObjectData(scene->data, 12, TEXT, "SCORE: 0", 600, 12, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 13, TEXT, "ACT: Selectionnez une tuile", 16, 440, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             break;
         case 2: // Two players
@@ -108,7 +109,7 @@ void readyScene(Scene *scene) {
     scene->isReady = true;
 }
 
-void changeScene(Scene *scene, int id) {
+void changeScene(Scene *scene, short id) {
     scene->flags[0] = 1;
     scene->id = id;
     destroyScene(scene);
@@ -130,7 +131,7 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->data[4]->isVisible = false;
 
                         scene->data[5]->isVisible = true;
-                        scene->data[6]->isVisible = true;
+                        //scene->data[6]->isVisible = true;
                     } else if (isOnObject(scene, 3, input, 128, 48)) { // Continue
 
                     } else if (isOnObject(scene, 4, input, 128, 48)) { // Exit
@@ -189,15 +190,24 @@ void updateScene(Scene *scene, Input *input, Window *window) {
             case 1: // GAME 1-PLAYER
                 switch(scene->flags[9]) {
                     case 0: // Select a tile to set on grid
-                        for (int i = 5; i < 10; i++) {
+                        for (short i = 5; i < 10; i++) {
                             if(isOnObject(scene, i, input, 96, 96)) {
                                 scene->data[i]->y = 480;
                                 if(input->mouse[SDL_BUTTON_LEFT]) {
-                                    scene->data[i]->z = 1;
+                                    if (scene->flags[3]) return;
+                                    scene->flags[3] = 1;
+
+                                    scene->data[i]->z = -1;
                                     scene->data[i]->flush = true;
+
+                                    strcpy(scene->data[13]->sprite, "ACT: Selectionnez la case a placer");
+                                    scene->data[13]->flush = true;
 
                                     scene->flags[10] = i; // save the currently selected tile for later uses
                                     scene->flags[9] = 1;
+                                    scene->flags[12] = getTileCharsPosition(scene->data[i]->sprite);
+                                } else {
+                                    scene->flags[3] = 0;
                                 }
                             } else {
                                 scene->data[i]->y = 500;
@@ -206,22 +216,137 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         break;
                     case 1: // Select the character on the tile
                         if(input->keys[SDL_SCANCODE_ESCAPE]) {
+                            if (scene->flags[14]) return;
+                            scene->flags[14] = 1;
+
                             scene->data[scene->flags[10]]->z = 0;
                             scene->data[scene->flags[10]]->flush = true;
+
+                            strcpy(scene->data[13]->sprite, "ACT: Selectionnez une tuile");
+                            scene->data[13]->flush = true;
+
                             scene->flags[9] = 0;
                             scene->flags[10] = 0;
+                        } else {
+                            scene->flags[14] = 0;
+                        }
+
+                        if(input->mouse[SDL_BUTTON_LEFT]) {
+                            if (scene->flags[3]) return;
+                            scene->flags[3] = 1;
+
+                            int tmp = 1;
+                            int x = 144 + 104 * (scene->flags[10] - 5);
+                            for(int i = 0; i < 9; i++) {
+                                if((tmp & scene->flags[12]) != 0
+                                && isInRect(input, x + 32 * (i % 3) + 2, 482 + 32 * (i / 3), 28, 28)) {
+                                    scene->data[scene->flags[10]]->z = i + 1;
+                                    scene->data[scene->flags[10]]->flush = true;
+
+                                    strcpy(scene->data[13]->sprite, "ACT: Selectionnez une case sur la grille");
+                                    scene->data[13]->flush = true;
+
+                                    scene->flags[11] = i;
+                                    scene->flags[9] = 2;
+                                }
+                                tmp *= 2;
+                            }
+                        } else {
+                            scene->flags[3] = 0;
                         }
                         break;
                     case 2: // Select a square in the tile
-                        if(scene->flags[7] == 0) { // first tile
+                        short width = scene->flags[4] == 0 ? 6 : scene->flags[4] == 1 ? 12 : 18;
+                        short height = scene->flags[4] == 0 ? 3 : scene->flags[4] == 1 ? 6 : 9;
+                        short size = width * height;
 
+                        if(input->keys[SDL_SCANCODE_ESCAPE]) {
+                            if (scene->flags[14]) return;
+                            scene->flags[14] = 1;
+
+                            scene->data[scene->flags[10]]->z = -1;
+                            scene->data[scene->flags[10]]->flush = true;
+
+                            strcpy(scene->data[13]->sprite, "ACT: Selectionnez la case a placer");
+                            scene->data[13]->flush = true;
+
+                            scene->flags[11] = 0;
+                            scene->flags[9] = 1;
                         } else {
+                            scene->flags[14] = 0;
+                        }
 
+                        if(scene->flags[7] == 0) { // first tile
+                            if(input->mouse[SDL_BUTTON_LEFT]) {
+                                if (scene->flags[3]) return;
+                                scene->flags[3] = 1;
+                                for(short i = 0; i < size; i++) {
+                                    if(isInRect(input, scene->data[2]->x + 2 + 32 * (i % width), scene->data[2]->y + 2 + 32 * (i / width), 28, 28)) {
+                                        scene->flags[13] = i;
+                                        int pos = i - width * (scene->flags[11] / 3) - scene->flags[11] % 3;
+                                        if(isInGrid(scene->data[scene->flags[10]]->sprite, pos, scene->flags[11], width, height)) {
+                                            setTile(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos, width);
+                                            scene->data[2]->flush = true;
+
+                                            scene->flags[9] = 3;
+                                        } else {
+                                            strcpy(scene->data[13]->sprite, "ACT: Tuile en dehors!");
+                                            scene->data[13]->flush = true;
+                                        }
+                                    }
+                                }
+
+                            } else {
+                                scene->flags[3] = 0;
+                            }
+                        } else {
+                            if(input->mouse[SDL_BUTTON_LEFT]) {
+                                if (scene->flags[3]) return;
+                                scene->flags[3] = 1;
+                                for(short i = 0; i < size; i++) {
+                                    if (isdigit(scene->data[2]->sprite[i])
+                                    && isInRect(input, scene->data[2]->x + 2 + 32 * (i % width), scene->data[2]->y + 2 + 32 * (i / width), 28, 28)) {
+                                        scene->flags[13] = i;
+                                        int pos = i - width * (scene->flags[11] / 3) - scene->flags[11] % 3;
+
+                                        if(isValidPos(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos, width, false)) {
+                                            setTile(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos,
+                                                    width);
+                                            scene->data[2]->flush = true;
+
+                                            scene->flags[9] = 3;
+                                        } else {
+                                            strcpy(scene->data[13]->sprite, "ACT: Placement incorrect!");
+                                            scene->data[13]->flush = true;
+                                        }
+                                    }
+                                }
+                            } else {
+                                scene->flags[3] = 0;
+                            }
                         }
                         break;
+                    case 3: // End of turn
+                        int flags = 0;
+                        if (scene->flags[2]) flags |= 1;
+                        if (scene->flags[1]) flags |= 2;
+
+                        scene->flags[7]++;
+                        sprintf(scene->data[12]->sprite, "SCORE: %d", scene->flags[7]);
+                        scene->data[12]->flush = true;
+
+                        scene->data[scene->flags[10]]->z = 0;
+                        generateTile(scene->data[scene->flags[10]]->sprite, flags);
+                        scene->data[scene->flags[10]]->flush = true;
+
+                        strcpy(scene->data[13]->sprite, "ACT: Selectionnez une tuile");
+                        scene->data[13]->flush = true;
+
+                        scene->flags[3] = 0;
+                        scene->flags[9] = 0;
+                        scene->flags[10] = 0;
+                        break;
                 }
-                /*sprintf(scene->data[12]->sprite, "SCORE: %d", scene->flags[7]);
-                scene->data[12]->flush = true;*/
                 break;
             case 2: // GAME 2-PLAYERS
 

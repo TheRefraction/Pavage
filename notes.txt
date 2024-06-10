@@ -1,5 +1,9 @@
 PENSE-BÊTE POUR L'USAGE DES INPUTS DANS UNE SCENE
 
+warning: 'initObjectData' reading 256 bytes from a region of size 25 [-Wstringop-overread]
+
+(neg && isNegativeDigit(str[i])) || (!neg && isdigit(str[i]))
+
 scene->data[0]->angle += 2;
 if (input->keys[SDL_SCANCODE_UP]) {
     scene->data[0]->y--;

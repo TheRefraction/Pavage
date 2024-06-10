@@ -70,7 +70,7 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
 
                         dest.x -= 6;
                     } else color = SDL_GREEN;
-                } else if(data->type == TILE && data->z == 1) {
+                } else if(data->type == TILE && (data->z == -1 || data->z == i + 1)) {
                     color = SDL_ORANGE;
                 }
             }
@@ -97,6 +97,7 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failure to load surface:\n%s", SDL_GetError());
     }
+    return NULL;
 }
 
 void initObjectData(ObjectData *data[], int id, ObjectType type, const char sprite[256], int x, int y, int z, short fontId, float angle, SDL_Color color, SDL_RendererFlip flip, bool isVisible) {
