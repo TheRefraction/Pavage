@@ -185,8 +185,50 @@ void generateTile(char *str, int flags) {
     populateTile(str, set, flags, true);
 }
 
-void setTile(char *grid, char *tile, int pos, int width) {
+void setTile(char *grid, char *tile, int pos, int choice, int width, int height) {
+    int xPos = pos % width;
+    int yPos = (pos < 0) ? pos / width - 1 : pos / width;
+
+    if(xPos < 0) {
+        xPos = width + xPos;
+    }
+
+    bool col[3] = {false, false, false};
+    bool lin[3] = {false, false, false};
+
+    if(xPos == (width - 2)) {
+        if(choice % 3 == 2) {
+            col[0] = true;
+            col[1] = true;
+        } else {
+            col[2] = true;
+        }
+    } else if(xPos == (width - 1)) {
+        if(choice % 3 == 0) {
+            col[1] = true;
+            col[2] = true;
+        } else {
+            col[0] = true;
+        }
+    }
+
+    if(yPos == -2) {
+        lin[0] = true;
+        lin[1] = true;
+    } else if(yPos == -1) {
+        lin[0] = true;
+    } else if(yPos == (height - 2)) {
+        lin[2] = true;
+    } else if(yPos == (height - 1)) {
+        lin[1] = true;
+        lin[2] = true;
+    }
+
     for (int i = 0; i < 9; i++) {
+        if(col[i % 3] || lin[i / 3]) {
+            continue;
+        }
+
         int pi = pos + i % 3 + (i / 3) * width;
 
         if(grid[pi] == ' ') {

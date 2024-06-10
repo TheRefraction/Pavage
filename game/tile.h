@@ -97,8 +97,10 @@ void generateTile(char *str, int flags);
  * @param grid The string that holds the grid's data
  * @param tile The string that holds the tile's data
  * @param pos Position to set the tile on
+ * @param choice The square selected in the tile by the user
  * @param width Width of the grid
+ * @param height Height of the grid
  */
-void setTile(char *grid, char *tile, int pos, int width);
+void setTile(char *grid, char *tile, int pos, int choice, int width, int height);
 
 #endif
