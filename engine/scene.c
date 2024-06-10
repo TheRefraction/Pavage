@@ -28,26 +28,26 @@ void initScene(Scene *scene, short id) {
 void readyScene(Scene *scene) {
     switch(scene->id) {
         case 0: // Title screen
-            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 1, TEXT, "PAVAGE", 260, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 0, SPRITE, "./resources/spr_back_0.bmp", 0, 0, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, TEXT, "JEU DE PAVAGE", 260, 24, 0, 4, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             // buttons of main screen
-            initObjectData(scene->data, 2, SPRITE, "./resources/spr_btn_newgame.bmp", 336, 200, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 3, SPRITE, "./resources/spr_btn_continue.bmp", 336, 256, 0, 0, 0, SDL_GRAY, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 4, SPRITE, "./resources/spr_btn_exit.bmp", 336, 312, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 2, SPRITE, "./resources/spr_btn_main_0.bmp", 336, 200, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 3, SPRITE, "./resources/spr_btn_main_1.bmp", 336, 256, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 4, SPRITE, "./resources/spr_btn_main_2.bmp", 336, 312, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
             // how many players buttons
-            initObjectData(scene->data, 5, SPRITE, "./resources/spr_btn_onep.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            initObjectData(scene->data, 6, SPRITE, "./resources/spr_btn_twop.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 5, SPRITE, "./resources/spr_btn_play_0.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 6, SPRITE, "./resources/spr_btn_play_1.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
 
             // difficulties buttons
-            initObjectData(scene->data, 7, SPRITE, "./resources/spr_btn_d1.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            initObjectData(scene->data, 8, SPRITE, "./resources/spr_btn_d2.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 7, SPRITE, "./resources/spr_btn_diff_0.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 8, SPRITE, "./resources/spr_btn_diff_1.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
 
             //which size ?
-            initObjectData(scene->data, 9, SPRITE, "./resources/spr_btn_s1.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            initObjectData(scene->data, 10, SPRITE, "./resources/spr_btn_s2.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
-            initObjectData(scene->data, 11, SPRITE, "./resources/spr_btn_s3.bmp", 336, 314, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 9, SPRITE, "./resources/spr_btn_size_0.bmp", 336, 202, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 10, SPRITE, "./resources/spr_btn_size_1.bmp", 336, 258, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 11, SPRITE, "./resources/spr_btn_size_2.bmp", 336, 314, 0, 0, 0, SDL_WHITE, SDL_FLIP_NONE, false);
 
             break;
         case 1: // One Player
@@ -73,7 +73,7 @@ void readyScene(Scene *scene) {
             }
 
             initObjectData(scene->data, 0, SPRITE, "./resources/spr_back_1.bmp", 0, 0, 0, 0, 0, SDL_PURPLE,SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_opt.bmp", 10, 10, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 1, SPRITE, "./resources/spr_btn_save.bmp", 8, 16, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
 
             // Game Grid
             initObjectData(scene->data, 2, GRID, "", x_tmp, y_tmp, scene->flags[4], 3, 0, SDL_BLACK, SDL_FLIP_NONE,true);
@@ -97,6 +97,7 @@ void readyScene(Scene *scene) {
 
             initObjectData(scene->data, 12, TEXT, "SCORE: 0", 600, 12, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             initObjectData(scene->data, 13, TEXT, "ACT: Selectionnez une tuile", 16, 440, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 14, SPRITE, "./resources/spr_btn_stop.bmp", 64, 16, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
 
             break;
         case 2: // Two players
@@ -131,9 +132,15 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->data[4]->isVisible = false;
 
                         scene->data[5]->isVisible = true;
-                        //scene->data[6]->isVisible = true;
+                        scene->data[6]->isVisible = true;
                     } else if (isOnObject(scene, 3, input, 128, 48)) { // Continue
+                        FILE *f = fopen("save.dat", "r");
+                        if(f != NULL) {
 
+                            fclose(f);
+                        } else {
+                            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, WINDOW_TITLE, "Le fichier de sauvegarde est inexistant ou n'a pas pu être ouvert !", window->handle);
+                        }
                     } else if (isOnObject(scene, 4, input, 128, 48)) { // Exit
                         window->isClosing = true;
                     } else if (isOnObject(scene, 5, input, 128, 48)) {
@@ -188,6 +195,16 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                 break;
             case 1: // GAME 1-PLAYER
+                if (input->mouse[SDL_BUTTON_LEFT] && isOnObject(scene, 1, input, 48, 48)) {
+                    FILE *f = fopen("save.dat", "w");
+                    if (f != NULL) {
+
+                        fclose(f);
+                    } else {
+                        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, WINDOW_TITLE,"Le fichier de sauvegarde n'a pas pu être créé!", window->handle);
+                    }
+                }
+
                 switch(scene->flags[9]) {
                     case 0: // Select a tile to set on grid
                         for (short i = 5; i < 10; i++) {
@@ -285,7 +302,7 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                                         scene->flags[13] = i;
                                         int pos = i - width * (scene->flags[11] / 3) - scene->flags[11] % 3;
                                         if(isInGrid(scene->data[scene->flags[10]]->sprite, pos, scene->flags[11], width, height)) {
-                                            setTile(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos, width, 0, 0);
+                                            setTile(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos, -1, width, 0);
                                             scene->data[2]->flush = true;
 
                                             scene->flags[9] = 3;
@@ -310,8 +327,7 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                                         int pos = i - width * (scene->flags[11] / 3) - scene->flags[11] % 3;
 
                                         if(isValidPos(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos, width, false)) {
-                                            setTile(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos,
-                                                    width, height, scene->flags[11]);
+                                            setTile(scene->data[2]->sprite, scene->data[scene->flags[10]]->sprite, pos, scene->flags[11], width, height);
                                             scene->data[2]->flush = true;
 
                                             scene->flags[9] = 3;
@@ -345,6 +361,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->flags[3] = 0;
                         scene->flags[9] = 0;
                         scene->flags[10] = 0;
+                        break;
+                    case 4: // end of game
                         break;
                 }
                 break;

@@ -186,42 +186,44 @@ void generateTile(char *str, int flags) {
 }
 
 void setTile(char *grid, char *tile, int pos, int choice, int width, int height) {
-    int xPos = pos % width;
-    int yPos = (pos < 0) ? pos / width - 1 : pos / width;
-
-    if(xPos < 0) {
-        xPos = width + xPos;
-    }
-
     bool col[3] = {false, false, false};
     bool lin[3] = {false, false, false};
 
-    if(xPos == (width - 2)) {
-        if(choice % 3 == 2) {
-            col[0] = true;
-            col[1] = true;
-        } else {
-            col[2] = true;
-        }
-    } else if(xPos == (width - 1)) {
-        if(choice % 3 == 0) {
-            col[1] = true;
-            col[2] = true;
-        } else {
-            col[0] = true;
-        }
-    }
+    if(choice != -1) {
+        int xPos = pos % width;
+        int yPos = (pos < 0) ? pos / width - 1 : pos / width;
 
-    if(yPos == -2) {
-        lin[0] = true;
-        lin[1] = true;
-    } else if(yPos == -1) {
-        lin[0] = true;
-    } else if(yPos == (height - 2)) {
-        lin[2] = true;
-    } else if(yPos == (height - 1)) {
-        lin[1] = true;
-        lin[2] = true;
+        if (xPos < 0) {
+            xPos = width + xPos;
+        }
+
+        if(xPos == (width - 2)) {
+            if(choice % 3 == 2) {
+                col[0] = true;
+                col[1] = true;
+            } else {
+                col[2] = true;
+            }
+        } else if(xPos == (width - 1)) {
+            if(choice % 3 == 0) {
+                col[1] = true;
+                col[2] = true;
+            } else {
+                col[0] = true;
+            }
+        }
+
+        if(yPos == -2) {
+            lin[0] = true;
+            lin[1] = true;
+        } else if(yPos == -1) {
+            lin[0] = true;
+        } else if(yPos == (height - 2)) {
+            lin[2] = true;
+        } else if(yPos == (height - 1)) {
+            lin[1] = true;
+            lin[2] = true;
+        }
     }
 
     for (int i = 0; i < 9; i++) {
@@ -235,7 +237,13 @@ void setTile(char *grid, char *tile, int pos, int choice, int width, int height)
             grid[pi] = tile[i];
         } else if(isdigit(adjustChar(grid[pi]))) {
             if(isdigit(adjustChar(tile[i]))) {
-                grid[pi] = digitToChar(charToDigit(grid[pi]) + charToDigit(tile[i]));
+                int tmp = charToDigit(grid[pi]) + charToDigit(tile[i]);
+                if(tmp > 9) {
+                    tmp = 9;
+                } else if(tmp < -9) {
+                    tmp = -9;
+                }
+                grid[pi] = digitToChar(tmp);
             } else if (tile[i] != ' ') {
                 grid[pi] = tile[i];
             }

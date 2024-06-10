@@ -2,7 +2,7 @@
 #define CONSTANTS_H
 
 #define FRAMERATE 60
-#define WINDOW_TITLE "Tiling"
+#define WINDOW_TITLE "PAVAGE"
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define WINDOW_ICON -1
