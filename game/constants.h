@@ -1,6 +1,9 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
-
+/**
+ * @file constants.h
+ *
+ */
 #define FRAMERATE 60
 #define WINDOW_TITLE "PAVAGE"
 #define WINDOW_WIDTH 800

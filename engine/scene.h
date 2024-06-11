@@ -1,6 +1,9 @@
 #ifndef SCENE_H
 #define SCENE_H
-
+/**
+ * @file scene.h
+ * fichier concernant les scenes
+ */
 #include "../game/constants.h"
 #include "object.h"
 #include "input.h"

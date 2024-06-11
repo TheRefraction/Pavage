@@ -1,6 +1,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-
+/**
+ * @file window.h
+ * concernant la fenetre
+ */
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 

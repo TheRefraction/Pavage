@@ -1,6 +1,9 @@
 #ifndef OBJECT_H
 #define OBJECT_H
-
+/**
+ * @file object.h
+ * concerne les objets
+ */
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 

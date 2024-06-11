@@ -1,6 +1,9 @@
 #ifndef BUTTON_H
 #define BUTTON_H
-
+/**
+ * @file gui.h
+ * concerne gui
+ */
 #include <stdbool.h>
 
 #include "scene.h"

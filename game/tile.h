@@ -1,6 +1,9 @@
 #ifndef TILE_H
 #define TILE_H
-
+/**
+ * @file tile.h
+ * concerne les tuiles
+ */
 #include <stdbool.h>
 
 /**
@@ -62,6 +65,7 @@ bool isInTile(char *arr, char c);
  * @param width Width of the grid
  * @param height Height of the grid
  * @return bool
+ * @retval true tile is in the grid
  */
 bool isInGrid(char *arr, int pos, int choice, int width, int height);
 
@@ -73,6 +77,7 @@ bool isInGrid(char *arr, int pos, int choice, int width, int height);
  * @param width Width of the grid
  * @param p2 Is Player 2?
  * @return bool
+ * @retval true (valide position )
  */
 bool isValidPos(char *grid, char *tile, int pos, int width, bool p2);
 
@@ -102,5 +107,16 @@ void generateTile(char *str, int flags);
  * @param height Height of the grid
  */
 void setTile(char *grid, char *tile, int pos, int choice, int width, int height);
+
+/**
+ * getNumberOfMoves - Gets the number of remaining moves for one tile
+ * @param grid The string that holds the grid's data
+ * @param tile The string that holds the tile's data
+ * @param width Width of the grid
+ * @param height Height of the grid
+ * @param p2 Is player 2 ?
+ * @return
+ */
+int getNumberOfMoves(char *grid, char *tile, int width, int height, bool p2);
 
 #endif

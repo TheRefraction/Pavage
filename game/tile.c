@@ -1,8 +1,8 @@
 #include "tile.h"
+#include "SDL2/SDL_log.h"
 
 #include <stdlib.h>
 #include <ctype.h>
-
 
 char digitToChar(int i) {
     if (i > 0 && i <= 9) { //nombres positifs
@@ -249,4 +249,15 @@ void setTile(char *grid, char *tile, int pos, int choice, int width, int height)
             }
         }
     }
+}
+
+int getNumberOfMoves(char *grid, char *tile, int width, int height, bool p2) {
+    int size = width * height;
+    int res = 0;
+    for (int i = -2 * width; i < size + 2 * width; i++){ // TO VERIFY
+        if (isValidPos(grid, tile, i, width, p2)) {
+            res++;
+        }
+    }
+    return res;
 }

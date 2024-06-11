@@ -1,6 +1,9 @@
 #ifndef INPUT_H
 #define INPUT_H
-
+/**
+ * @file input.h
+ * concerne les imputs
+ */
 #include <stdbool.h>
 #include "SDL2/SDL.h"
 

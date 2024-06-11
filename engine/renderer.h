@@ -1,6 +1,9 @@
 #ifndef RENDERER_H
 #define RENDERER_H
-
+/**
+ * @file renderer.h
+ * concerne renderer
+ */
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 

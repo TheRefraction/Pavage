@@ -95,9 +95,15 @@ void readyScene(Scene *scene) {
                 generateTile(scene->data[i]->sprite, flags);
             }
 
-            initObjectData(scene->data, 12, TEXT, "SCORE: 0", 600, 12, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 13, TEXT, "ACT: Selectionnez une tuile", 16, 440, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
-            initObjectData(scene->data, 14, SPRITE, "./resources/spr_btn_stop.bmp", 64, 16, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 10, TEXT, "SCORE: 0", 600, 12, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 11, TEXT, "ACT: Selectionnez une tuile", 16, 440, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
+            initObjectData(scene->data, 12, SPRITE, "./resources/spr_btn_stop.bmp", 64, 16, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, true);
+
+            initObjectData(scene->data, 15, SPRITE, "./resources/spr_back_2.bmp", 160, 96, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 16, TEXT, "Fin de partie", 320, 108, 0, 3, 0, SDL_WHITE,SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 17, TEXT, "Error!", 208, 184, 0, 2, 0, SDL_BLACK,SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 18, SPRITE, "./resources/spr_btn_ok.bmp", 336, 376, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, false);
+
 
             break;
         case 2: // Two players
@@ -114,6 +120,19 @@ void changeScene(Scene *scene, short id) {
     scene->flags[0] = 1;
     scene->id = id;
     destroyScene(scene);
+}
+
+void endGame(Scene *scene) {
+    for(int i = 1; i < 13; i++) {
+        scene->data[i]->isVisible = false;
+    }
+    for(int i = 15; i < 19; i++) {
+        scene->data[i]->isVisible = true;
+    }
+    sprintf(scene->data[17]->sprite, "Nombre de tuiles posees: %d", scene->flags[7]); // TO CHECK
+    scene->data[17]->flush = true;
+
+    scene->flags[9] = 4;
 }
 
 void updateScene(Scene *scene, Input *input, Window *window) {
@@ -136,8 +155,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                     } else if (isOnObject(scene, 3, input, 128, 48)) { // Continue
                         FILE *f = fopen("save.dat", "r");
                         if(f != NULL) {
-
                             fclose(f);
+
                         } else {
                             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, WINDOW_TITLE, "Le fichier de sauvegarde est inexistant ou n'a pas pu être ouvert !", window->handle);
                         }
@@ -158,6 +177,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->data[7]->isVisible = true;
                         scene->data[8]->isVisible = true;
                     } else if (isOnObject(scene, 7, input, 128, 48)) {
+                        scene->flags[2] = 0;
+
                         scene->data[7]->isVisible = false;
                         scene->data[8]->isVisible = false;
 
@@ -180,11 +201,13 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         changeScene(scene, scene->flags[1] ? 2 : 1);
                     } else if (isOnObject(scene, 10, input, 128, 48)) {
                         scene->flags[3] = 0;
+                        scene->flags[14] = 0;
                         scene->flags[4] = 1;
 
                         changeScene(scene, scene->flags[1] ? 2 : 1);
                     } else if (isOnObject(scene, 11, input, 128, 48)) {
                         scene->flags[3] = 0;
+                        scene->flags[14] = 0;
                         scene->flags[4] = 2;
 
                         changeScene(scene, scene->flags[1] ? 2 : 1);
@@ -195,15 +218,61 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                 break;
             case 1: // GAME 1-PLAYER
-                if (input->mouse[SDL_BUTTON_LEFT] && isOnObject(scene, 1, input, 48, 48)) {
-                    FILE *f = fopen("save.dat", "w");
-                    if (f != NULL) {
+                if (input->mouse[SDL_BUTTON_LEFT]) {
+                    if (isOnObject(scene, 1, input, 48, 48)) {
+                        FILE *f = fopen("save.dat", "w");
+                        if (f != NULL) {
+                            fclose(f);
 
-                        fclose(f);
-                    } else {
-                        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, WINDOW_TITLE,"Le fichier de sauvegarde n'a pas pu être créé!", window->handle);
+                            const SDL_MessageBoxButtonData buttons[] = {
+                                    {0,                                       0, "Non"},
+                                    {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1, "Oui"},
+                            };
+
+                            const SDL_MessageBoxColorScheme colorScheme = {
+                                    {
+                                            {255, 0, 0},
+                                            {0, 255, 0},
+                                            {255, 255, 0},
+                                            {0, 0, 255},
+                                            {255, 0, 255}
+                                    }
+                            };
+
+                            const SDL_MessageBoxData messageboxdata = {
+                                    SDL_MESSAGEBOX_INFORMATION,
+                                    window->handle,
+                                    WINDOW_TITLE,
+                                    "Le jeu a été sauvegardé avec succès!\nVoulez-vous continuer la partie ?",
+                                    SDL_arraysize(buttons),
+                                    buttons,
+                                    &colorScheme
+                            };
+
+                            int buttonid;
+                            if (SDL_ShowMessageBox(&messageboxdata, &buttonid) < 0) {
+                                SDL_Log("Error displaying message box!");
+                                return;
+                            }
+                            // focus here
+
+                            scene->flags[3] = 1;
+                            if (buttonid == 0) {
+                                changeScene(scene, 0);
+                                return;
+                            }
+                        } else {
+                            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, WINDOW_TITLE,
+                                                     "Le fichier de sauvegarde n'a pas pu être créé!", window->handle);
+                        }
+                    } else if(isOnObject(scene, 12, input, 48, 48)) {
+                        endGame(scene);
                     }
                 }
+
+                short width = scene->flags[4] == 0 ? 6 : scene->flags[4] == 1 ? 12 : 18;
+                short height = scene->flags[4] == 0 ? 3 : scene->flags[4] == 1 ? 6 : 9;
+                short size = width * height;
 
                 switch(scene->flags[9]) {
                     case 0: // Select a tile to set on grid
@@ -217,8 +286,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                                     scene->data[i]->z = -1;
                                     scene->data[i]->flush = true;
 
-                                    strcpy(scene->data[13]->sprite, "ACT: Selectionnez la case a placer");
-                                    scene->data[13]->flush = true;
+                                    strcpy(scene->data[1]->sprite, "ACT: Selectionnez la case a placer");
+                                    scene->data[11]->flush = true;
 
                                     scene->flags[10] = i; // save the currently selected tile for later uses
                                     scene->flags[9] = 1;
@@ -239,8 +308,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                             scene->data[scene->flags[10]]->z = 0;
                             scene->data[scene->flags[10]]->flush = true;
 
-                            strcpy(scene->data[13]->sprite, "ACT: Selectionnez une tuile");
-                            scene->data[13]->flush = true;
+                            strcpy(scene->data[11]->sprite, "ACT: Selectionnez une tuile");
+                            scene->data[11]->flush = true;
 
                             scene->flags[9] = 0;
                             scene->flags[10] = 0;
@@ -260,8 +329,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                                     scene->data[scene->flags[10]]->z = i + 1;
                                     scene->data[scene->flags[10]]->flush = true;
 
-                                    strcpy(scene->data[13]->sprite, "ACT: Selectionnez une case sur la grille");
-                                    scene->data[13]->flush = true;
+                                    strcpy(scene->data[11]->sprite, "ACT: Selectionnez une case sur la grille");
+                                    scene->data[11]->flush = true;
 
                                     scene->flags[11] = i;
                                     scene->flags[9] = 2;
@@ -273,10 +342,6 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         }
                         break;
                     case 2: // Select a square in the tile
-                        short width = scene->flags[4] == 0 ? 6 : scene->flags[4] == 1 ? 12 : 18;
-                        short height = scene->flags[4] == 0 ? 3 : scene->flags[4] == 1 ? 6 : 9;
-                        short size = width * height;
-
                         if(input->keys[SDL_SCANCODE_ESCAPE]) {
                             if (scene->flags[14]) return;
                             scene->flags[14] = 1;
@@ -284,8 +349,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                             scene->data[scene->flags[10]]->z = -1;
                             scene->data[scene->flags[10]]->flush = true;
 
-                            strcpy(scene->data[13]->sprite, "ACT: Selectionnez la case a placer");
-                            scene->data[13]->flush = true;
+                            strcpy(scene->data[11]->sprite, "ACT: Selectionnez la case a placer");
+                            scene->data[11]->flush = true;
 
                             scene->flags[11] = 0;
                             scene->flags[9] = 1;
@@ -307,8 +372,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                                             scene->flags[9] = 3;
                                         } else {
-                                            strcpy(scene->data[13]->sprite, "ACT: Tuile en dehors!");
-                                            scene->data[13]->flush = true;
+                                            strcpy(scene->data[11]->sprite, "ACT: Tuile en dehors!");
+                                            scene->data[11]->flush = true;
                                         }
                                     }
                                 }
@@ -332,8 +397,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                                             scene->flags[9] = 3;
                                         } else {
-                                            strcpy(scene->data[13]->sprite, "ACT: Placement incorrect!");
-                                            scene->data[13]->flush = true;
+                                            strcpy(scene->data[11]->sprite, "ACT: Placement incorrect!");
+                                            scene->data[11]->flush = true;
                                         }
                                     }
                                 }
@@ -348,21 +413,47 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         if (scene->flags[1]) flags |= 2;
 
                         scene->flags[7]++;
-                        sprintf(scene->data[12]->sprite, "SCORE: %d", scene->flags[7]);
-                        scene->data[12]->flush = true;
+                        sprintf(scene->data[10]->sprite, "SCORE: %d", scene->flags[7]); // TO CHECK
+                        scene->data[10]->flush = true;
 
                         scene->data[scene->flags[10]]->z = 0;
                         generateTile(scene->data[scene->flags[10]]->sprite, flags);
                         scene->data[scene->flags[10]]->flush = true;
 
-                        strcpy(scene->data[13]->sprite, "ACT: Selectionnez une tuile");
-                        scene->data[13]->flush = true;
+                        strcpy(scene->data[11]->sprite, "ACT: Selectionnez une tuile");
+                        scene->data[11]->flush = true;
 
                         scene->flags[3] = 0;
                         scene->flags[9] = 0;
                         scene->flags[10] = 0;
+
+                        bool res = false;
+                        int num;
+                        for(int i = 5; i < 10 ; i++) {
+                            num = getNumberOfMoves(scene->data[2]->sprite, scene->data[i]->sprite, width, height, false);
+                            SDL_Log("Number of attempts possible for tile %d : %d", i - 5, num);
+                            if (num > 0) {
+                                res = true;
+                            }
+                        }
+
+                        if(!res) {
+                            endGame(scene);
+                        }
+
                         break;
                     case 4: // end of game
+                        if(input->mouse[SDL_BUTTON_LEFT]) {
+                            if (scene->flags[3]) return;
+                            scene->flags[3] = 1;
+
+                            if (isOnObject(scene, 18, input, 128, 48)) {
+                                changeScene(scene, 0);
+                                return;
+                            }
+                        } else {
+                            scene->flags[3] = 0;
+                        }
                         break;
                 }
                 break;
