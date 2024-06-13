@@ -1,27 +1,75 @@
 #include "file.h"
-#include <stdio.h>
-#include <string.h>
+#include "memory.h"
 
-void save(int nb_players, int difficulty, int grid_size[2], int score[2], int isP1Turn) {
+#include <stdio.h>
+#include <stdlib.h>
+#include <intrin.h>
+
+bool fileExists(const char *filename) {
+    FILE *f = fopen(filename, "r");
+    if(f != NULL) {
+        fclose(f);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void save(short flags[256], char *grid, char **tiles) {
     FILE* file = fopen("sav.dat", "w");
     if(file != NULL) {
-        fprintf(file, "%d\n%d\n%d %d\n%d %d\n%d\n", nb_players, difficulty, grid_size[0], grid_size[1], score[0], score[1], isP1Turn);
-        // how many players ?
-        // | difficulty
-        // | grid size
-        // | scores
-        // | p1 or p2 turn
+        fprintf(file, "%d\n%d\n%d\n%d\n%d\n%d\n", flags[1], flags[6], flags[7], flags[8], flags[2], flags[4]);
 
+        size_t sizeGrid = (flags[4] == 0) ? 18 : (flags[4] == 1) ? 72 : 162;
+        size_t numTiles = flags[1] ? 10 : 5;
 
-        // TO DO : SAVE EACH PLAYERS' TILES
+        for(int i = 0; i < sizeGrid; i++) {
+            fprintf(file, "%c", grid[i]);
+        }
+        fprintf(file, "\n");
+
+        for(int i = 0; i < numTiles; i++) {
+            for(int j = 0; j < 9; j++) {
+                fprintf(file, "%c", tiles[i][j]);
+            }
+            fprintf(file, "\n");
+        }
     }
     fclose(file);
 }
 
-void load() {
+void load(short flags[256], char buffers[16][256]) {
+    char buffer[256];
+    int i = 0;
+
     FILE* file = fopen("sav.dat", "r");
-    if(file != NULL) {
-        //strtok
+    while((flags[1] && i < 17) || (!flags[1] && i < 12)) {
+        fgets(buffer, 256, file);
+
+        switch(i) {
+            case 0:
+                flags[1] = atoi(buffer);
+                break;
+            case 1:
+                flags[6] = atoi(buffer);
+                break;
+            case 2:
+                flags[7] = atoi(buffer);
+                break;
+            case 3:
+                flags[8] = atoi(buffer);
+                break;
+            case 4:
+                flags[2] = atoi(buffer);
+                break;
+            case 5:
+                flags[4] = atoi(buffer);
+                break;
+            default:
+                strcpy(buffers[i - 6], buffer);
+                break;
+        }
+        i++;
     }
     fclose(file);
 }

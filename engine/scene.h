@@ -14,10 +14,11 @@
 typedef struct SCENE_STRUCT {
     short id;
     bool isReady;
-    short flags[256]; // 0: flush Renderer | 1: Players | 2 : Difficulty | 3: has pressed button |
-    // 4: size grid | 5: first turn | 6: player 2 turn | 7: score 1 | 8: score 2 | 9: controller |
+    short flags[256]; // 0: flush Renderer | 1: Players  | 2 : Difficulty | 3: has pressed button |
+    // 4: size grid | 5: first turn (UNUSED) | 6: player 2 turn | 7: score 1 | 8: score 2 | 9: controller |
     // 10: selected tile | 11: selected character on tile | 12: position of each character |
-    // 13: selected square on grid | 14: has pressed ESC
+    // 13: selected square on grid | 14: has pressed ESC | 15: buffers used
+    char buffers[16][256];
     ObjectData *data[MAX_OBJECTS];
 } Scene;
 

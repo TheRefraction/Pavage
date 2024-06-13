@@ -3,6 +3,7 @@
 #include "gui.h"
 
 #include "../game/tile.h"
+#include "file.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -18,6 +19,10 @@ void initScene(Scene *scene, short id) {
 
     for(int i = 0; i < 256; i++) {
         scene->flags[i] = 0;
+    }
+
+    for(int i = 0; i < 16; i++) {
+        initArray(scene->buffers[i], 256, 0);
     }
 }
 
@@ -80,19 +85,29 @@ void readyScene(Scene *scene) {
             initObjectData(scene->data, 3, TEXT, str1, x_tmp + 10, y_tmp - 32, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
             initObjectData(scene->data, 4, TEXT, str2, x_tmp - 32, y_tmp, 0, 3, 0, SDL_WHITE, SDL_FLIP_NONE, true);
 
-            initArray(scene->data[2]->sprite, 256, ' ');
+            if(scene->flags[15]) {
+                strcpy(scene->data[2]->sprite, scene->buffers[0]);
+            } else {
+                initArray(scene->data[2]->sprite, 256, ' ');
+            }
 
             int flags = 0;
             if (scene->flags[2]) flags |= 1;
             if (scene->flags[1]) flags |= 2;
 
-            scene->flags[7] = 0;
+            if(!scene->flags[15]) {
+                scene->flags[7] = 0;
+            }
             scene->flags[9] = 0;
 
             // Hand of 5 tiles
             for (int i = 5; i < 10; i++) {
                 initObjectData(scene->data, i, TILE, "", 144 + 104 * (i - 5), 500, 0, 3, 0, SDL_BLACK, SDL_FLIP_NONE, true);
-                generateTile(scene->data[i]->sprite, flags);
+                if(scene->flags[15]) {
+                    strcpy(scene->data[i]->sprite, scene->buffers[i - 4]);
+                } else {
+                    generateTile(scene->data[i]->sprite, flags);
+                }
             }
 
             initObjectData(scene->data, 10, TEXT, "SCORE: 0", 600, 12, 0, 2, 0, SDL_WHITE, SDL_FLIP_NONE, true);
@@ -102,9 +117,12 @@ void readyScene(Scene *scene) {
             initObjectData(scene->data, 15, SPRITE, "./resources/spr_back_2.bmp", 160, 96, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, false);
             initObjectData(scene->data, 16, TEXT, "Fin de partie", 320, 108, 0, 3, 0, SDL_WHITE,SDL_FLIP_NONE, false);
             initObjectData(scene->data, 17, TEXT, "Error!", 208, 184, 0, 2, 0, SDL_BLACK,SDL_FLIP_NONE, false);
-            initObjectData(scene->data, 18, SPRITE, "./resources/spr_btn_ok.bmp", 336, 376, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 18, TEXT, "Error!", 208, 216, 0, 2, 0, SDL_BLACK,SDL_FLIP_NONE, false);
+            initObjectData(scene->data, 19, TEXT, "Error!", 208, 248, 0, 2, 0, SDL_BLACK,SDL_FLIP_NONE, false);
 
+            initObjectData(scene->data, 20, SPRITE, "./resources/spr_btn_ok.bmp", 336, 376, 0, 0, 0, SDL_WHITE,SDL_FLIP_NONE, false);
 
+            scene->flags[15] = 0;
             break;
         case 2: // Two players
 
@@ -123,16 +141,27 @@ void changeScene(Scene *scene, short id) {
 }
 
 void endGame(Scene *scene) {
-    for(int i = 1; i < 13; i++) {
-        scene->data[i]->isVisible = false;
-    }
-    for(int i = 15; i < 19; i++) {
-        scene->data[i]->isVisible = true;
-    }
-    sprintf(scene->data[17]->sprite, "Nombre de tuiles posees: %d", scene->flags[7]); // TO CHECK
-    scene->data[17]->flush = true;
+    if(scene->flags[1]) {
 
-    scene->flags[9] = 4;
+    } else {
+        for (int i = 1; i < 13; i++) {
+            scene->data[i]->isVisible = false;
+        }
+        for (int i = 15; i < 21; i++) {
+            scene->data[i]->isVisible = true;
+        }
+
+        sprintf(scene->data[17]->sprite, "Mode: %s", scene->flags[2] ? "Difficile" : "Facile"); // TO CHECK
+        scene->data[17]->flush = true;
+
+        sprintf(scene->data[18]->sprite, "Taille de grille: %s", (scene->flags[4] == 0) ? "Petite" : (scene->flags[4] == 1 ? "Moyenne" : "Grande")); // TO CHECK
+        scene->data[18]->flush = true;
+
+        sprintf(scene->data[19]->sprite, "Nombre de tuiles posees: %d", scene->flags[7]); // TO CHECK
+        scene->data[19]->flush = true;
+
+        scene->flags[9] = 4;
+    }
 }
 
 void updateScene(Scene *scene, Input *input, Window *window) {
@@ -153,16 +182,20 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->data[5]->isVisible = true;
                         scene->data[6]->isVisible = true;
                     } else if (isOnObject(scene, 3, input, 128, 48)) { // Continue
-                        FILE *f = fopen("save.dat", "r");
-                        if(f != NULL) {
-                            fclose(f);
+                        if(fileExists("sav.dat")) {
+                            load(scene->flags, scene->buffers);
+                            scene->flags[15] = 1;
 
+                            changeScene(scene, scene->flags[1] + 1);
+                            return;
                         } else {
                             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, WINDOW_TITLE, "Le fichier de sauvegarde est inexistant ou n'a pas pu être ouvert !", window->handle);
                         }
                     } else if (isOnObject(scene, 4, input, 128, 48)) { // Exit
                         window->isClosing = true;
                     } else if (isOnObject(scene, 5, input, 128, 48)) {
+                        scene->flags[1] = 0;
+
                         scene->data[5]->isVisible = false;
                         scene->data[6]->isVisible = false;
 
@@ -220,9 +253,13 @@ void updateScene(Scene *scene, Input *input, Window *window) {
             case 1: // GAME 1-PLAYER
                 if (input->mouse[SDL_BUTTON_LEFT]) {
                     if (isOnObject(scene, 1, input, 48, 48)) {
-                        FILE *f = fopen("save.dat", "w");
-                        if (f != NULL) {
-                            fclose(f);
+                        if (fileExists("sav.dat")) {
+                            char *arr[5];
+                            for(int i = 0; i < 5; i++) {
+                                arr[i] = scene->data[5 + i]->sprite;
+                            }
+
+                            save(scene->flags, scene->data[2]->sprite, arr);
 
                             const SDL_MessageBoxButtonData buttons[] = {
                                     {0,                                       0, "Non"},
@@ -428,11 +465,8 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                         scene->flags[10] = 0;
 
                         bool res = false;
-                        int num;
                         for(int i = 5; i < 10 ; i++) {
-                            num = getNumberOfMoves(scene->data[2]->sprite, scene->data[i]->sprite, width, height, false);
-                            SDL_Log("Number of attempts possible for tile %d : %d", i - 5, num);
-                            if (num > 0) {
+                            if (getNumberOfMoves(scene->data[2]->sprite, scene->data[i]->sprite, width, height, false) > 0) {
                                 res = true;
                             }
                         }
@@ -447,7 +481,7 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                             if (scene->flags[3]) return;
                             scene->flags[3] = 1;
 
-                            if (isOnObject(scene, 18, input, 128, 48)) {
+                            if (isOnObject(scene, 20, input, 128, 48)) {
                                 changeScene(scene, 0);
                                 return;
                             }

@@ -254,7 +254,7 @@ void setTile(char *grid, char *tile, int pos, int choice, int width, int height)
 int getNumberOfMoves(char *grid, char *tile, int width, int height, bool p2) {
     int size = width * height;
     int res = 0;
-    for (int i = -2 * width; i < size + 2 * width; i++){ // TO VERIFY
+    for (int i = -2 * width; i < size + 2 * width; i++){
         if (isValidPos(grid, tile, i, width, p2)) {
             res++;
         }
