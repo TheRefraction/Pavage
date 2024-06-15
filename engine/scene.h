@@ -14,11 +14,12 @@
 typedef struct SCENE_STRUCT {
     short id;
     bool isReady;
-    short flags[256]; // 0: flush Renderer | 1: Players  | 2 : Difficulty | 3: has pressed button |
-    // 4: size grid | 5: first turn (UNUSED) | 6: player 2 turn | 7: score 1 | 8: score 2 | 9: controller |
-    // 10: selected tile | 11: selected character on tile | 12: position of each character |
-    // 13: selected square on grid | 14: has pressed ESC | 15: buffers used
-    char buffers[16][256];
+    short flags[MAX_FLAGS];
+    // 0: Flush Renderer | 1: Buffers used? | 2: Has pressed LEFT_BUTTON? | 3: Has pressed ESC? |
+    // 4: Scene controller | 5: 2 players? | 6: Difficulty | 7: Grid size |
+    // 8: Turn | 9: Score 1 | 10: Score 2 | 11: Selected tile |
+    // 12: Selected character on tile | 13: Selected square on grid | 14: Position of each char on tile (TO REWORK)
+    char buffers[MAX_BUFFERS][BUFFER_SIZE];
     ObjectData *data[MAX_OBJECTS];
 } Scene;
 
@@ -27,7 +28,6 @@ typedef struct SCENE_STRUCT {
  * @param scene Pointer on the scene to initialize
  * @param id Which scene ID to load
  */
-
 void initScene(Scene *scene, short id);
 
 /**
