@@ -725,7 +725,7 @@ void updateScene(Scene *scene, Input *input, Window *window) {
                                         int pos = i - width * (scene->flags[12] / 3) - scene->flags[12] % 3;
 
                                         if (isInGrid(scene->data[scene->flags[11]]->sprite, pos, scene->flags[12], width, height)
-                                        && isValidPosFirstTurn(scene->data[2]->sprite, scene->data[scene->flags[11]]->sprite, pos, width, size, scene->flags[8])) {
+                                        && isValidPosFirstTurn(scene->data[2]->sprite, scene->data[scene->flags[11]]->sprite, pos, width)) {
                                             setTile(scene->data[2]->sprite, scene->data[scene->flags[11]]->sprite, pos, -1, width, 0);
                                             scene->data[2]->flush = true;
 
