@@ -59,7 +59,36 @@ int displaySaveMessage(SDL_Window *handle, int *buttonid) {
 
 void endGame(Scene *scene) {
     if(scene->flags[5]) { // 2 PLAYERS SCREEN
+        for (int i = 2; i < 20; i++) {
+            scene->data[i]->isVisible = false;
+        }
 
+        for (int i = 20; i < 28; i++) {
+            scene->data[i]->isVisible = true;
+        }
+
+        sprintf(scene->data[22]->sprite, "Mode: %s", scene->flags[6] ? "Difficile" : "Facile"); // TO CHECK
+        scene->data[22]->flush = true;
+
+        sprintf(scene->data[23]->sprite, "Taille de grille: %s", (scene->flags[7] == 0) ? "Petite" : (scene->flags[7] == 1 ? "Moyenne" : "Grande")); // TO CHECK
+        scene->data[23]->flush = true;
+
+        sprintf(scene->data[24]->sprite, "Score Joueur 1: %d", scene->flags[9]); // TO CHECK
+        scene->data[24]->flush = true;
+
+        sprintf(scene->data[25]->sprite, "Score Joueur 2: %d", scene->flags[10]); // TO CHECK
+        scene->data[25]->flush = true;
+
+        if(scene->flags[15] != 0) {
+            sprintf(scene->data[26]->sprite, "Le joueur %d a abandonne!", scene->flags[15]);
+        } else if(scene->flags[9] == scene->flags[10]) {
+            strcpy(scene->data[26]->sprite, "Aucun joueur n'a gagne!");
+        } else {
+            sprintf(scene->data[26]->sprite, "Le joueur %d a gagne!", scene->flags[9] > scene->flags[10] ? 1 : 2);
+        }
+        scene->data[26]->flush = true;
+
+        scene->flags[4] = 4;
     } else {
         for (int i = 2; i < 14; i++) {
             scene->data[i]->isVisible = false;

@@ -20,7 +20,8 @@ typedef struct SCENE_STRUCT {
     // 0: Flush Renderer | 1: Buffers used? | 2: Has pressed LEFT_BUTTON? | 3: Has pressed ESC? |
     // 4: Scene controller | 5: 2 players? | 6: Difficulty | 7: Grid size |
     // 8: Turn | 9: Score 1 | 10: Score 2 | 11: Selected tile |
-    // 12: Selected character on tile | 13: Selected square on grid | 14: Position of each char on tile (TO REWORK)
+    // 12: Selected character on tile | 13: Selected square on grid | 14: Position of each char on tile (TO REWORK) | 15: Which player gave up? (0: no one, 1: player 1, 2: player 2) |
+    // 16: Has displayed continue message
     char buffers[MAX_BUFFERS][BUFFER_SIZE];
     ObjectData *data[MAX_OBJECTS];
 } Scene;

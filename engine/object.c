@@ -72,9 +72,9 @@ Object* initObject(SDL_Renderer *renderer, TTF_Font *fonts[], ObjectData *data) 
                     } else color = SDL_GREEN;
                 } else if(data->type == TILE) {
                     if (data->z == -1) {
-                        color = SDL_ORANGE;
+                        color = SDL_LIGHT_BLUE;
                     } else if (data->z == i + 1){
-                        color = SDL_DARK_ORANGE;
+                        color = SDL_BLUE;
                     }
                 }
             }

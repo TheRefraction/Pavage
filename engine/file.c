@@ -22,6 +22,8 @@ void save(short flags[256], char *grid, char **tiles) {
             fprintf(file, "%d\n", flags[i]);
         }
 
+        fprintf(file, "%d\n", flags[16]);
+
         size_t sizeGrid = (flags[7] == 0) ? 18 : (flags[7] == 1) ? 72 : 162;
         size_t numTiles = flags[5] ? 10 : 5;
 
@@ -45,11 +47,13 @@ void load(short flags[256], char buffers[16][256]) {
     int i = 0;
 
     FILE* file = fopen("sav.dat", "r");
-    while((flags[5] && i < 17) || (!flags[5] && i < 12)) {
+    while((flags[5] && i < 18) || (!flags[5] && i < 13)) {
         fgets(buffer, 256, file);
 
-        if(i > 5) {
-            strcpy(buffers[i - 6], buffer);
+        if(i > 6) {
+            strcpy(buffers[i - 7], buffer);
+        } else if(i == 6) {
+            flags[16] = atoi(buffer);
         } else {
             flags[5 + i] = atoi(buffer);
         }

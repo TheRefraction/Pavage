@@ -77,11 +77,23 @@ bool isInGrid(char *arr, int pos, int choice, int width, int height);
  * @param tile The string that holds the tile's data
  * @param pos The absolute position of the upper-left square of the tile
  * @param width Width of the grid
+ * @param size Size of the grid
  * @param p2 Is Player 2?
+ * @return bool
+ * @retval true (valid position)
+ */
+bool isValidPos(char *grid, char *tile, int pos, int width, int size, bool p2);
+
+/**
+ * isValidPosFirstTurn - Checks if the tile has a valid position on the grid (First turn - 2Players)
+ * @param grid The string that holds the grid's data
+ * @param tile The string that holds the tile's data
+ * @param pos The absolute position of the upper-left square of the tile
+ * @param width Width of the grid
  * @return bool
  * @retval true (valide position )
  */
-bool isValidPos(char *grid, char *tile, int pos, int width, bool p2);
+bool isValidPosFirstTurn(char *grid, char *tile, int pos, int width);
 
 /**
  * populateTile - Randomly populates a tile

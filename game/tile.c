@@ -25,7 +25,7 @@ int charToDigit(char c) {
 }
 
 char adjustChar(char c) {
-    if(c >= 39 && c <= 47) { //si le nombre est négatif on le convertit en nombre positif
+    if(c >= 39 && c <= 47) { // Converts negative digits to positive
         return c + 10;
     } else {
         return c;
@@ -50,7 +50,7 @@ short getTileCharsPosition(char *arr) {
     short res = 0;
     short tmp = 1;
     for(int i = 0; i < 9; i++) {
-        if(arr[i] != ' ' && !isdigit(arr[i])) {
+        if(arr[i] != ' ' && !isdigit(adjustChar(arr[i]))) {
             res |= tmp;
         }
         tmp *= 2;
@@ -71,11 +71,23 @@ bool isInTile(char *arr, char c) {
 }
 
 bool isInGrid(char *arr, int pos, int choice, int width, int height) {
-    int xPos = pos % width; //coordonnée de x de la case la plus en haut à gauche
-    int yPos = (pos < 0) ? pos / width - 1 : pos / width; // coordonnée de y de la case la plus en haut à gauche
+    int xPos = pos % width;
+    int yPos = pos / width;
 
     if(xPos < 0) {
-        xPos = width + xPos;
+        xPos += width;
+    }
+
+    if(choice / 3 == 1) {
+        if(pos < -1 * choice % 3) {
+            yPos = -1;
+        }
+    } else if(choice / 3 == 2) {
+        if(pos < -1 * width - choice % 3) {
+            yPos = -2;
+        } else if(pos < -1 * choice % 3) {
+            yPos = -1;
+        }
     }
 
     if(xPos == (width - 2)) {
@@ -121,10 +133,20 @@ bool isInGrid(char *arr, int pos, int choice, int width, int height) {
     return true;
 }
 
-bool isValidPos(char *grid, char *tile, int pos, int width, bool p2) {
+bool isValidPos(char *grid, char *tile, int pos, int width, int size, bool p2) {
     for (int i = 0; i < 9; i++) {
         int pi = pos + i % 3 + (i / 3) * width;
-        if(isalpha(tile[i]) && (grid[pi] == '0' || (!p2 && !isdigit(grid[pi])) || (p2 && !isNegativeDigit(grid[pi])))) {
+        if(isalpha(tile[i]) && (pi < 0 || pi >= size || grid[pi] == '0' || (!p2 && !isdigit(grid[pi])) || (p2 && !isNegativeDigit(grid[pi])))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool isValidPosFirstTurn(char *grid, char *tile, int pos, int width) {
+    for (int i = 0; i < 9; i++) {
+        int pi = pos + i % 3 + (i / 3) * width;
+        if(isalpha(tile[i]) && grid[pi] != ' ') {
             return false;
         }
     }
@@ -191,10 +213,22 @@ void setTile(char *grid, char *tile, int pos, int choice, int width, int height)
 
     if(choice != -1) {
         int xPos = pos % width;
-        int yPos = (pos < 0) ? pos / width - 1 : pos / width;
+        int yPos = pos / width;
 
         if (xPos < 0) {
             xPos = width + xPos;
+        }
+
+        if(choice / 3 == 1) {
+            if(pos < -1 * choice % 3) {
+                yPos = -1;
+            }
+        } else if(choice / 3 == 2) {
+            if(pos < -1 * width - choice % 3) {
+                yPos = -2;
+            } else if(pos < -1 * choice % 3) {
+                yPos = -1;
+            }
         }
 
         if(xPos == (width - 2)) {
@@ -255,7 +289,7 @@ int getNumberOfMoves(char *grid, char *tile, int width, int height, bool p2) {
     int size = width * height;
     int res = 0;
     for (int i = -2 * width; i < size + 2 * width; i++){
-        if (isValidPos(grid, tile, i, width, p2)) {
+        if (isValidPos(grid, tile, i, width, size, p2)) {
             res++;
         }
     }
