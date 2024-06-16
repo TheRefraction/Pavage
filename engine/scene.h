@@ -1,9 +1,11 @@
-#ifndef SCENE_H
-#define SCENE_H
 /**
  * @file scene.h
- * fichier concernant les scenes
+ * concerns scene
  */
+
+#ifndef SCENE_H
+#define SCENE_H
+
 #include "../game/constants.h"
 #include "object.h"
 #include "input.h"

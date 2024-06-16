@@ -1,9 +1,11 @@
-#ifndef OBJECT_H
-#define OBJECT_H
 /**
  * @file object.h
- * concerne les objets
+ * concerns objects
  */
+
+#ifndef OBJECT_H
+#define OBJECT_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 

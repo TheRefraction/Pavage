@@ -2,7 +2,7 @@
 #define COLORS_H
 /**
  * @file colors.h
- * couleurs
+ * definition of all the colors
  */
 #define SDL_WHITE (SDL_Color){255, 255, 255, SDL_ALPHA_OPAQUE}
 #define SDL_RED (SDL_Color){255, 0, 0, SDL_ALPHA_OPAQUE}

@@ -41,6 +41,7 @@ void init(Window *window, Renderer *renderer, Input *input, Scene *scene) {
     }
 
     initWindow(window, WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
+    setIconWindow(window, "./resources/spr_game_icon.bmp");
     initRenderer(renderer, window->handle);
     initInput(input);
     initScene(scene, 0);

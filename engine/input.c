@@ -17,25 +17,31 @@ void initInput(Input *input) {
 void updateInput(Input *input, SDL_Event event) {
     switch(event.type)
     {
-        case SDL_KEYDOWN:
+        case SDL_KEYDOWN: {
             input->keys[SDL_GetScancodeFromKey(event.key.keysym.sym)] = true;
             break;
-        case SDL_KEYUP:
+        }
+        case SDL_KEYUP: {
             input->keys[SDL_GetScancodeFromKey(event.key.keysym.sym)] = false;
             break;
-        case SDL_MOUSEBUTTONDOWN:
+        }
+        case SDL_MOUSEBUTTONDOWN: {
             input->mouse[event.button.button] = true;
             break;
-        case SDL_MOUSEBUTTONUP:
+        }
+        case SDL_MOUSEBUTTONUP: {
             input->mouse[event.button.button] = false;
             break;
-        case SDL_MOUSEWHEEL:
+        }
+        case SDL_MOUSEWHEEL: {
             input->scroll = event.wheel.y;
             break;
-        case SDL_MOUSEMOTION:
+        }
+        case SDL_MOUSEMOTION: {
             input->cursor[0] = event.motion.x;
             input->cursor[1] = event.motion.y;
             break;
+        }
     }
 }
 

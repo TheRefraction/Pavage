@@ -1,9 +1,11 @@
-#ifndef TILE_H
-#define TILE_H
 /**
  * @file tile.h
- * concerne les tuiles
+ * concerns tiles
  */
+
+#ifndef TILE_H
+#define TILE_H
+
 #include <stdbool.h>
 
 /**

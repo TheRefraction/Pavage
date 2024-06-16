@@ -18,7 +18,9 @@ bool fileExists(const char *filename) {
 void save(short flags[256], char *grid, char **tiles) {
     FILE* file = fopen("sav.dat", "w");
     if(file != NULL) {
-        fprintf(file, "%d\n%d\n%d\n%d\n%d\n%d\n", flags[5], flags[8], flags[9], flags[10], flags[6], flags[7]);
+        for(int i = 5; i < 11; i++) {
+            fprintf(file, "%d\n", flags[i]);
+        }
 
         size_t sizeGrid = (flags[7] == 0) ? 18 : (flags[7] == 1) ? 72 : 162;
         size_t numTiles = flags[5] ? 10 : 5;
@@ -46,29 +48,12 @@ void load(short flags[256], char buffers[16][256]) {
     while((flags[5] && i < 17) || (!flags[5] && i < 12)) {
         fgets(buffer, 256, file);
 
-        switch(i) {
-            case 0:
-                flags[5] = atoi(buffer);
-                break;
-            case 1:
-                flags[8] = atoi(buffer);
-                break;
-            case 2:
-                flags[9] = atoi(buffer);
-                break;
-            case 3:
-                flags[10] = atoi(buffer);
-                break;
-            case 4:
-                flags[6] = atoi(buffer);
-                break;
-            case 5:
-                flags[7] = atoi(buffer);
-                break;
-            default:
-                strcpy(buffers[i - 6], buffer);
-                break;
+        if(i > 5) {
+            strcpy(buffers[i - 6], buffer);
+        } else {
+            flags[5 + i] = atoi(buffer);
         }
+
         i++;
     }
     fclose(file);

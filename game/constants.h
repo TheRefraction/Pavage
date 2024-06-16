@@ -1,9 +1,11 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
 /**
  * @file constants.h
- *
+ * definition of all the constants
  */
+
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 #define FRAMERATE 60
 #define WINDOW_TITLE "Jeu de Pavage"
 #define WINDOW_WIDTH 800

@@ -1,15 +1,18 @@
-#ifndef WINDOW_H
-#define WINDOW_H
 /**
  * @file window.h
- * concernant la fenetre
+ * All functions managing windows
  */
+
+#ifndef WINDOW_H
+#define WINDOW_H
+
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
 typedef struct WINDOW_STRUCT {
     SDL_Window *handle;
     SDL_Surface *surface;
+    SDL_Surface *icon;
 
     char *title;
     int width;
@@ -26,79 +29,92 @@ typedef struct WINDOW_STRUCT {
 } Window;
 
 /**
- * initWindow- initialise une fenetre
- * @param window -
- * @param title - titre de la fenetre
- * @param width - largeur de la fenetre
- * @param height - hauteur de la fenetre
+ * initWindow - Initializes a window
+ * @param window Pointer to the current window
+ * @param title Title of the window
+ * @param width Width of the window
+ * @param height Height of the window
  */
 void initWindow(Window *window, char *title, int width, int height);
 
 /**
- * updateWindow-met à jour la fenetre
- * @param window - nom de la fenetre
- * @param event - evenement à effectuer sur la fenetre
+ * updateWindow - Updates a window
+ * @param window Pointer to the current window
+ * @param event SDL_Event
  */
 void updateWindow(Window *window, SDL_Event event);
 
 /**
- * setTitleWindow- definit le titre de la fenetre
- * @param window - nom de la fenetre
- * @param title - titre de la fenetre
+ * setTitleWindow - Sets the title of a window
+ * @param window Pointer to the current window
+ * @param title Title of the window
  */
 void setTitleWindow(Window *window, char *title);
 
 /**
- * setSizeWindow-definit la taille de la fenetre
- * @param window-nom de la fenetre
- * @param width-largeur de la fenetre
- * @param height-hauteur de la fenetre
+ * setIconWindow - Sets the icon for the window
+ * @param window Pointer to the current window
+ * @param filename Filename of the icon
+ */
+void setIconWindow(Window *window, char *filename);
+
+/**
+ * setSizeWindow - Sets the size of a window
+ * @param window Pointer to the current window
+ * @param width Width of the window
+ * @param height Height of the window
  */
 void setSizeWindow(Window *window, int width, int height);
 
 /**
- * setPositionWindow-definit la position de la fenetre
- * @param window - nom de la fenetre
- * @param x - position en x de la fenetre
- * @param y - position en y de la fenetre
+ * setPositionWindow - Sets the position on the screen of a window
+ * @param window Pointer to the current window
+ * @param x X-Coordinate of the window
+ * @param y Y-Coordinate of the window
  */
 void setPositionWindow(Window *window, int x, int y);
 
 /**
- *grabCursorWindow-
- * @param window
+ * setInputFocusWindow - Sets the input focus on a window
+ * @param window Pointer to the current window
+ */
+void setInputFocusWindow(Window *window);
+
+/**
+ * grabCursorWindow - Keeps the mouse cursor inside the bounds of a window
+ * @param window Pointer to the current window
  */
 void grabCursorWindow(Window *window);
 
 /**
- *freeCursorWindow-
- * @param window
+ * freeCursorWindow - Frees the mouse cursor from the bounds of a window
+ * @param window Pointer to the current window
  */
 void freeCursorWindow(Window *window);
 
 /**
- *setFullscreenWindow-
- * @param window
- * @param fullscreen
+ * setFullscreenWindow - Sets a window in fullscreen mode
+ * @param window Pointer to the current window
+ * @param fullscreen Boolean
  */
 void setFullscreenWindow(Window *window, bool fullscreen);
 
 /**
- *setResizableWindow-
- * @param window
- * @param resizable
+ * setResizableWindow - Sets the user-resizable state of a window
+ * @param window Pointer to the current window
+ * @param resizable Boolean
  */
 void setResizableWindow(Window *window, bool resizable);
 
 /**
- * showWindow - affiche la fenetre
- * @param window - nom de la fenetre
+ * showWindow - Shows a window
+ * @param window Pointer to the current window
  */
 void showWindow(Window * window);
 
 /**
- * hideWindow- cache la fenetre
- * @param window - nom de la fenetre
+ * hideWindow - Hides a window
+ * @param window Pointer to the current window
  */
 void hideWindow(Window * window);
 

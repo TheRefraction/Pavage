@@ -2,6 +2,7 @@
 #include "constants.h"
 
 #include <string.h>
+#include <stdio.h>
 
 void initGridPosAndLabels(short size, int *x, int *y, char str1[96], char str2[96]) {
     if (size == 0) {
@@ -54,4 +55,29 @@ int displaySaveMessage(SDL_Window *handle, int *buttonid) {
     }
 
     return 0;
+}
+
+void endGame(Scene *scene) {
+    if(scene->flags[5]) { // 2 PLAYERS SCREEN
+
+    } else {
+        for (int i = 2; i < 14; i++) {
+            scene->data[i]->isVisible = false;
+        }
+
+        for (int i = 15; i < 21; i++) {
+            scene->data[i]->isVisible = true;
+        }
+
+        sprintf(scene->data[17]->sprite, "Mode: %s", scene->flags[6] ? "Difficile" : "Facile"); // TO CHECK
+        scene->data[17]->flush = true;
+
+        sprintf(scene->data[18]->sprite, "Taille de grille: %s", (scene->flags[7] == 0) ? "Petite" : (scene->flags[7] == 1 ? "Moyenne" : "Grande")); // TO CHECK
+        scene->data[18]->flush = true;
+
+        sprintf(scene->data[19]->sprite, "Nombre de tuiles posees: %d", scene->flags[9]); // TO CHECK
+        scene->data[19]->flush = true;
+
+        scene->flags[4] = 4;
+    }
 }
