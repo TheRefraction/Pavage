@@ -1,6 +1,6 @@
 /**
  * @file renderer.h
- * concerns renderer
+ * Renderer Functions
  */
 
 #ifndef RENDERER_H

@@ -1,6 +1,6 @@
 /**
  * @file input.h
- * concerne les imputs
+ * Input System
  */
 
 #ifndef INPUT_H

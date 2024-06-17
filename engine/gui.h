@@ -1,6 +1,6 @@
 /**
  * @file gui.h
- * concerns gui
+ * Graphical Elements Functions
  */
 
 #ifndef BUTTON_H

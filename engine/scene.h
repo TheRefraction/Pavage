@@ -1,6 +1,6 @@
 /**
  * @file scene.h
- * concerns scene
+ * Scene Functions & Code for the game
  */
 
 #ifndef SCENE_H

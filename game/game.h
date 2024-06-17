@@ -1,6 +1,6 @@
 /**
  * @file game.h
- * concerns game
+ * Main program
  */
 
 #ifndef GAME_H

@@ -1,6 +1,6 @@
 /**
  * @file object.h
- * concerns objects
+ * Objects & ObjectData Functions
  */
 
 #ifndef OBJECT_H

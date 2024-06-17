@@ -731,7 +731,7 @@ void updateScene(Scene *scene, Input *input, Window *window) {
 
                                             scene->flags[4] = 3;
                                         } else {
-                                            strcpy(scene->data[17]->sprite, "ACT: Tuile en dehors!");
+                                            strcpy(scene->data[17]->sprite, "ACT: Tuile en dehors ou placement incorrect!");
                                             scene->data[17]->flush = true;
                                         }
                                     }
